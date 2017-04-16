@@ -13,6 +13,7 @@ services:
         working_dir: /code
         volumes:
             - "$PWD:/code"
+            - "../common:/lib/common"
         ports:
             - "8080:80"
         environment:
@@ -27,8 +28,8 @@ services:
         container_name: phpunit
         command: vendor/bin/phpunit
         working_dir: /code
-        volumes:
-            - "$PWD:/code"
+        volumes_from:
+            - app
         environment:
             - PHP_IDE_CONFIG="serverName=app"
 
@@ -36,5 +37,5 @@ services:
         image: composer/composer
         container_name: composer
         working_dir: /code
-        volumes:
-            - "$PWD:/code"
+        volumes_from:
+            - app

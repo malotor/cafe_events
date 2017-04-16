@@ -1,15 +1,9 @@
-# Project Skeleton
+# CQRS
 
-A Skeleton project for working on
-
-- PHP7
-- Phpunit 6
-- Docker
+This project is an example of Command Query Responsabily Segregaton ( CQRS ) arquitechtur. Is based on the example describe in ( http://cqrs.nu/ ) and rewrited in PHP.
 
 ## Start the project
 
-    $ composer create-project malotor/skeleton my_project dev-master
-    $ cd my_project
     $ docker-compose build
     $ docker-compose run --rm composer install
     $ docker-compose up -d app
@@ -26,13 +20,21 @@ A Skeleton project for working on
 
 http://localhost:8080
     
+## The domain
+
+For this tutorial, we'll work in the cafe domain. Our focus will be on the concept of a tab, which tracks the visit of an individual or group to the cafe. When people arrive to the cafe and take a table, a tab is opened. They may then order drinks and food. Drinks are served immediately by the table staff, however food must be cooked by a chef. Once the chef has prepared the food, it can then be served.
+
+During their time at the restaurant, visitors may order extra food or drinks. If they realize they ordered the wrong thing, they may amend the order - but not after the food and drink has been served to and accepted by them.
+
+Finally, the visitors close the tab by paying what is owed, possibly with a tip for the serving staff. Upon closing a tab, it must be paid for in full. A tab with unserved items cannot be closed unless the items are either marked as served or cancelled first.
  
 ## Documentations
 
-- https://blog.jetbrains.com/phpstorm/2016/11/docker-remote-interpreters/
-- https://www.jetbrains.com/help/phpstorm/2016.1/configuring-php-namespaces-in-a-project.html
-- https://sandro-keil.de/blog/2015/10/05/docker-php-xdebug-cli-debugging/
-- https://gist.github.com/chadrien/c90927ec2d160ffea9c4
-- https://medium.com/@pablofmorales/xdebug-with-docker-and-phpstorm-786da0d0fad2
-- https://mhdzaherghaibeh.name/2016/09/25/debug-your-php-with-docker-and-xdebug-from-phpstorm/
-- http://binary-data.github.io/2016/06/15/running-integration-tests-phpstorm-phpunit-docker/
+- https://github.com/rojoangel/event-sourcing
+- https://github.com/dddinphp/blog-cqrs
+- https://github.com/broadway/broadway
+- https://gist.github.com/jsor/6e79afb989c866915f20
+- http://eventuate.io/exampleapps.html
+- http://squirrel.pl/blog/2015/08/31/introduction-to-event-sourcing-and-command-query-responsibility-segregation/
+- https://blog.oasisdigital.com/2014/task-based-user-interfaces/
+- https://www.securityartwork.es/2012/04/23/arquitecturas-robustas-y-seguras-con-cqrs-i/

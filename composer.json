@@ -1,5 +1,5 @@
 {
-    "name": "malotor/skeleton",
+    "name": "malotor/events_cafe",
     "type": "project",
     "require-dev": {
         "phpunit/phpunit": "^6.0"
@@ -12,8 +12,18 @@
     ],
     "autoload": {
         "psr-4": {
-            "malotor\\Skeleton\\": "src/"
+            "malotor\\EventsCafe\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "ramsey/uuid": "^3.6",
+        "buttercup/protects": "dev-master",
+        "mathiasverraes/classfunctions": "^1.1"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "/lib/common/"
+        }
+    ]
 }
