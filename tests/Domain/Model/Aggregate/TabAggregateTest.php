@@ -260,8 +260,24 @@ class TabAggregateTest extends TestCase
         $this->assertFalse($tab->isOpen());
     }
 
+    /**
+     * @test
+     */
     public function CanCloseTabWithTip()
     {
+        $tab = Tab::open(1,"John");
+        $orderedItems = [
+            new OrderedItem(1,"Coke",true,2.5),
+            new OrderedItem(2,"Pizza",false,4.5),
+        ];
+        $tab->placeOrder($orderedItems);
 
+        $tab->serveDrinks([1]);
+        $tab->prepareFood([2]);
+        $tab->serveFood([2]);
+
+        $tab->close(9);
+
+        $this->assertFalse($tab->isOpen());
     }
 }

@@ -56,6 +56,11 @@ class Tab extends Aggregate
 
     }
 
+    static public function createEmptyWithId($id): Aggregate
+    {
+        return new Tab($id, null, null);
+    }
+
     public function isOpen(): bool
     {
         return $this->open;
@@ -102,7 +107,7 @@ class Tab extends Aggregate
 
         $tabAmount = $this->calculateTotalAmount();
 
-        if ($tabAmount != $amount)
+        if ($tabAmount > $amount)
             throw new MustPayEnoughException();
 
         $this->applyAndRecordThat(new TabClosed($this->getAggregateId(),$amount, $tabAmount , ($tabAmount-$amount)));

@@ -6,15 +6,13 @@ use Buttercup\Protects\AggregateRoot;
 use Buttercup\Protects\DomainEvents;
 use Buttercup\Protects\DomainEvent;
 use Buttercup\Protects\AggregateHistory;
+use Buttercup\Protects\IdentifiesAggregate;
 use Buttercup\Protects\RecordsEvents;
 
 use malotor\Common\Events\DomainEventPublisher;
 use Ramsey\Uuid\Uuid;
 use Verraes\ClassFunctions\ClassFunctions;
 
-/**
- * @codeCoverageIgnore
- */
 abstract class Aggregate implements AggregateRoot
 {
 
@@ -25,9 +23,13 @@ abstract class Aggregate implements AggregateRoot
      */
     private $recordedEvents = [];
 
-    public function getAggregateId() : Uuid
+    public function getAggregateId()
     {
         return $this->id;
+    }
+
+    public function setAggregateId(IdentifiesAggregate $id){
+        $this->id = $id;
     }
 
     public function hasChanges() : bool
@@ -76,16 +78,14 @@ abstract class Aggregate implements AggregateRoot
      */
     public static function reconstituteFrom(AggregateHistory $anAggregateHistory)
     {
-        // TODO: Implement
-        /*
-        $aPost = static::createEmptyPostWith($anAggregateHistory->getAggregateId());
+        $anAggregate = static::createEmptyWithId($anAggregateHistory->getAggregateId());
 
         foreach ($anAggregateHistory as $anEvent) {
-            $aPost->apply($anEvent);
+            $anAggregate->apply($anEvent);
         }
 
-        return $aPost;
-        */
+        return $anAggregate;
+
     }
 
     private function apply($anEvent)
@@ -98,5 +98,6 @@ abstract class Aggregate implements AggregateRoot
         DomainEventPublisher::instance()->publish($domainEvent);
     }
 
+    abstract static public function createEmptyWithId($id): Aggregate;
 
 }

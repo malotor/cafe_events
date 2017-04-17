@@ -12,7 +12,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "malotor\\EventsCafe\\": "src/"
+            "malotor\\EventsCafe\\": "src/",
+            "malotor\\EventsCafe\\Tests\\": "tests/"
         }
     },
     "require": {
