@@ -8,6 +8,7 @@ use malotor\EventsCafe\Domain\Model\Events\DrinksServed;
 use malotor\EventsCafe\Domain\Model\Events\FoodOrdered;
 use malotor\EventsCafe\Domain\Model\Events\FoodPrepared;
 use malotor\EventsCafe\Domain\Model\Events\FoodServed;
+use malotor\EventsCafe\Domain\Model\Events\TabClosed;
 use malotor\EventsCafe\Domain\Model\Events\TabOpenedEvent;
 use Ramsey\Uuid\Uuid;
 
@@ -21,12 +22,15 @@ class Tab extends Aggregate
     private $waiter;
 
     private $open = false;
-
+    /** @var OrderedItem[]  */
     private $outstandingDrinks = [];
+    /** @var OrderedItem[]  */
     private $outstandingFoods = [];
 
+    /** @var OrderedItem[]  */
     private $preparedFood = [];
 
+    /** @var OrderedItem[]  */
     private $servedItems = [];
 
     private function __construct(Uuid $id, $table, $waiter)
@@ -101,17 +105,20 @@ class Tab extends Aggregate
         if ($tabAmount != $amount)
             throw new MustPayEnoughException();
 
-        $this->open = false;
+        $this->applyAndRecordThat(new TabClosed($this->getAggregateId(),$amount, $tabAmount , ($tabAmount-$amount)));
+
     }
+
 
     private function calculateTotalAmount()
     {
         return array_reduce(
             $this->servedItems,
-            function(&$res, $a) { $res += $a->getPrice(); },
+            function($res, $a) { return $res += $a->getPrice(); },
             0
         );
     }
+
 
     public function outstandingItems()
     {
@@ -120,36 +127,29 @@ class Tab extends Aggregate
 
     public function isItemOutstanding($itemMenuNumber): bool
     {
-        if (in_array($itemMenuNumber,$this->outstandingDrinks) or in_array($itemMenuNumber, $this->outstandingFoods))
-            return true;
 
-        return false;
+        return in_array($itemMenuNumber, array_keys($this->outstandingFoods)) || in_array($itemMenuNumber, array_keys($this->outstandingDrinks));
     }
 
     public function isItemServed($itemMenuNumber): bool
     {
-        if (in_array($itemMenuNumber,$this->servedItems))
-            return true;
-
-        return false;
+        return in_array($itemMenuNumber, array_keys($this->servedItems));
     }
 
 
     public function applyDrinksOrdered(DrinksOrdered $drinksOrdered)
     {
-        /** @var OrderedItem $drink */
         foreach ($drinksOrdered->getItems() as $drink)
         {
-            $this->outstandingDrinks[] = $drink->getMenuNumber();
+            $this->outstandingDrinks[$drink->getMenuNumber()] = $drink;
         }
     }
 
     public function applyFoodOrdered(FoodOrdered $foodOrdered)
     {
-        /** @var $food $drink */
         foreach ($foodOrdered->getItems() as $food)
         {
-            $this->outstandingFoods[] = $food->getMenuNumber();
+            $this->outstandingFoods[$food->getMenuNumber()] = $food;
         }
     }
 
@@ -157,11 +157,12 @@ class Tab extends Aggregate
     public function applyDrinksServed(DrinksServed $drinksServed)
     {
         foreach ($drinksServed->getItems() as $drink) {
-            foreach ( $this->outstandingDrinks as $key => $item)
+
+            foreach ( $this->outstandingDrinks as $itemMenuNumber => $item)
             {
-                if ($item == $drink) {
-                    $this->servedItems[] = $drink;
-                    unset($this->outstandingDrinks[$key]);
+                if ($itemMenuNumber == $drink) {
+                    $this->servedItems[$itemMenuNumber] = $item;
+                    unset($this->outstandingDrinks[$itemMenuNumber]);
                  }
 
             }
@@ -171,50 +172,67 @@ class Tab extends Aggregate
 
     public function applyFoodPrepared(FoodPrepared $foodPrepared)
     {
-        $this->preparedFood = array_merge($this->preparedFood, $foodPrepared->getItems());
+        foreach ($foodPrepared->getItems() as $food) {
+            $item = $this->outstandingFoods[$food];
+            $this->preparedFood[$food] = $item;
+        }
     }
 
     public function applyFoodServed(FoodServed $foodServed)
     {
         foreach ($foodServed->getItems() as $food) {
-            foreach ( $this->outstandingFoods as $key => $item)
-            {
-                if ($item == $food) {
-                    $this->servedItems[] = $food;
-                    unset($this->outstandingFoods[$key]);
-                    unset($this->preparedFood[$key]);
-                }
-
-            }
+            $item = $this->preparedFood[$food];
+            $this->servedItems[$food] = $item;
+            unset($this->outstandingFoods[$food]);
+            unset($this->preparedFood[$food]);
         }
 
     }
 
+    public function applyTabClosed(TabClosed $tabClosed)
+    {
+        $this->open = false;
+    }
+
     private function assertDrinksAreOutstanding($drinksServed)
     {
-        foreach ($drinksServed as $drink) {
-            if (!in_array($drink, $this->outstandingDrinks))
-                throw new DrinkIsNotOutstanding();
 
+        foreach ($drinksServed as $drink) {
+            $inArray = false;
+            foreach ($this->outstandingDrinks as $item)
+            {
+                if ($item->getMenuNumber() == $drink ) $inArray = true;
+            }
+            if (!$inArray)
+                throw new DrinkIsNotOutstanding();
         }
     }
 
     private function assertFoodsAreOutstanding($foodsServed)
     {
         foreach ($foodsServed as $food) {
-            if (!in_array($food, $this->outstandingFoods))
+            $inArray = false;
+            foreach ($this->outstandingFoods as $item)
+            {
+                if ($item->getMenuNumber() == $food ) $inArray = true;
+            }
+            if (!$inArray)
                 throw new FoodNotOutstanding();
-
         }
+
     }
 
 
     private function assertFoodsArePrepared($foodsServed)
     {
         foreach ($foodsServed as $food) {
-            if (!in_array($food, $this->preparedFood))
+            $inArray = false;
+            foreach ($this->preparedFood as $item)
+            {
+                if ($item->getMenuNumber() == $food ) $inArray = true;
+            }
+            if (!$inArray)
                 throw new FoodIsNotPrepared();
-
         }
     }
 

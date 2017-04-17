@@ -122,7 +122,7 @@ class TabAggregateTest extends TestCase
     /**
      * @test
      */
-    public function food_prepared_still_be_outstanding ()
+    public function food_prepared_still_be_outstanding()
     {
 
         $tab = Tab::open(1,"John");

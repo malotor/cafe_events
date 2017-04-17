@@ -1,6 +1,6 @@
 # CQRS
 
-This project is an example of Command Query Responsabily Segregaton ( CQRS ) arquitechtur. Is based on the example describe in ( http://cqrs.nu/ ) and rewrited in PHP.
+This project is an example of Command Query Responsibility Segregation ( CQRS ) architecture. Is based on the example describe in ( http://cqrs.nu/ ) and rewrited in PHP.
 
 ## Start the project
 
@@ -11,6 +11,7 @@ This project is an example of Command Query Responsabily Segregaton ( CQRS ) arq
 ## Run the tests
 
     $ docker-compose run --rm phpunit
+    $ sh phpunit_docker.sh  --coverage-html ./coverage
 
 ## 
 
