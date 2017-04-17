@@ -2,6 +2,7 @@
 
 namespace malotor\EventsCafe\Tests\Domain\Model\Aggregate;
 
+use Buttercup\Protects\AggregateHistory;
 use Buttercup\Protects\DomainEvent;
 use Buttercup\Protects\IdentifiesAggregate;
 use malotor\EventsCafe\Domain\Model\Aggregate\Aggregate;
@@ -49,6 +50,25 @@ class AggregateTest extends TestCase
         $this->assertInstanceOf(BarIncremented::class, $events[0]);
         $this->assertEquals($anAggregate->getAggregateId(), ($events[0])->getAggregateId());
 
+    }
+
+    /**
+     * @tests
+     */
+    public function it_should_be_reconstituted_from_events()
+    {
+        $aggregateId = FooAggregateID::fromString("adb40bf1-e79c-442e-ae7c-3c9cfcdd38f1");
+
+        $eventHistory = new AggregateHistory($aggregateId, [
+            new BarIncremented($aggregateId, 1),
+            new BarIncremented($aggregateId, 3)
+        ]);
+
+
+        $anAggregate = FooAggreate::reconstituteFrom($eventHistory);
+
+        $this->assertEquals("adb40bf1-e79c-442e-ae7c-3c9cfcdd38f1",(string) $anAggregate->getAggregateId());
+        $this->assertEquals(4, $anAggregate->getBar());
     }
 
 }
