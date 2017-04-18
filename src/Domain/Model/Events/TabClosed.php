@@ -2,6 +2,8 @@
 
 namespace malotor\EventsCafe\Domain\Model\Events;
 
+use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
+
 class TabClosed extends TabEvent
 {
     private $amountPaid;
@@ -16,7 +18,7 @@ class TabClosed extends TabEvent
      * @param $orderValue
      * @param $tipValue
      */
-    public function __construct($id, $amountPaid, $orderValue, $tipValue)
+    public function __construct(TabId $id, $amountPaid, $orderValue, $tipValue)
     {
         $this->id = $id;
         $this->amountPaid = $amountPaid;

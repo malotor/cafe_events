@@ -39,10 +39,7 @@ class AggregateTest extends TestCase
 
         $anAggregate = FooAggreate::createEmptyWithId(FooAggregateID::create());
 
-        //$anAggregate->increment(1);
-
         $anAggregate->applyAndRecordThat(new BarIncremented($anAggregate->getAggregateId(), 1) );
-
 
         $events = $anAggregate->getRecordedEvents();
 

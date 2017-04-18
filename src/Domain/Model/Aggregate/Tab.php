@@ -2,16 +2,13 @@
 
 namespace malotor\EventsCafe\Domain\Model\Aggregate;
 
-use malotor\EventsCafe\Domain\Model\Command\OpenTabCommand;
 use malotor\EventsCafe\Domain\Model\Events\DrinksOrdered;
 use malotor\EventsCafe\Domain\Model\Events\DrinksServed;
 use malotor\EventsCafe\Domain\Model\Events\FoodOrdered;
 use malotor\EventsCafe\Domain\Model\Events\FoodPrepared;
 use malotor\EventsCafe\Domain\Model\Events\FoodServed;
 use malotor\EventsCafe\Domain\Model\Events\TabClosed;
-use malotor\EventsCafe\Domain\Model\Events\TabOpenedEvent;
-use Ramsey\Uuid\Uuid;
-
+use malotor\EventsCafe\Domain\Model\Events\TabOpened;
 
 
 class Tab extends Aggregate
@@ -33,7 +30,7 @@ class Tab extends Aggregate
     /** @var OrderedItem[]  */
     private $servedItems = [];
 
-    private function __construct(Uuid $id, $table, $waiter)
+    private function __construct(TabId $id, $table, $waiter)
     {
         $this->id = $id;
         $this->table = $table;
@@ -45,11 +42,11 @@ class Tab extends Aggregate
     static public function open($table, $waiter) : Tab
     {
 
-        $id = Uuid::uuid4();
+        $id = TabId::create();
         $newTab =  new Tab($id, $table, $waiter);
 
         $newTab->recordThat(
-            new TabOpenedEvent($id, $table, $waiter)
+            new TabOpened($id, $table, $waiter)
         );
 
         return $newTab;
@@ -76,28 +73,28 @@ class Tab extends Aggregate
         $food = array_filter($orderedItems, function ($a) { return !$a->isDrink(); });
 
 
-        if (count($drinks) > 0 ) $this->applyAndRecordThat(new DrinksOrdered($drinks));
-        if (count($food) > 0 ) $this->applyAndRecordThat(new FoodOrdered($food));
+        if (count($drinks) > 0 ) $this->applyAndRecordThat(new DrinksOrdered($this->getAggregateId(), $drinks));
+        if (count($food) > 0 ) $this->applyAndRecordThat(new FoodOrdered($this->getAggregateId(), $food));
 
     }
 
     public function serveDrinks($drinksServed)
     {
         $this->assertDrinksAreOutstanding($drinksServed);
-        $this->applyAndRecordThat(new DrinksServed($drinksServed));
+        $this->applyAndRecordThat(new DrinksServed($this->getAggregateId(), $drinksServed));
     }
 
     public function prepareFood($foodPrepared)
     {
         $this->assertFoodsAreOutstanding($foodPrepared);
-        $this->applyAndRecordThat(new FoodPrepared($foodPrepared));
+        $this->applyAndRecordThat(new FoodPrepared($this->getAggregateId(),$foodPrepared));
 
     }
 
     public function serveFood($foodServed)
     {
         $this->assertFoodsArePrepared($foodServed);
-        $this->applyAndRecordThat(new FoodServed($foodServed));
+        $this->applyAndRecordThat(new FoodServed($this->getAggregateId(),$foodServed));
     }
 
 
@@ -132,7 +129,6 @@ class Tab extends Aggregate
 
     public function isItemOutstanding($itemMenuNumber): bool
     {
-
         return in_array($itemMenuNumber, array_keys($this->outstandingFoods)) || in_array($itemMenuNumber, array_keys($this->outstandingDrinks));
     }
 
@@ -141,6 +137,10 @@ class Tab extends Aggregate
         return in_array($itemMenuNumber, array_keys($this->servedItems));
     }
 
+    public function applyTabOpenend(TabOpened $tabOpenedEvent)
+    {
+
+    }
 
     public function applyDrinksOrdered(DrinksOrdered $drinksOrdered)
     {

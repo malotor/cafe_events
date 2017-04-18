@@ -2,19 +2,15 @@
 
 namespace malotor\EventsCafe\Domain\Model\Events;
 
-use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItem;
+use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
 
 class DrinksServed extends TabEvent
 {
     private $items;
 
-    /**
-     * DrinksOrdered constructor.
-     *
-     * @param $items
-     */
-    public function __construct($items)
+    public function __construct(TabId $id, $items)
     {
+        $this->id = $id;
         $this->items = $items;
     }
 

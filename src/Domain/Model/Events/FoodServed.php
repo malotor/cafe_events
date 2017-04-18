@@ -2,23 +2,18 @@
 
 namespace malotor\EventsCafe\Domain\Model\Events;
 
+use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
+
 class FoodServed extends TabEvent
 {
     private $items;
 
-    /**
-     * FoodOrdered constructor.
-     *
-     * @param $items
-     */
-    public function __construct($items)
+    public function __construct(TabId $id, $items)
     {
+        $this->id = $id;
         $this->items = $items;
     }
 
-    /**
-     * @return mixed
-     */
     public function getItems()
     {
         return $this->items;

@@ -6,7 +6,7 @@ use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
 use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItem;
 use Ramsey\Uuid\Uuid;
 
-class TabAggregateTest extends TestCase
+class TabTest extends TestCase
 {
     /**
      * @test
