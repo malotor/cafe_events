@@ -11,7 +11,7 @@ class TabTest extends TestCase
     /**
      * @test
      */
-    public function it_should_be_open()
+    public function new_tab_should_be_open()
     {
         $tab = Tab::open(1,"John");
 
@@ -42,7 +42,7 @@ class TabTest extends TestCase
      * @test
      * @expectedException \malotor\EventsCafe\Domain\Model\Aggregate\DrinkIsNotOutstanding
      */
-    public function it_should_not_serve_drinks_that_are_not_outstanding()
+    public function should_not_serve_drinks_that_are_not_outstanding()
     {
 
         $tab = Tab::open(1,"John");
@@ -63,7 +63,7 @@ class TabTest extends TestCase
     /**
      * @test
      */
-    public function it_should_serve_drinks_that_are_outstanding()
+    public function served_drinks_must_be_outstanding()
     {
 
         $tab = Tab::open(1,"John");
@@ -167,7 +167,7 @@ class TabTest extends TestCase
      * @test
      * @expectedException \malotor\EventsCafe\Domain\Model\Aggregate\TabHasUnservedItems
      */
-    public function CanNotCloseTabWithUnservedDrinksItems()
+    public function can_not_close_tab_with_unserved_drinks()
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
@@ -186,7 +186,7 @@ class TabTest extends TestCase
      * @test
      * @expectedException \malotor\EventsCafe\Domain\Model\Aggregate\TabHasUnservedItems
      */
-    public function CanNotCloseTabWithUnpreparedFoodItems()
+    public function can_not_close_tab_with_unprepared_food()
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
@@ -204,7 +204,7 @@ class TabTest extends TestCase
      * @test
      * @expectedException \malotor\EventsCafe\Domain\Model\Aggregate\TabHasUnservedItems
      */
-    public function CanNotCloseTabWithUnservedFoodItems()
+    public function can_not_close_tab_with_unserved_food()
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
@@ -222,7 +222,7 @@ class TabTest extends TestCase
      * @test
      * @expectedException \malotor\EventsCafe\Domain\Model\Aggregate\MustPayEnoughException
      */
-    public function tab_cannot_be_closed_with_enough_pay()
+    public function cannot_be_closed_with_not_enough_pay()
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
@@ -242,7 +242,7 @@ class TabTest extends TestCase
     /**
      * @test
      */
-    public function CanCloseTabByPayingExactAmount()
+    public function can_close_tab_by_paying_exact_amount()
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
@@ -263,7 +263,7 @@ class TabTest extends TestCase
     /**
      * @test
      */
-    public function CanCloseTabWithTip()
+    public function can_close_tab_with_tip()
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
