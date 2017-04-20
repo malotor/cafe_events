@@ -17,5 +17,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="blog-cqrs" />
+    <orderEntry type="module" module-name="blog-cqrs" />
   </component>
 </module>
