@@ -16,20 +16,17 @@ $app->view(function (array $controllerResult) use ($app) {
 });*/
 
 
-$app['tab_repository'] = $app->share(function($app) {
-
+$app['tab_repository'] = function($app) {
     return new \malotor\EventsCafe\Infrastructure\Persistence\Domain\Model\InMemoryTabRepository();
-
-});
-
+};
 
 
-$app['command_bus'] = $app->share(function($app) {
+
+$app['command_bus'] = function($app) {
     $commandBus = new CommandBus();
     $commandBus->register(new Command\OpenTabHandler($app['tab_repository']));
-
     return $commandBus;
-});
+};
 
 
 $app->error(function (\Exception $e, $code) use ($app) {
@@ -63,15 +60,17 @@ $app->post('/tab', function(Request $request) use($app) {
 
     $errors = $app['validator']->validate($data, $constraint);
 
+    $command = new Command\OpenTabCommand();
+    $command->tableNumber = $data['table'];
+    $command->waiterId = $data['waiter'];
+    $app['command_bus']->handle($command);
+
     if (count($errors) > 0)
         return $app->json($errors, 500);
 
-
-    return  [
+    return   $app->json([
         'message' => 'Tab has been opened'
-    ];
-
-
+    ]);
 
 });
 

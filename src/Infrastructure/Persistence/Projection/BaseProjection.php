@@ -1,9 +1,8 @@
 <?php
 
-namespace CQRSBlog\BlogEngine\Infrastructure\Projection;
+namespace malotor\EventsCafe\Infrastructure\Persistence\Projection;
 
 use Buttercup\Protects\DomainEvents;
-use CQRSBlog\Common\DomainModel\Projection;
 use Verraes\ClassFunctions\ClassFunctions;
 
 abstract class BaseProjection implements Projection

@@ -83,4 +83,18 @@ class ApplicationTest extends TestCase
 
         $this->assertEquals(500, $client->getResponse()->getStatusCode());
     }
+
+    /**
+     * @test
+     */
+    public function open_new_tab()
+    {
+        $client = $this->createClient();
+        $crawler = $client->request('POST', '/tab', [
+            'table' => '1',
+            'waiter' => 'John Doe'
+        ]);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }

@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a113a5e9-9754-4030-b6c0-9bb141ca2c0d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/events_cafe.iml" afterPath="$PROJECT_DIR$/.idea/events_cafe.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/PostProjection.php" afterPath="$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/TabProjection.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Domain/Model/Command/OpenTabCommand.php" afterPath="$PROJECT_DIR$/src/Domain/Model/Command/OpenTabCommand.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Domain/Model/Command/OpenTabHandler.php" afterPath="$PROJECT_DIR$/src/Domain/Model/Command/OpenTabHandler.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/EventStore/PDOEventStore.php" afterPath="$PROJECT_DIR$/src/Infrastructure/Persistence/EventStore/PDOEventStore.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/BaseProjection.php" afterPath="$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/BaseProjection.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/Projection.php" afterPath="$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/Projection.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Infrastructure/ui/web/bootstrap.php" afterPath="$PROJECT_DIR$/src/Infrastructure/ui/web/bootstrap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/Functional/ApplicationTest.php" afterPath="$PROJECT_DIR$/tests/Functional/ApplicationTest.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,123 +20,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="InMemoryTabRepository.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Domain/Model/InMemoryTabRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="52">
-              <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding>
-                <element signature="e#78#121#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PDOEventStore.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/EventStore/PDOEventStore.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="52">
-              <caret line="2" column="28" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AggregateRepository.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Domain/Model/AggregateRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="616">
-              <caret line="48" column="50" lean-forward="true" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
-              <folding>
-                <element signature="e#78#121#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EventStore.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Persistence/EventStore/EventStore.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EventStore.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/EventStore/EventStore.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
-              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding>
-                <element signature="e#76#116#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PostProjection.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/PostProjection.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <marker date="1492664704029" expanded="true" signature="987:1094" ph="INSERT INTO posts... " />
-                <marker date="1492664704029" expanded="true" signature="1598:1654" ph="UPDATE posts... " />
-                <marker date="1492664704029" expanded="true" signature="2082:2138" ph="UPDATE posts... " />
-                <marker date="1492664704029" expanded="true" signature="2571:2631" ph="UPDATE posts... " />
-                <marker date="1492664704029" expanded="true" signature="3023:3067" ph="SELECT * FRO... posts" />
-                <marker date="1492664704029" expanded="true" signature="3264:3429" ph="INSERT INTO posts_with_comments... " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaseProjection.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/BaseProjection.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#65#101#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Projection.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/Projection.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Aggregate.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Domain/Model/Aggregate/Aggregate.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="78" column="27" lean-forward="false" selection-start-line="78" selection-start-column="27" selection-end-line="78" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OpenTabHandler.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Domain/Model/Command/OpenTabHandler.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="21" column="42" lean-forward="false" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -144,6 +29,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="dummy://restClient/response1.json" root0="SKIP_INSPECTION" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -154,13 +42,18 @@
         <option value="$PROJECT_DIR$/src/Infrastructure/ServiceBus/CommandBus.php" />
         <option value="$PROJECT_DIR$/src/Infrastructure/ServiceBus/HandlerNotFoundException.php" />
         <option value="$PROJECT_DIR$/src/Infrastructure/ServiceBus/QueryBus.php" />
-        <option value="$PROJECT_DIR$/src/Infrastructure/ui/web/bootstrap.php" />
         <option value="$PROJECT_DIR$/src/Domain/Model/Aggregate/TabRepository.php" />
         <option value="$PROJECT_DIR$/src/Infrastructure/Persistence/Domain/Model/InMemoryTabRepository.php" />
         <option value="$PROJECT_DIR$/src/Infrastructure/Persistence/Domain/Model/PostRepository.php" />
-        <option value="$PROJECT_DIR$/src/Domain/Model/Command/OpenTabHandler.php" />
         <option value="$PROJECT_DIR$/src/Infrastructure/Persistence/Domain/Model/AggregateRepository.php" />
         <option value="$PROJECT_DIR$/src/Infrastructure/Persistence/EventStore/EventStore.php" />
+        <option value="$PROJECT_DIR$/src/Infrastructure/Persistence/EventStore/PDOEventStore.php" />
+        <option value="$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/Projection.php" />
+        <option value="$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/BaseProjection.php" />
+        <option value="$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/TabProjection.php" />
+        <option value="$PROJECT_DIR$/src/Domain/Model/Command/OpenTabHandler.php" />
+        <option value="$PROJECT_DIR$/tests/Functional/ApplicationTest.php" />
+        <option value="$PROJECT_DIR$/src/Infrastructure/ui/web/bootstrap.php" />
       </list>
     </option>
   </component>
@@ -182,10 +75,8 @@
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="PhpXdebugProxy" ide_key="PHPSTORM" host="192.168.33.100" port="9000" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-11" />
-    <option name="y" value="-11" />
-    <option name="width" value="1942" />
-    <option name="height" value="1042" />
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -205,8 +96,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -215,91 +104,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="blog-cqrs" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
               <option name="myItemId" value="events_cafe" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blog-cqrs" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events_cafe" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blog-cqrs" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CQRSBlog" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Common" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events_cafe" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blog-cqrs" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CQRSBlog" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Common" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DomainModel" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events_cafe" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blog-cqrs" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CQRSBlog" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BlogEngine" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -310,6 +115,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="events_cafe" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Functional" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="events_cafe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="events_cafe" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -328,6 +155,14 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Infrastructure" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -374,118 +209,6 @@
               <option name="myItemId" value="Persistence" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Projection" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events_cafe" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events_cafe" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Infrastructure" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Persistence" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EventStore" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events_cafe" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events_cafe" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Infrastructure" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Persistence" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Domain" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events_cafe" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events_cafe" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Domain" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Events" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events_cafe" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="events_cafe" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Domain" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Command" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -525,6 +248,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -533,6 +258,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="SearchEverywhereHistoryKey" value="EventStore&#9;null&#9;null&#10;AggregateR&#9;null&#9;null" />
+    <property name="FullScreen" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -545,6 +271,44 @@
       <recent name="C:\Users\MALOPezT\Projects\general\CQRS\events_cafe\src\Infrastructure\Persistence\Domain\Model" />
       <recent name="C:\Users\MALOPezT\Projects\general\CQRS\events_cafe\src\Infrastructure" />
     </key>
+  </component>
+  <component name="RestClientSettings">
+    <option name="REQUEST_HISTORY">
+      <list>
+        <RestClientRequest>
+          <option name="httpMethod" value="POST" />
+          <option name="urlBase" value="http://localhost:8080" />
+          <option name="urlPath" value="/tab" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parameters">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="table" />
+                <option name="value" value="1" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="waiter" />
+                <option name="value" value="Manel" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+      </list>
+    </option>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -642,21 +406,22 @@
       <updated>1492629577133</updated>
       <workItem from="1492629578798" duration="6703000" />
       <workItem from="1492700238524" duration="3007000" />
+      <workItem from="1492714495780" duration="2653000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9710000" />
+    <option name="totallyTimeSpent" value="12363000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32947367" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32947367" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -668,6 +433,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32947367" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -682,6 +448,24 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/Domain/Model/Aggregate/Aggregate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1638">
+          <caret line="78" column="27" lean-forward="false" selection-start-line="78" selection-start-column="27" selection-end-line="78" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/Model/Command/OpenTabHandler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="19" column="1" lean-forward="true" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+          <folding>
+            <element signature="e#59#119#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain/Model/Aggregate/Tab.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1508">
@@ -700,19 +484,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Domain/Model/InMemoryTabRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Domain/Model/InMemoryTabRepository.php" />
     <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/EventStore/PDOEventStore.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="52">
           <caret line="2" column="44" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#76#116#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -729,71 +508,19 @@
         <state relative-caret-position="416">
           <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
           <folding>
-            <element signature="e#59#119#0#PHP" expanded="false" />
+            <element signature="e#59#119#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/controllers.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/app.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3250">
-          <caret line="153" column="0" lean-forward="false" selection-start-line="153" selection-start-column="0" selection-end-line="166" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain/Model/Aggregate/TabRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="7" column="37" lean-forward="false" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Infrastructure/ServiceBus/CommandBus.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="8" column="34" lean-forward="true" selection-start-line="8" selection-start-column="34" selection-end-line="11" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="156">
-            <caret line="6" column="6" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="26" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/controllers.php" />
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/app.php" />
+    <entry file="file://$PROJECT_DIR$/src/Domain/Model/Aggregate/TabRepository.php" />
+    <entry file="file://$PROJECT_DIR$/src/Infrastructure/ServiceBus/CommandBus.php" />
     <entry file="file://$PROJECT_DIR$/build/php/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="546">
           <caret line="21" column="98" lean-forward="false" selection-start-line="21" selection-start-column="98" selection-end-line="21" selection-end-column="98" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="40" column="18" lean-forward="false" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Functional/ApplicationTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="66" column="5" lean-forward="true" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -813,123 +540,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../Artica/artica-infra/api-core/src/RestApplication/Providers/Config/ConfigServiceProvider.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="14" column="45" lean-forward="false" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../Artica/artica-infra/api-core/src/RestApplication/Providers/Config/YamlFileLoader.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../Artica/artica-infra/api-core/src/RestApplication/Providers/Database/PDOProvider.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../Artica/artica-infra/api-core/src/RestApplication/Providers/FixturesProvider.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../Artica/artica-infra/api-core/src/RestApplication/Providers/LogProvider.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-182">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/Common/ServiceBus/CommandBus.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain/Model/Command/OpenTabCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="8" column="21" lean-forward="false" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/controllers.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Projection/Redis/PostProjection.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1144">
-          <caret line="28" column="5" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Projection/PDO/PostProjection.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1492664704029" expanded="true" signature="987:1094" ph="INSERT INTO posts... " />
-            <marker date="1492664704029" expanded="true" signature="1598:1654" ph="UPDATE posts... " />
-            <marker date="1492664704029" expanded="true" signature="2082:2138" ph="UPDATE posts... " />
-            <marker date="1492664704029" expanded="true" signature="2571:2631" ph="UPDATE posts... " />
-            <marker date="1492664704029" expanded="true" signature="3023:3067" ph="SELECT * FRO... posts" />
-            <marker date="1492664704029" expanded="true" signature="3264:3429" ph="INSERT INTO posts_with_comments... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Projection/BaseProjection.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Infrastructure/ServiceBus/HandlerNotFoundException.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Artica/artica-infra/api-core/src/RestApplication/Providers/Config/ConfigServiceProvider.php" />
+    <entry file="file://$USER_HOME$/Artica/artica-infra/api-core/src/RestApplication/Providers/Config/YamlFileLoader.php" />
+    <entry file="file://$USER_HOME$/Artica/artica-infra/api-core/src/RestApplication/Providers/Database/PDOProvider.php" />
+    <entry file="file://$USER_HOME$/Artica/artica-infra/api-core/src/RestApplication/Providers/FixturesProvider.php" />
+    <entry file="file://$USER_HOME$/Artica/artica-infra/api-core/src/RestApplication/Providers/LogProvider.php" />
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/Common/ServiceBus/CommandBus.php" />
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/controllers.php" />
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Projection/Redis/PostProjection.php" />
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Projection/PDO/PostProjection.php" />
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Projection/BaseProjection.php" />
+    <entry file="file://$PROJECT_DIR$/src/Infrastructure/ServiceBus/HandlerNotFoundException.php" />
     <entry file="file://$PROJECT_DIR$/composer.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Persistence/EventStore/PDOEventStore.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-182">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1492664704019" expanded="true" signature="808:932" ph="INSERT INTO events... " />
-            <marker date="1492664704019" expanded="true" signature="1543:1598" ph="SELECT * FRO... events" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Persistence/EventStore/PDOEventStore.php" />
     <entry file="file://$PROJECT_DIR$/vendor/buttercup/protects/src/Buttercup/Protects/AggregateRepository.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
@@ -938,169 +567,141 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Infrastructure/ServiceBus/QueryBus.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Infrastructure/ServiceBus/CommandBus.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Persistence/PDO/PostViewRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="650">
-          <caret line="62" column="25" lean-forward="true" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="25" />
-          <folding>
-            <marker date="1492664704023" expanded="true" signature="580:638" ph="SELECT * FRO... posts_with_comments" />
-            <marker date="1492664704023" expanded="true" signature="1390:1409" ph="SELECT * FRO... posts" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Infrastructure/ui/web/bootstrap.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="13" column="53" lean-forward="true" selection-start-line="13" selection-start-column="53" selection-end-line="13" selection-end-column="53" />
-          <folding>
-            <element signature="e#7#52#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain/Model/Aggregate/TabRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="7" column="42" lean-forward="false" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/DomainModel/PostRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/app.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="10" column="76" lean-forward="false" selection-start-line="10" selection-start-column="62" selection-end-line="10" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Persistence/EventStore/PostRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="34" column="5" lean-forward="true" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-          <folding>
-            <element signature="e#77#120#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Domain/Model/InMemoryTabRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding>
-            <element signature="e#78#121#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain/Model/Command/OpenTabHandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="21" column="42" lean-forward="false" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain/Model/Aggregate/Aggregate.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="78" column="27" lean-forward="false" selection-start-line="78" selection-start-column="27" selection-end-line="78" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Domain/Model/AggregateRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="48" column="50" lean-forward="true" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
-          <folding>
-            <element signature="e#78#121#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Persistence/EventStore/EventStore.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Infrastructure/ServiceBus/QueryBus.php" />
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Persistence/PDO/PostViewRepository.php" />
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/DomainModel/PostRepository.php" />
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/app.php" />
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Persistence/EventStore/PostRepository.php" />
+    <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Domain/Model/AggregateRepository.php" />
+    <entry file="file://$PROJECT_DIR$/../../dddphp/blog-cqrs/src/CQRSBlog/BlogEngine/Infrastructure/Persistence/EventStore/EventStore.php" />
     <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/EventStore/PDOEventStore.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52">
-          <caret line="2" column="28" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/EventStore/EventStore.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state relative-caret-position="420">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="e#76#116#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/Model/Aggregate/Aggregate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="78" column="27" lean-forward="false" selection-start-line="78" selection-start-column="27" selection-end-line="78" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/Model/Aggregate/TabRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Domain/Model/InMemoryTabRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="8" column="49" lean-forward="true" selection-start-line="8" selection-start-column="49" selection-end-line="8" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="147">
+            <caret line="7" column="46" lean-forward="false" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="46" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/TabProjection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="42" lean-forward="false" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/EventStore/EventStore.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="25" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/Projection.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="42">
+          <caret line="2" column="66" lean-forward="false" selection-start-line="2" selection-start-column="56" selection-end-line="2" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/Functional/ApplicationTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="712">
+          <caret line="97" column="31" lean-forward="false" selection-start-line="97" selection-start-column="31" selection-end-line="97" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Infrastructure/ServiceBus/CommandBus.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="22" column="46" lean-forward="true" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Infrastructure/ui/web/bootstrap.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="65" column="40" lean-forward="false" selection-start-line="65" selection-start-column="40" selection-end-line="65" selection-end-column="40" />
+          <folding>
+            <element signature="e#7#52#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/Model/Command/OpenTabHandler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding>
+            <element signature="e#59#119#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain/Model/Command/OpenTabCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="6" lean-forward="false" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/BaseProjection.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="147">
+          <caret line="7" column="15" lean-forward="false" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
           <folding>
-            <element signature="e#65#101#0#PHP" expanded="true" />
+            <element signature="e#76#112#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Infrastructure/Persistence/Projection/PostProjection.php">
+    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1492664704029" expanded="true" signature="987:1094" ph="INSERT INTO posts... " />
-            <marker date="1492664704029" expanded="true" signature="1598:1654" ph="UPDATE posts... " />
-            <marker date="1492664704029" expanded="true" signature="2082:2138" ph="UPDATE posts... " />
-            <marker date="1492664704029" expanded="true" signature="2571:2631" ph="UPDATE posts... " />
-            <marker date="1492664704029" expanded="true" signature="3023:3067" ph="SELECT * FRO... posts" />
-            <marker date="1492664704029" expanded="true" signature="3264:3429" ph="INSERT INTO posts_with_comments... " />
-          </folding>
+        <state relative-caret-position="702">
+          <caret line="40" column="18" lean-forward="false" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>

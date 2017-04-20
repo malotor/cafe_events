@@ -16,11 +16,8 @@ class OpenTabHandler
 
     public function handle(OpenTabCommand $command)
     {
-
         $newTab = Tab::open($command->tableNumber, $command->waiterId);
-
         $this->tabRepopsitory->add($newTab);
-
     }
 
 }
