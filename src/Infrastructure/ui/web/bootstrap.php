@@ -4,6 +4,8 @@ use Symfony\Component\HttpFoundation\Request;
 use malotor\EventsCafe\Domain\Model\Command;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use malotor\EventsCafe\Infrastructure\ServiceBus\CommandBus;
+
 $app = new Silex\Application();
 
 $app->register(new Silex\Provider\ValidatorServiceProvider());
@@ -12,6 +14,22 @@ $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app->view(function (array $controllerResult) use ($app) {
     return $app->json($controllerResult);
 });*/
+
+
+$app['tab_repository'] = $app->share(function($app) {
+
+    return new \malotor\EventsCafe\Infrastructure\Persistence\Domain\Model\InMemoryTabRepository();
+
+});
+
+
+
+$app['command_bus'] = $app->share(function($app) {
+    $commandBus = new CommandBus();
+    $commandBus->register(new Command\OpenTabHandler($app['tab_repository']));
+
+    return $commandBus;
+});
 
 
 $app->error(function (\Exception $e, $code) use ($app) {
@@ -45,14 +63,15 @@ $app->post('/tab', function(Request $request) use($app) {
 
     $errors = $app['validator']->validate($data, $constraint);
 
-    if (count($errors) > 0) {
+    if (count($errors) > 0)
         return $app->json($errors, 500);
-    } else {
-        return  [
-            'message' => 'Tab has been opened'
-        ];
 
-    }
+
+    return  [
+        'message' => 'Tab has been opened'
+    ];
+
+
 
 });
 

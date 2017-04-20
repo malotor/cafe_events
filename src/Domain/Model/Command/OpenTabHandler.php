@@ -2,19 +2,25 @@
 
 namespace malotor\EventsCafe\Domain\Model\Command;
 
-use Ramsey\Uuid\Uuid;
+use malotor\EventsCafe\Domain\Model\Aggregate\TabRepository;
 use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
 
 class OpenTabHandler
 {
+    private $tabRepopsitory;
+
+    public function __construct(TabRepository $tabRepository )
+    {
+        $this->tabRepopsitory = $tabRepository;
+    }
 
     public function handle(OpenTabCommand $command)
     {
-        return new Tab(
-            $command->id,
-            $command->tableNumber,
-            $command->waiterId
-        );
+
+        $newTab = Tab::open($command->tableNumber, $command->waiterId);
+
+        $this->tabRepopsitory->add($newTab);
+
     }
 
 }
