@@ -1,0 +1,7 @@
+malotor\EventsCafe\Domain\Model\Events\TabOpened:
+    exclusion_policy: ALL
+    properties:
+        waiter:
+            type: string
+        table:
+            type: string

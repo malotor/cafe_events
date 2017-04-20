@@ -137,9 +137,10 @@ class Tab extends Aggregate
         return in_array($itemMenuNumber, array_keys($this->servedItems));
     }
 
-    public function applyTabOpenend(TabOpened $tabOpenedEvent)
+    public function applyTabOpened(TabOpened $tabOpenedEvent)
     {
-
+        $this->waiter = $tabOpenedEvent->waiterId;
+        $this->table = $tabOpenedEvent->tableNumber;
     }
 
     public function applyDrinksOrdered(DrinksOrdered $drinksOrdered)

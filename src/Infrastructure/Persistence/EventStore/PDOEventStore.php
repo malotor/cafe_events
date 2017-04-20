@@ -40,7 +40,7 @@ class PDOEventStore implements EventStore
             $stmt->execute([
                 ':aggregate_id' => (string) $event->getAggregateId(),
                 ':type'         => get_class($event),
-                ':created_at'   => (new DateTimeImmutable())->format('Y-m-d H:i:s'),
+                ':created_at'   => (new \DateTimeImmutable())->format('Y-m-d H:i:s'),
                 ':data'         => $this->serializer->serialize($event, 'json')
             ]);
         }
@@ -59,7 +59,7 @@ class PDOEventStore implements EventStore
 
         $events = [];
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $events[] = $this->serializer->deserialize(
                 $row['data'],
                 $row['type'],

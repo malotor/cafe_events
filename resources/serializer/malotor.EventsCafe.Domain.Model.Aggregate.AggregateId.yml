@@ -1,0 +1,6 @@
+malotor\EventsCafe\Domain\Model\Aggregate\AggregateId:
+    exclusion_policy: ALL
+    properties:
+        value:
+            type: string
+            serialized_name: value
