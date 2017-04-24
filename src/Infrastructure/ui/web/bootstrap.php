@@ -4,8 +4,6 @@ use Symfony\Component\HttpFoundation\Request;
 use malotor\EventsCafe\Domain\Model\Command;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use malotor\EventsCafe\Infrastructure\ServiceBus\CommandBus;
-
 use malotor\EventsCafe\Infrastructure\Persistence\EventStore\PDOEventStore;
 use malotor\EventsCafe\Infrastructure\Persistence\Projection\TabProjection;
 use malotor\EventsCafe\Infrastructure\Persistence\Domain\Model\TabEventSourcingRepository;
@@ -15,6 +13,10 @@ use JMS\Serializer\SerializerBuilder;
 use League\Tactician\Handler\Locator\InMemoryLocator;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\MethodNameInflector\HandleClassNameInflector;
+
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+
 
 $app = new Silex\Application();
 
@@ -86,6 +88,24 @@ $app['command_bus'] = function($app) {
     return new \League\Tactician\CommandBus([$handlerMiddleware]);
 };
 
+$app['entity_manager'] =  function ($app) {
+
+    $isDevMode = true;
+    $config = Setup::createYAMLMetadataConfiguration(array(__DIR__."/../../../../resources/doctrine"), $isDevMode);
+
+    // database configuration parameters
+    $conn = array(
+        'driver' => 'pdo_sqlite',
+        'path' => __DIR__ . '/../../../../resources/db/events_cafe.db',
+    );
+
+    // obtaining the entity manager
+    return EntityManager::create($conn, $config);
+};
+
+
+
+// APPLICATION REST
 
 $app->error(function (\Exception $e, $code) use ($app) {
     $response = [
@@ -102,6 +122,8 @@ $app->get('/', function(Request $request) use($app) {
     ]);
 
 });
+
+// CONTROLLERS
 
 $app->post('/tab', function(Request $request) use($app) {
 
