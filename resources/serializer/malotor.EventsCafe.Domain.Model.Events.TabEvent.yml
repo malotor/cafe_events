@@ -1,0 +1,6 @@
+malotor\EventsCafe\Domain\Model\Events\TabEvent:
+    exclusion_policy: ALL
+    properties:
+        id:
+            type: malotor\EventsCafe\Domain\Model\Aggregate\TabId
+            serialized_name: id

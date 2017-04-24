@@ -19,6 +19,8 @@ RUN apk update \
     && echo "xdebug.remote_host=$remote_host" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && rm -rf /tmp/*
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+
 WORKDIR /code
 
 EXPOSE 9000

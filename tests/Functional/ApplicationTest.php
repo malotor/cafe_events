@@ -54,6 +54,7 @@ class ApplicationTest extends TestCase
 
         $app = require __DIR__.'/../../src/Infrastructure/ui/web/bootstrap.php';
         $app['debug'] = true;
+        $app['env'] = 'test';
         unset($app['exception_handler']);
 
         return $app;
@@ -82,5 +83,19 @@ class ApplicationTest extends TestCase
         ]);
 
         $this->assertEquals(500, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
+    public function open_new_tab()
+    {
+        $client = $this->createClient();
+        $crawler = $client->request('POST', '/tab', [
+            'table' => '1',
+            'waiter' => 'John Doe'
+        ]);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

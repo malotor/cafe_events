@@ -23,7 +23,10 @@
         "buttercup/protects": "dev-master",
         "mathiasverraes/classfunctions": "^1.1",
         "silex/silex": "^2.0",
-        "symfony/validator": "^3.2"
+        "symfony/validator": "^3.2",
+        "jms/serializer": "^1.6",
+        "doctrine/cache": "^1.6",
+        "symfony/yaml": "^3.2"
     },
     "repositories": [
         {

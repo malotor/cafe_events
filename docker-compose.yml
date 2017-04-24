@@ -7,7 +7,7 @@ services:
         build:
             context: ./build/php
             args:
-                remote_host : 192.168.1.100
+                remote_host : 192.168.33.100
         container_name: app
         command: php -S app:80 -t public/ public/app.php
         working_dir: /code
@@ -24,9 +24,10 @@ services:
         build:
             context: ./build/php
             args:
-                remote_host : 192.168.1.100
+                remote_host : 192.168.33.100
         container_name: phpunit
-        command: vendor/bin/phpunit
+        entrypoint:
+            - vendor/bin/phpunit
         working_dir: /code
         volumes_from:
             - app
@@ -34,8 +35,11 @@ services:
             - PHP_IDE_CONFIG="serverName=app"
 
     composer:
-        image: composer/composer
+        build:
+            context: ./build/php
         container_name: composer
         working_dir: /code
+        entrypoint:
+          - composer
         volumes_from:
             - app
