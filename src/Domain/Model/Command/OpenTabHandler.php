@@ -14,10 +14,15 @@ class OpenTabHandler
         $this->tabRepopsitory = $tabRepository;
     }
 
-    public function handle(OpenTabCommand $command)
+    private function handle(OpenTabCommand $command)
     {
         $newTab = Tab::open($command->tableNumber, $command->waiterId);
         $this->tabRepopsitory->add($newTab);
+    }
+
+    public function handleOpenTabCommand(OpenTabCommand $command)
+    {
+        $this->handle($command);
     }
 
 }
