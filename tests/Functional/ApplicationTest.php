@@ -98,4 +98,30 @@ class ApplicationTest extends TestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+
+
+
+    /**
+     * @test
+     * @requires open_new_tab
+     */
+    public function list_open_tabs()
+    {
+        $app = $this->app;
+
+        $client = $this->createClient();
+
+        $client->request('POST', '/tab', [
+            'table' => '1',
+            'waiter' => 'John Doe'
+        ]);
+
+        $crawler = $client->request('GET', '/tab');
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $response = json_decode($client->getResponse()->getContent());
+        $this->assertEquals(1, $response['tabs'][0]['table']);
+        $this->assertEquals('John Doe', $response['tabs'][0]['waiter']);
+
+    }
 }

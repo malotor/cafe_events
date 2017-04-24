@@ -15,7 +15,7 @@ class TabProjectionTest extends TestCase
     public function setUp()
     {
         $this->pdo = new \PDO(
-            'sqlite::memory:',
+            'sqlite::memory',
             null,
             null,
             array(\PDO::ATTR_PERSISTENT => true)
