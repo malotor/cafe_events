@@ -103,7 +103,11 @@ $app['entity_manager'] =  function ($app) {
     return EntityManager::create($conn, $config);
 };
 
-
+$app['tab_view_repository'] = function ($app) {
+    /** @var EntityManager $em */
+    $em = $app['entity_manager'];
+    return $em->getRepository('malotor\EventsCafe\Domain\ReadModel\Tabs');
+};
 
 // APPLICATION REST
 
