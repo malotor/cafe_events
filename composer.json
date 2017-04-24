@@ -26,7 +26,8 @@
         "symfony/validator": "^3.2",
         "jms/serializer": "^1.6",
         "doctrine/cache": "^1.6",
-        "symfony/yaml": "^3.2"
+        "symfony/yaml": "^3.2",
+        "league/tactician": "^1.0"
     },
     "repositories": [
         {
