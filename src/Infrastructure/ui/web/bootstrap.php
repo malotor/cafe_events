@@ -12,14 +12,14 @@ use malotor\EventsCafe\Infrastructure\Persistence\Domain\Model\TabEventSourcingR
 
 use JMS\Serializer\SerializerBuilder;
 
+use League\Tactician\Handler\Locator\InMemoryLocator;
+use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
+use League\Tactician\Handler\MethodNameInflector\HandleClassNameInflector;
+
 $app = new Silex\Application();
 
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app['env'] = 'dev';
-/*
-$app->view(function (array $controllerResult) use ($app) {
-    return $app->json($controllerResult);
-});*/
 
 
 $app['pdo.sqlite.file'] = function () {
@@ -71,9 +71,19 @@ $app['tab_repository'] = function($app) {
 
 
 $app['command_bus'] = function($app) {
-    $commandBus = new CommandBus();
-    $commandBus->register(new Command\OpenTabHandler($app['tab_repository']));
-    return $commandBus;
+
+    $locator = new InMemoryLocator();
+    $locator->addHandler(
+        new Command\OpenTabHandler($app['tab_repository']),
+        Command\OpenTabCommand::class)
+    ;
+
+    $handlerMiddleware = new League\Tactician\Handler\CommandHandlerMiddleware(
+        new ClassNameExtractor(),
+        $locator,
+        new HandleClassNameInflector()
+    );
+    return new \League\Tactician\CommandBus([$handlerMiddleware]);
 };
 
 
