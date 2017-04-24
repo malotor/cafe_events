@@ -6,12 +6,12 @@ use Buttercup\Protects\IdentifiesAggregate;
 use Buttercup\Protects\IsEventSourced;
 use Buttercup\Protects\RecordsEvents;
 
-use CQRSBlog\BlogEngine\DomainModel\Post;
-use CQRSBlog\BlogEngine\DomainModel\PostProjection;
-use CQRSBlog\BlogEngine\DomainModel\PostRepository as BasePostRepository;
 use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
+use malotor\EventsCafe\Domain\Model\Aggregate\TabRepository;
+use malotor\EventsCafe\Infrastructure\Persistence\EventStore\EventStore;
+use malotor\EventsCafe\Infrastructure\Persistence\Projection\Projection;
 
-class AggregateRepository
+class TabEventSourcingRepository implements TabRepository
 {
     /**
      * @var EventStore
@@ -23,10 +23,10 @@ class AggregateRepository
      */
     private $projection;
 
-    public function __construct($eventStore, $postProjection)
+    public function __construct(EventStore $eventStore,Projection $postProjection)
     {
         $this->eventStore = $eventStore;
-        $this->postProjection = $postProjection;
+        $this->projection = $postProjection;
     }
 
     /**
@@ -48,7 +48,7 @@ class AggregateRepository
     {
         $events = $aggregate->getRecordedEvents();
         $this->eventStore->commit($events);
-        $this->postProjection->project($events);
+        $this->projection->project($events);
 
         $aggregate->clearRecordedEvents();
     }

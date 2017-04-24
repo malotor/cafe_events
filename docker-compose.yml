@@ -26,7 +26,8 @@ services:
             args:
                 remote_host : 192.168.33.100
         container_name: phpunit
-        command: vendor/bin/phpunit
+        entrypoint:
+            - vendor/bin/phpunit
         working_dir: /code
         volumes_from:
             - app

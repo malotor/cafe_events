@@ -9,9 +9,11 @@ use PHPUnit\Framework\TestCase;
 
 use malotor\EventsCafe\Infrastructure\Persistence\EventStore\PDOEventStore;
 use JMS\Serializer\SerializerBuilder;
+use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
 
 class PDOEventStoreTest extends TestCase
 {
+
 
     private $pdo;
     private $repository;
@@ -46,11 +48,12 @@ class PDOEventStoreTest extends TestCase
         ]);
         $this->repository->commit($domainEvents);
         $stm = $this->pdo->query("SELECT * FROM events");
+        $results = $stm->fetchAll(\PDO::FETCH_ASSOC);
 
-        var_dump($stm->fetchAll(\PDO::FETCH_ASSOC));
+        $this->assertEquals("e247721a-b70c-4431-9ba5-1867340ae241", $results[0]['aggregate_id']);
+        $this->assertEquals(TabOpened::class, $results[0]['type']);
 
     }
-
 
     /**
      * @test
@@ -62,9 +65,13 @@ class PDOEventStoreTest extends TestCase
             new TabOpened(TabId::fromString("e247721a-b70c-4431-9ba5-1867340ae241"),1,'John')
         ]);
         $this->repository->commit($domainEvents);
+        /** @var $anAggregate Tab */
+        $anAggregateHistory = $this->repository->getAggregateHistoryFor(TabId::fromString("e247721a-b70c-4431-9ba5-1867340ae241"));
 
-        $anAggregate = $this->repository->getAggregateHistoryFor(TabId::fromString("e247721a-b70c-4431-9ba5-1867340ae241"));
-        var_dump($anAggregate);
+        $tab = Tab::reconstituteFrom($anAggregateHistory);
 
+        $this->assertEquals("e247721a-b70c-4431-9ba5-1867340ae241", (string) $tab->getAggregateId());
+        $this->assertEquals(1, $tab->getTable());
+        $this->assertEquals("John", $tab->getWaiter());
     }
 }

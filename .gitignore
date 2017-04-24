@@ -1,3 +1,4 @@
 vendor/
 coverage/
 cache/
+/resources/db/events_cafe.db

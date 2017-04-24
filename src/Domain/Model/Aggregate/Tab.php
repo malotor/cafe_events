@@ -38,6 +38,22 @@ class Tab extends Aggregate
         $this->open = true;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTable()
+    {
+        return $this->table;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWaiter()
+    {
+        return $this->waiter;
+    }
+
 
     static public function open($table, $waiter) : Tab
     {
@@ -139,8 +155,8 @@ class Tab extends Aggregate
 
     public function applyTabOpened(TabOpened $tabOpenedEvent)
     {
-        $this->waiter = $tabOpenedEvent->waiterId;
-        $this->table = $tabOpenedEvent->tableNumber;
+        $this->waiter = $tabOpenedEvent->getWaiterId();
+        $this->table = $tabOpenedEvent->getTableNumber();
     }
 
     public function applyDrinksOrdered(DrinksOrdered $drinksOrdered)
@@ -197,6 +213,7 @@ class Tab extends Aggregate
 
     public function applyTabClosed(TabClosed $tabClosed)
     {
+        //TODO Save amount and tip
         $this->open = false;
     }
 

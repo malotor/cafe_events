@@ -54,6 +54,7 @@ class ApplicationTest extends TestCase
 
         $app = require __DIR__.'/../../src/Infrastructure/ui/web/bootstrap.php';
         $app['debug'] = true;
+        $app['env'] = 'test';
         unset($app['exception_handler']);
 
         return $app;

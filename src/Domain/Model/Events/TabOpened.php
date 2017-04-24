@@ -6,8 +6,8 @@ use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
 
 class TabOpened extends TabEvent
 {
-    public $tableNumber;
-    public $waiterId;
+    private $tableNumber;
+    private $waiterId;
 
     /**
      * TabOpenedEvent constructor.
