@@ -37,3 +37,17 @@ Finally, the visitors close the tab by paying what is owed, possibly with a tip 
 - http://squirrel.pl/blog/2015/08/31/introduction-to-event-sourcing-and-command-query-responsibility-segregation/
 - https://blog.oasisdigital.com/2014/task-based-user-interfaces/
 - https://www.securityartwork.es/2012/04/23/arquitecturas-robustas-y-seguras-con-cqrs-i/
+
+
+## Doctrine
+
+  sh scripts/run.sh vendor/bin/doctrine orm:schema-tool:drop --force
+  sh scripts/run.sh vendor/bin/doctrine orm:schema-tool:create
+  sh scripts/run.sh vendor/bin/doctrine orm:generate-entities src/Domain/ReadModel
+  sh scripts/run.sh vendor/bin/doctrine orm:schema-tool:create --dump-sql > resources/db/events_cafe1.sql
+
+  sh scripts/run.sh vendor/bin/doctrine orm:clear-cache:metadata
+  sh scripts/run.sh vendor/bin/doctrine orm:clear-cache:query
+  sh scripts/run.sh vendor/bin/doctrine orm:clear-cache:result
+
+  sh scripts/run.sh vendor/bin/doctrine orm:convert-mapping --from-database yml resources/doctrine

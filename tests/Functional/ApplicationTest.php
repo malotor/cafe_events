@@ -28,6 +28,21 @@ class ApplicationTest extends TestCase
     protected function setUp()
     {
         $this->app = $this->createApplication();
+        $em = $this->app['entity_manager'];
+
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+
+        //$tool->createSchema($classes);
+
+        $tool->dropDatabase();
+
+        $classes = array(
+            $em->getClassMetadata('malotor\EventsCafe\Domain\ReadModel\Tabs'),
+            $em->getClassMetadata('malotor\EventsCafe\Domain\ReadModel\Events'),
+            $em->getClassMetadata('malotor\EventsCafe\Domain\ReadModel\Items'),
+        );
+        $tool->createSchema($classes);
+
     }
 
 
@@ -54,7 +69,7 @@ class ApplicationTest extends TestCase
 
         $app = require __DIR__.'/../../src/Infrastructure/ui/web/bootstrap.php';
         $app['debug'] = true;
-        $app['env'] = 'test';
+        //$app['env'] = 'test';
         unset($app['exception_handler']);
 
         return $app;
@@ -97,5 +112,34 @@ class ApplicationTest extends TestCase
         ]);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+
+
+    /**
+     * @test
+     */
+    public function list_open_tabs()
+    {
+        $app = $this->app;
+
+        $client = $this->createClient();
+
+        $client->request('POST', '/tab', [
+            'table' => '1',
+            'waiter' => 'John Doe'
+        ]);
+
+        //$stm = $app['pdo']->query("SELECT * FROM tabs");
+        //$result = $stm->fetch(\PDO::FETCH_ASSOC);
+        //var_dump($result);
+
+        $crawler = $client->request('GET', '/tab');
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $response = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals(1, $response['tabs'][0]['table']);
+        $this->assertEquals('John Doe', $response['tabs'][0]['waiter']);
+
     }
 }

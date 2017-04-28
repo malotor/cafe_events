@@ -1,0 +1,23 @@
+malotor\EventsCafe\Domain\ReadModel\Items:
+    type: entity
+    table: items
+    id:
+        itemId:
+            type: integer
+            options:
+                fixed: false
+            id: true
+            column: item_id
+            generator:
+                strategy: AUTO
+    fields:
+        description:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+        price:
+            type: decimal
+            nullable: false
+    lifecycleCallbacks: {  }

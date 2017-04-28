@@ -45,7 +45,7 @@ class TabProjectionTest extends TestCase
         $result = $stm->fetch(\PDO::FETCH_ASSOC);
 
         $this->assertEquals('e247721a-b70c-4431-9ba5-1867340ae241', $result['tab_id']);
-        $this->assertEquals(1, $result['table']);
+        $this->assertEquals(1, $result['tableNumber']);
         $this->assertEquals('John', $result['waiter']);
 
 

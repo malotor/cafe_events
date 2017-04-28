@@ -1,0 +1,73 @@
+malotor\EventsCafe\Domain\ReadModel\Tabs:
+    type: entity
+    table: tabs
+    id:
+        tabId:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            id: true
+            column: tab_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        waiter:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+        tableNumber:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+    manyToMany:
+        outstandingDrinks:
+          targetEntity: malotor\EventsCafe\Domain\ReadModel\Items
+          joinTable:
+            name: tabs_outstanding_drinks
+            joinColumns:
+              tabId:
+                referencedColumnName: tab_id
+            inverseJoinColumns:
+              itemId:
+                referencedColumnName: item_id
+                unique: true
+        outstandingFoods:
+          targetEntity: malotor\EventsCafe\Domain\ReadModel\Items
+          joinTable:
+            name: tabs_outstanding_foods
+            joinColumns:
+              tabId:
+                referencedColumnName: tab_id
+            inverseJoinColumns:
+              itemId:
+                referencedColumnName: item_id
+                unique: true
+        preparedFoods:
+          targetEntity: malotor\EventsCafe\Domain\ReadModel\Items
+          joinTable:
+            name: tabs_prepared_foods
+            joinColumns:
+              tabId:
+                referencedColumnName: tab_id
+            inverseJoinColumns:
+              itemId:
+                referencedColumnName: item_id
+                unique: true
+        servedItems:
+          targetEntity: malotor\EventsCafe\Domain\ReadModel\Items
+          joinTable:
+            name: tabs_served_items
+            joinColumns:
+              tabId:
+                referencedColumnName: tab_id
+            inverseJoinColumns:
+              itemId:
+                referencedColumnName: item_id
+                unique: true
+    lifecycleCallbacks: {  }
