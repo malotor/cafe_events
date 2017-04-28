@@ -46,8 +46,12 @@ Finally, the visitors close the tab by paying what is owed, possibly with a tip 
   sh scripts/run.sh vendor/bin/doctrine orm:generate-entities src/Domain/ReadModel
   sh scripts/run.sh vendor/bin/doctrine orm:schema-tool:create --dump-sql > resources/db/events_cafe1.sql
 
+  sh scripts/run.sh vendor/bin/doctrine orm:generate-entities src/Domain/ReadModel --update-entities
+
   sh scripts/run.sh vendor/bin/doctrine orm:clear-cache:metadata
   sh scripts/run.sh vendor/bin/doctrine orm:clear-cache:query
   sh scripts/run.sh vendor/bin/doctrine orm:clear-cache:result
-
+  
+  Reverse
+  
   sh scripts/run.sh vendor/bin/doctrine orm:convert-mapping --from-database yml resources/doctrine

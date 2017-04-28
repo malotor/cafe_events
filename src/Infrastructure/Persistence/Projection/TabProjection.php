@@ -20,7 +20,7 @@ class TabProjection extends BaseProjection
     public function projectTabOpened(TabOpened $event)
     {
         $stmt = $this->pdo->prepare(
-            "INSERT INTO tabs (tab_id, waiter, tableNumber) VALUES (:tab_id, :waiter, :tableNumber)"
+            "INSERT INTO tabs (tab_id, waiter, tableNumber, open) VALUES (:tab_id, :waiter, :tableNumber, 1)"
         );
 
         $stmt->execute([

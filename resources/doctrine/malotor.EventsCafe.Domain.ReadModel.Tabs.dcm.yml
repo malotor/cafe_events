@@ -25,6 +25,11 @@ malotor\EventsCafe\Domain\ReadModel\Tabs:
             length: 50
             options:
                 fixed: false
+        open:
+            type: boolean
+            option:
+                default : true
+
     manyToMany:
         outstandingDrinks:
           targetEntity: malotor\EventsCafe\Domain\ReadModel\Items

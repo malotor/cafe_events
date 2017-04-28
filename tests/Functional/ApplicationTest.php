@@ -69,7 +69,7 @@ class ApplicationTest extends TestCase
     {
         // TODO: Implement createApplication() method.
 
-        $app = require __DIR__.'/../../src/Infrastructure/ui/web/bootstrap.php';
+        $app = require __DIR__.'/../../src/Infrastructure/ui/web/app.php';
         $app['debug'] = true;
         //$app['env'] = 'test';
         unset($app['exception_handler']);
