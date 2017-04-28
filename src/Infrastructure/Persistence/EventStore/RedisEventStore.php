@@ -37,7 +37,7 @@ class RedisEventStore implements EventStore
                 $this->computeHashFor($event->getAggregateId()),
                 $this->serializer->serialize([
                     'type' => $eventType,
-                    'created_on' => (new DateTimeImmutable())->format('YmdHis'),
+                    'created_on' => (new \DateTimeImmutable())->format('YmdHis'),
                     'data' => $data
                 ], 'json')
             );
