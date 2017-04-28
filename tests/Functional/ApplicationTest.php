@@ -43,6 +43,9 @@ class ApplicationTest extends TestCase
         );
         $tool->createSchema($classes);
 
+
+        $client = new \Predis\Client('tcp://redis:6379');
+        $client->flushall();
     }
 
 
