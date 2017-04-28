@@ -13,11 +13,14 @@ use JMS\Serializer\SerializerBuilder;
 use League\Tactician\Handler\Locator\InMemoryLocator;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\MethodNameInflector\HandleClassNameInflector;
+use League\Tactician\Handler\MethodNameInflector\MethodNameInflector;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
 use malotor\EventsCafe\Infrastructure\Persistence\EventStore\RedisEventStore;
+
+use malotor\EventsCafe\Application\Query;
 
 $app = new Silex\Application();
 
@@ -92,7 +95,27 @@ $app['command_bus'] = function($app) {
     $handlerMiddleware = new League\Tactician\Handler\CommandHandlerMiddleware(
         new ClassNameExtractor(),
         $locator,
-        new HandleClassNameInflector()
+        new \malotor\EventsCafe\Infrastructure\CommandBus\CustomInflector()
+    );
+    return new \League\Tactician\CommandBus([$handlerMiddleware]);
+};
+
+$app['query_bus'] = function($app) {
+
+    $locator = new InMemoryLocator();
+
+    $locator->addHandler(
+        new Query\AllTabsQueryHandler(
+            $app['tab_view_repository'],
+            new \malotor\EventsCafe\Application\DataTransformer\TabToArrayDataTransformer()
+        ),
+        Query\AllTabsQuery::class
+    );
+
+    $handlerMiddleware = new League\Tactician\Handler\CommandHandlerMiddleware(
+        new ClassNameExtractor(),
+        $locator,
+        new \malotor\EventsCafe\Infrastructure\CommandBus\CustomInflector()
     );
     return new \League\Tactician\CommandBus([$handlerMiddleware]);
 };
@@ -119,8 +142,6 @@ $app['entity_manager'] =  function ($app) {
             break;
     }
 
-
-    // obtaining the entity manager
     return EntityManager::create($conn, $config);
 };
 
@@ -175,12 +196,7 @@ $app->post('/tab', function(Request $request) use($app) {
 
 $app->get('/tab', function(Request $request) use($app) {
 
-
-    $queryHander = new \malotor\EventsCafe\Application\Query\AllTabsQueryHandler(
-        $app['tab_view_repository'],
-        new \malotor\EventsCafe\Application\DataTransformer\TabToArrayDataTransformer()
-    );
-    $response = $queryHander->handle(new \malotor\EventsCafe\Application\Query\AllTabsQuery());
+    $response = $app['query_bus']->handle(new \malotor\EventsCafe\Application\Query\AllTabsQuery());
 
     return   $app->json([
         'tabs' => $response

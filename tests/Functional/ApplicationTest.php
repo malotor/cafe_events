@@ -38,7 +38,6 @@ class ApplicationTest extends TestCase
 
         $classes = array(
             $em->getClassMetadata('malotor\EventsCafe\Domain\ReadModel\Tabs'),
-            $em->getClassMetadata('malotor\EventsCafe\Domain\ReadModel\Events'),
             $em->getClassMetadata('malotor\EventsCafe\Domain\ReadModel\Items'),
         );
         $tool->createSchema($classes);
