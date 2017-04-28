@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\HttpFoundation\Request;
-use malotor\EventsCafe\Domain\Model\Command;
+use malotor\EventsCafe\Application\Command;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use malotor\EventsCafe\Infrastructure\Persistence\EventStore\PDOEventStore;

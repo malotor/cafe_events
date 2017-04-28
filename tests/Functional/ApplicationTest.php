@@ -130,10 +130,6 @@ class ApplicationTest extends TestCase
             'waiter' => 'John Doe'
         ]);
 
-        //$stm = $app['pdo']->query("SELECT * FROM tabs");
-        //$result = $stm->fetch(\PDO::FETCH_ASSOC);
-        //var_dump($result);
-
         $crawler = $client->request('GET', '/tab');
 
         $this->assertTrue($client->getResponse()->isOk());

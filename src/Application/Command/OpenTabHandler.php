@@ -1,6 +1,6 @@
 <?php
 
-namespace malotor\EventsCafe\Domain\Model\Command;
+namespace malotor\EventsCafe\Application\Command;
 
 use malotor\EventsCafe\Domain\Model\Aggregate\TabRepository;
 use malotor\EventsCafe\Domain\Model\Aggregate\Tab;

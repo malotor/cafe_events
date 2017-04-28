@@ -1,6 +1,6 @@
 <?php
 
-namespace malotor\EventsCafe\Domain\Model\Command;
+namespace malotor\EventsCafe\Application\Command;
 
 class CloseTab
 {
