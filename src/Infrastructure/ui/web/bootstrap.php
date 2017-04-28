@@ -17,6 +17,7 @@ use League\Tactician\Handler\MethodNameInflector\HandleClassNameInflector;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
+use malotor\EventsCafe\Infrastructure\Persistence\EventStore\RedisEventStore;
 
 $app = new Silex\Application();
 
@@ -74,7 +75,9 @@ $app['serializer'] = function ($app) {
 
 $app['tab_repository'] = function($app) {
     $tabProjection = new TabProjection($app['pdo']);
-    $eventStore = new PDOEventStore($app['pdo'], $app['serializer']);
+    //$eventStore = new PDOEventStore($app['pdo'], $app['serializer']);
+    $client = new \Predis\Client('tcp://redis:6379');
+    $eventStore = new RedisEventStore($client, $app['serializer']);
     return new TabEventSourcingRepository($eventStore, $tabProjection);
 };
 

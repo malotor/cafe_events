@@ -9,14 +9,23 @@ use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
 use malotor\EventsCafe\Domain\Model\Events\TabOpened;
 
 use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
+use malotor\EventsCafe\Infrastructure\Persistence\EventStore\RedisEventStore;
+
+use JMS\Serializer\SerializerBuilder;
 
 class RedisEventStoreTest extends TestCase
 {
-    private $repository;
+    private $eventStore;
 
     public function setUp()
     {
+        $serializer = SerializerBuilder::create()
+            ->addMetadataDir(__DIR__ . '/../../../../resources/serializer')
+            ->build();
 
+        $client = new \Predis\Client('tcp://redis:6379');
+
+        $this->eventStore = new RedisEventStore($client, $serializer);
     }
 
     /**
@@ -28,9 +37,9 @@ class RedisEventStoreTest extends TestCase
         $domainEvents = new DomainEvents([
             new TabOpened(TabId::fromString("e247721a-b70c-4431-9ba5-1867340ae241"),1,'John')
         ]);
-        $this->repository->commit($domainEvents);
+        $this->eventStore->commit($domainEvents);
         /** @var $anAggregate Tab */
-        $anAggregateHistory = $this->repository->getAggregateHistoryFor(TabId::fromString("e247721a-b70c-4431-9ba5-1867340ae241"));
+        $anAggregateHistory = $this->eventStore->getAggregateHistoryFor(TabId::fromString("e247721a-b70c-4431-9ba5-1867340ae241"));
 
         $tab = Tab::reconstituteFrom($anAggregateHistory);
 
