@@ -7,7 +7,7 @@ services:
         build:
             context: ./build/php
             args:
-                remote_host : 192.168.33.100
+                remote_host : 192.168.1.100
         container_name: app
         command: php -S app:80 -t public/ public/app.php
         working_dir: /code
@@ -24,7 +24,7 @@ services:
         build:
             context: ./build/php
             args:
-                remote_host : 192.168.33.100
+                remote_host : 192.168.1.100
         container_name: phpunit
         entrypoint:
             - vendor/bin/phpunit
@@ -43,3 +43,20 @@ services:
           - composer
         volumes_from:
             - app
+
+    redis:
+        container_name: redis
+        image: redis:3.2.4-alpine
+        command: redis-server --appendonly yes
+        restart: unless-stopped
+        ports:
+          - "50002:6379"
+    redis-gui:
+        image: tenstartups/redis-commander
+        container_name: redis-gui
+        command:  --redis-host redis
+        restart: unless-stopped
+        ports:
+          - "50000:8081"
+        depends_on:
+          - redis

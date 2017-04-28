@@ -22,26 +22,35 @@ $app = new Silex\Application();
 
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app['env'] = 'dev';
+$app['base_path'] =  __DIR__ . '/../../../..';
 
+// APPLICATION REST
 
-$app['pdo.sqlite.file'] = function () {
+$app->error(function (\Exception $e, $code) use ($app) {
+    $response = [
+        'code' => $code,
+        'message' => $e->getMessage(),
+    ];
+    return $app->json($response,500);
+});
+
+// SERVICE CONTAINER
+
+$app['pdo.sqlite.file'] = function ($app) {
    return new \PDO(
-        'sqlite:' . __DIR__ . '/../../../../resources/db/events_cafe.db',
+        'sqlite:' . $app['base_path'] . '/resources/db/events_cafe.db',
         null,
         null,
         array(\PDO::ATTR_PERSISTENT => true)
     );
 };
 
-$app['pdo.sqlite.inmemory'] = function () {
+$app['pdo.sqlite.inmemory'] = function ($app) {
     $pdo = new \PDO(
-        'sqlite:::memory:',
-        null,
-        null,
-        array(\PDO::ATTR_PERSISTENT => true)
+        'sqlite:::memory:'
     );
     //Provision
-    $sql = file_get_contents(__DIR__ . '/../../../../resources/db/events_cafe.sql');
+    $sql = file_get_contents($app['base_path'] . '/resources/db/events_cafe.sql');
     $pdo->exec($sql);
     return $pdo;
 };
@@ -57,20 +66,17 @@ $app['pdo'] = function ($app) {
     }
 };
 
-$app['serializer'] = function () {
+$app['serializer'] = function ($app) {
     return SerializerBuilder::create()
-        ->addMetadataDir(__DIR__ . '/../../../../resources/serializer')
+        ->addMetadataDir($app['base_path'] . '/resources/serializer')
         ->build();
 };
 
 $app['tab_repository'] = function($app) {
-
     $tabProjection = new TabProjection($app['pdo']);
     $eventStore = new PDOEventStore($app['pdo'], $app['serializer']);
     return new TabEventSourcingRepository($eventStore, $tabProjection);
 };
-
-
 
 $app['command_bus'] = function($app) {
 
@@ -91,13 +97,25 @@ $app['command_bus'] = function($app) {
 $app['entity_manager'] =  function ($app) {
 
     $isDevMode = true;
-    $config = Setup::createYAMLMetadataConfiguration(array(__DIR__."/../../../../resources/doctrine"), $isDevMode);
+    $config = Setup::createYAMLMetadataConfiguration(array($app['base_path'] . '/resources/doctrine'), $isDevMode);
 
-    // database configuration parameters
-    $conn = array(
-        'driver' => 'pdo_sqlite',
-        'path' => __DIR__ . '/../../../../resources/db/events_cafe.db',
-    );
+    switch ($app['env']) {
+        case 'test':
+            // database configuration parameters
+            $conn = array(
+                'driver' => 'pdo_sqlite',
+                'memory' => true
+            );
+            break;
+        default:
+            // database configuration parameters
+            $conn = array(
+                'driver' => 'pdo_sqlite',
+                'path' => $app['base_path'] . '/resources/db/events_cafe.db',
+            );
+            break;
+    }
+
 
     // obtaining the entity manager
     return EntityManager::create($conn, $config);
@@ -109,15 +127,9 @@ $app['tab_view_repository'] = function ($app) {
     return $em->getRepository('malotor\EventsCafe\Domain\ReadModel\Tabs');
 };
 
-// APPLICATION REST
 
-$app->error(function (\Exception $e, $code) use ($app) {
-    $response = [
-        'code' => $code,
-        'message' => $e->getMessage(),
-    ];
-    return $app->json($response,500);
-});
+
+// CONTROLLERS
 
 $app->get('/', function(Request $request) use($app) {
 
@@ -127,14 +139,14 @@ $app->get('/', function(Request $request) use($app) {
 
 });
 
-// CONTROLLERS
+
 
 $app->post('/tab', function(Request $request) use($app) {
 
 
     $data = [
         'table' =>  $request->request->get("table"),
-        'waiter' => $request->request->get("table")
+        'waiter' => $request->request->get("waiter")
     ];
 
     $constraint = new Assert\Collection(array(
@@ -154,6 +166,21 @@ $app->post('/tab', function(Request $request) use($app) {
 
     return   $app->json([
         'message' => 'Tab has been opened'
+    ]);
+
+});
+
+$app->get('/tab', function(Request $request) use($app) {
+
+
+    $queryHander = new \malotor\EventsCafe\Application\Query\AllTabsQueryHandler(
+        $app['tab_view_repository'],
+        new \malotor\EventsCafe\Application\DataTransformer\TabToArrayDataTransformer()
+    );
+    $response = $queryHander->handle(new \malotor\EventsCafe\Application\Query\AllTabsQuery());
+
+    return   $app->json([
+        'tabs' => $response
     ]);
 
 });

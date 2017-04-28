@@ -39,26 +39,15 @@ Finally, the visitors close the tab by paying what is owed, possibly with a tip 
 - https://www.securityartwork.es/2012/04/23/arquitecturas-robustas-y-seguras-con-cqrs-i/
 
 
-Doctrine
+## Doctrine
 
-sh scripts/run.sh vendor/bin/doctrine orm:schema-tool:drop --force
-sh scripts/run.sh vendor/bin/doctrine orm:schema-tool:create
-sh scripts/run.sh vendor/bin/doctrine  orm:generate-entities src/Domain/ReadModel
+  sh scripts/run.sh vendor/bin/doctrine orm:schema-tool:drop --force
+  sh scripts/run.sh vendor/bin/doctrine orm:schema-tool:create
+  sh scripts/run.sh vendor/bin/doctrine orm:generate-entities src/Domain/ReadModel
+  sh scripts/run.sh vendor/bin/doctrine orm:schema-tool:create --dump-sql > resources/db/events_cafe1.sql
 
-vendor/bin/doctrine orm:convert-mapping --from-database yml resources/doctrine
+  sh scripts/run.sh vendor/bin/doctrine orm:clear-cache:metadata
+  sh scripts/run.sh vendor/bin/doctrine orm:clear-cache:query
+  sh scripts/run.sh vendor/bin/doctrine orm:clear-cache:result
 
-vendor/bin/doctrine orm:generate-entities --regenerate-entities
-
-
-orm:schema-tool:drop
-orm:schema-tool:create
-orm:schema-tool:tool:update
-orm:schema-tool:create --dump-sql
-
-php doctrine orm:generate-entities
-$ php doctrine orm:generate-entities --update-entities
-$ php doctrine orm:generate-entities --regenerate-entities
-
- orm:clear-cache:metadata        
-  orm:clear-cache:query           Clear all query cache of the various cache drivers.
-  orm:clear-cache:result
+  sh scripts/run.sh vendor/bin/doctrine orm:convert-mapping --from-database yml resources/doctrine

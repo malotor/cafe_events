@@ -1,6 +1,6 @@
 vendor/
 coverage/
 cache/
-/resources/db/events_cafe.db
+resources/db/events_cafe.db
 .idea
 ::memory:

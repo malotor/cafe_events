@@ -20,7 +20,7 @@ class Tabs
     /**
      * @var string
      */
-    private $table;
+    private $tableNumber;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -106,9 +106,9 @@ class Tabs
      *
      * @return string
      */
-    public function getTable()
+    public function getTableNumber()
     {
-        return $this->table;
+        return $this->tableNumber;
     }
 
     /**
