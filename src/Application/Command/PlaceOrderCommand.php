@@ -4,6 +4,13 @@ namespace malotor\EventsCafe\Application\Command;
 
 class PlaceOrderCommand
 {
-    private $id;
-    private $items;
+    public $id;
+    public $items;
+
+    public function __construct($id, $items)
+    {
+        $this->id = $id;
+        $this->items = $items;
+    }
+
 }

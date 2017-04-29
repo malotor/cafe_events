@@ -20,4 +20,8 @@ malotor\EventsCafe\Domain\ReadModel\Items:
         price:
             type: decimal
             nullable: false
+        is_drink:
+            type: boolean
+            options:
+                default : true
     lifecycleCallbacks: {  }

@@ -25,7 +25,7 @@ class Tabs
     /**
      * @var boolean
      */
-    private $open;
+    private $open = true;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

@@ -27,7 +27,7 @@ malotor\EventsCafe\Domain\ReadModel\Tabs:
                 fixed: false
         open:
             type: boolean
-            option:
+            options:
                 default : true
 
     manyToMany:

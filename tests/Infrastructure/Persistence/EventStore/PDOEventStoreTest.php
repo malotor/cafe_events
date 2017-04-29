@@ -37,9 +37,7 @@ class PDOEventStoreTest extends TestCase
         $this->repository = new PDOEventStore($this->pdo, $serializer);
     }
 
-    /**
-     * @test
-     */
+
     public function it_should_commit_events_to_databse()
     {
 
@@ -55,9 +53,7 @@ class PDOEventStoreTest extends TestCase
 
     }
 
-    /**
-     * @test
-     */
+
     public function it_should_recover_aggregate_history()
     {
 

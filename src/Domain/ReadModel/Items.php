@@ -22,6 +22,11 @@ class Items
      */
     private $price;
 
+    /**
+     * @var boolean
+     */
+    private $is_drink = true;
+
 
     /**
      * Get itemId
@@ -79,6 +84,30 @@ class Items
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set isDrink
+     *
+     * @param boolean $isDrink
+     *
+     * @return Items
+     */
+    public function setIsDrink($isDrink)
+    {
+        $this->is_drink = $isDrink;
+
+        return $this;
+    }
+
+    /**
+     * Get isDrink
+     *
+     * @return boolean
+     */
+    public function getIsDrink()
+    {
+        return $this->is_drink;
     }
 }
 

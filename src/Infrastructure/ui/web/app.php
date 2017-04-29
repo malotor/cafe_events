@@ -92,6 +92,11 @@ $app['command_bus'] = function($app) {
         Command\OpenTabCommand::class)
     ;
 
+    $locator->addHandler(
+        new Command\PlaceOrderHandler($app['tab_repository'], $app['ordered_items_repository']),
+        Command\PlaceOrderCommand::class)
+    ;
+
     $handlerMiddleware = new League\Tactician\Handler\CommandHandlerMiddleware(
         new ClassNameExtractor(),
         $locator,
@@ -151,6 +156,11 @@ $app['tab_view_repository'] = function ($app) {
     return $em->getRepository('malotor\EventsCafe\Domain\ReadModel\Tabs');
 };
 
+$app['ordered_items_repository'] = function ($app) {
+    /** @var EntityManager $em */
+    $em = $app['entity_manager'];
+    return $em->getRepository('malotor\EventsCafe\Domain\ReadModel\Items');
+};
 
 
 // CONTROLLERS
@@ -195,6 +205,16 @@ $app->post('/tab', function(Request $request) use($app) {
 });
 
 $app->get('/tab', function(Request $request) use($app) {
+
+    $response = $app['query_bus']->handle(new \malotor\EventsCafe\Application\Query\AllTabsQuery());
+
+    return   $app->json([
+        'tabs' => $response
+    ]);
+
+});
+
+$app->post('/tab', function(Request $request) use($app) {
 
     $response = $app['query_bus']->handle(new \malotor\EventsCafe\Application\Query\AllTabsQuery());
 

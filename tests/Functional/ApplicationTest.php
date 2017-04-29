@@ -140,4 +140,30 @@ class ApplicationTest extends TestCase
         $this->assertEquals('John Doe', $response['tabs'][0]['waiter']);
 
     }
+
+    /**
+     * @test
+     */
+    public function only_order_items_that_are_in_the_menu()
+    {
+        $app = $this->app;
+
+        $client = $this->createClient();
+
+        $client->request('POST', '/tab', [
+            'table' => '1',
+            'waiter' => 'John Doe'
+        ]);
+
+        $crawler = $client->request('GET', '/tab');
+        $response = json_decode($client->getResponse()->getContent(), true);
+        $tabId = $response['tabs'][0]['id'];
+
+        $crawler = $client->request('POST', "/tab/$tabId",[
+            'orderedItems' => [5]
+        ]);
+
+        $this->assertFalse($client->getResponse()->isOk());
+
+    }
 }
