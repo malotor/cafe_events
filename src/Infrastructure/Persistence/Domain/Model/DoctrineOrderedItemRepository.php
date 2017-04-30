@@ -21,13 +21,11 @@ class DoctrineOrderedItemRepository implements OrderedItemsRepository
 
     public function findById($id): OrderedItem
     {
-        try {
-            /** @var Items $readOrderedItem */
-            $readOrderedItem = $this->em->find('malotor\EventsCafe\Domain\ReadModel\Items', $id);
-            return new OrderedItem($id, $readOrderedItem->getIsDrink(),$readOrderedItem->getPrice());
-        } catch (\Exception $e)
-        {
+        /** @var Items $readOrderedItem */
+        $readOrderedItem = $this->em->find('malotor\EventsCafe\Domain\ReadModel\Items', $id);
+        if ($readOrderedItem === null)
             throw new OrderedItemNotExists();
-        }
+
+        return new OrderedItem($id, $readOrderedItem->getIsDrink(),$readOrderedItem->getPrice());
     }
 }

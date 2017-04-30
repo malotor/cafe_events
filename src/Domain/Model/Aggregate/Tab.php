@@ -69,6 +69,15 @@ class Tab extends Aggregate
 
     }
 
+    static public function openWithId(TabId $id, $table, $waiter) : Tab
+    {
+        $newTab =  new Tab($id, $table, $waiter);
+        $newTab->recordThat(
+            new TabOpened($id, $table, $waiter)
+        );
+        return $newTab;
+    }
+
     static public function createEmptyWithId($id): Aggregate
     {
         return new Tab($id, null, null);

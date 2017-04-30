@@ -5,7 +5,7 @@ namespace malotor\EventsCafe\Tests\Functional;
 use Doctrine\ORM\EntityManager;
 
 
-class ApplicationTest extends AcceptanceTest
+class ApplicationTest extends Acceptance
 {
 
 
@@ -81,6 +81,8 @@ class ApplicationTest extends AcceptanceTest
             'waiter' => 'John Doe'
         ]);
 
+
+
         $response = $this->request('GET', '/tab');
 
         $this->assertTrue($this->client->getResponse()->isOk());
@@ -96,13 +98,13 @@ class ApplicationTest extends AcceptanceTest
     public function only_order_items_that_are_in_the_menu()
     {
 
-        $this->request('POST', '/tab', [
+        $response = $this->request('POST', '/tab', [
             'table' => '1',
             'waiter' => 'John Doe'
         ]);
 
-        $response = $this->request('GET', '/tab');
-        $tabId = $response['tabs'][0]['id'];
+        //$response = $this->request('GET', '/tab');
+        $tabId = $response['tab']['id'];
 
         $response = $this->request('POST', "/tab/$tabId",[
             'orderedItems' => [9999]
@@ -118,13 +120,12 @@ class ApplicationTest extends AcceptanceTest
     public function items_in_the_menu_could_be_ordered()
     {
 
-        $this->request('POST', '/tab', [
+        $response = $this->request('POST', '/tab', [
             'table' => '1',
             'waiter' => 'John Doe'
         ]);
 
-        $response = $this->request('GET', '/tab');
-        $tabId = $response['tabs'][0]['id'];
+        $tabId = $response['tab']['id'];
 
         $response = $this->request('POST', "/tab/$tabId",[
             'orderedItems' => [1,2,5,6]
@@ -134,7 +135,7 @@ class ApplicationTest extends AcceptanceTest
 
         $response = $this->request('GET', '/tab');
 
-        var_dump($response['tabs'][0]);
+        //var_dump($response['tabs'][0]);
         $this->assertEquals('Beer', $response['tabs'][0]['outstanding_drinks'][0]);
         $this->assertEquals('Ice tea', $response['tabs'][0]['outstanding_drinks'][1]);
 
@@ -143,4 +144,27 @@ class ApplicationTest extends AcceptanceTest
 
     }
 
+
+    /**
+     * @test
+     */
+    public function outstanding_foods_could_be_prepared()
+    {
+
+        $response = $this->request('POST', '/tab', [
+            'table' => '1',
+            'waiter' => 'John Doe'
+        ]);
+
+        $tabId = $response['tab']['id'];
+
+        $response = $this->request('POST', "/tab/$tabId",[
+            'orderedItems' => [1,2,5,6]
+        ]);
+
+        $this->request("POST", "/tab/$tabId/prepare",[
+            'items' => [5]
+        ]);
+
+    }
 }

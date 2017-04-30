@@ -190,6 +190,7 @@ $app->post('/tab', function(Request $request) use($app) {
     $errors = $app['validator']->validate($data, $constraint);
 
     $command = new Command\OpenTabCommand();
+    $command->tabId = \Ramsey\Uuid\Uuid::uuid4();
     $command->tableNumber = $data['table'];
     $command->waiterId = $data['waiter'];
     $app['command_bus']->handle($command);
@@ -198,7 +199,9 @@ $app->post('/tab', function(Request $request) use($app) {
         return $app->json($errors, 500);
 
     return   $app->json([
-        'message' => 'Tab has been opened'
+        'tab' => [
+            'id' => $command->tabId,
+        ]
     ]);
 
 });

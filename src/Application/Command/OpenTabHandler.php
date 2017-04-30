@@ -2,6 +2,7 @@
 
 namespace malotor\EventsCafe\Application\Command;
 
+use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
 use malotor\EventsCafe\Domain\Model\Aggregate\TabRepository;
 use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
 
@@ -16,7 +17,7 @@ class OpenTabHandler
 
     public function handle(OpenTabCommand $command)
     {
-        $newTab = Tab::open($command->tableNumber, $command->waiterId);
+        $newTab = Tab::openWithId(TabId::fromString($command->tabId), $command->tableNumber, $command->waiterId);
         $this->tabRepopsitory->add($newTab);
     }
 
