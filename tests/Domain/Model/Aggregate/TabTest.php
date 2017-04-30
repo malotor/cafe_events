@@ -29,8 +29,8 @@ class TabTest extends TestCase
         $this->assertEquals(0,$tab->outstandingItems());
 
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 
@@ -49,8 +49,8 @@ class TabTest extends TestCase
 
 
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 
@@ -68,8 +68,8 @@ class TabTest extends TestCase
 
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 
@@ -91,8 +91,8 @@ class TabTest extends TestCase
 
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 
@@ -110,8 +110,8 @@ class TabTest extends TestCase
 
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 
@@ -127,8 +127,8 @@ class TabTest extends TestCase
 
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 
@@ -146,8 +146,8 @@ class TabTest extends TestCase
 
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 
@@ -171,8 +171,8 @@ class TabTest extends TestCase
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 
@@ -190,8 +190,8 @@ class TabTest extends TestCase
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 
@@ -208,8 +208,8 @@ class TabTest extends TestCase
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 
@@ -226,8 +226,8 @@ class TabTest extends TestCase
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 
@@ -246,8 +246,8 @@ class TabTest extends TestCase
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 
@@ -267,8 +267,8 @@ class TabTest extends TestCase
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,"Coke",true,2.5),
-            new OrderedItem(2,"Pizza",false,4.5),
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
         ];
         $tab->placeOrder($orderedItems);
 

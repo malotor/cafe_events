@@ -23,6 +23,11 @@ class Tabs
     private $tableNumber;
 
     /**
+     * @var boolean
+     */
+    private $open = true;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $outstandingDrinks;
@@ -88,27 +93,51 @@ class Tabs
     }
 
     /**
-     * Set table
+     * Set tableNumber
      *
-     * @param string $table
+     * @param string $tableNumber
      *
      * @return Tabs
      */
-    public function setTable($table)
+    public function setTableNumber($tableNumber)
     {
-        $this->table = $table;
+        $this->tableNumber = $tableNumber;
 
         return $this;
     }
 
     /**
-     * Get table
+     * Get tableNumber
      *
      * @return string
      */
     public function getTableNumber()
     {
         return $this->tableNumber;
+    }
+
+    /**
+     * Set open
+     *
+     * @param boolean $open
+     *
+     * @return Tabs
+     */
+    public function setOpen($open)
+    {
+        $this->open = $open;
+
+        return $this;
+    }
+
+    /**
+     * Get open
+     *
+     * @return boolean
+     */
+    public function getOpen()
+    {
+        return $this->open;
     }
 
     /**

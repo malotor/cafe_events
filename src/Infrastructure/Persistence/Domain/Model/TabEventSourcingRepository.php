@@ -7,6 +7,7 @@ use Buttercup\Protects\IsEventSourced;
 use Buttercup\Protects\RecordsEvents;
 
 use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
+use malotor\EventsCafe\Domain\Model\Aggregate\TabNotExists;
 use malotor\EventsCafe\Domain\Model\Aggregate\TabRepository;
 use malotor\EventsCafe\Infrastructure\Persistence\EventStore\EventStore;
 use malotor\EventsCafe\Infrastructure\Persistence\Projection\Projection;
@@ -36,6 +37,9 @@ class TabEventSourcingRepository implements TabRepository
     public function get(IdentifiesAggregate $aggregateId)
     {
         $eventStream = $this->eventStore->getAggregateHistoryFor($aggregateId);
+
+        if ($eventStream->count()==0)
+            throw new TabNotExists();
 
         return Tab::reconstituteFrom($eventStream);
     }

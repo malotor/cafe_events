@@ -10,10 +10,10 @@ class OrderedItem
     private $price;
 
 
-    public function __construct(int $menuNumber, $description, bool $IsDrink, float $price)
+    public function __construct(int $menuNumber, bool $IsDrink, float $price)
     {
         $this->menuNumber = $menuNumber;
-        $this->description = $description;
+        //$this->description = $description;
         $this->IsDrink = $IsDrink;
         $this->price = $price;
     }
@@ -26,13 +26,13 @@ class OrderedItem
         return $this->menuNumber;
     }
 
-    /**
-     * @return mixed
-     */
+
+    /*
     public function getDescription(): string 
     {
         return $this->description;
     }
+    */
 
     /**
      * @return bool

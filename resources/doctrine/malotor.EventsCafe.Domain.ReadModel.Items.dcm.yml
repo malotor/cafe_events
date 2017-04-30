@@ -4,12 +4,8 @@ malotor\EventsCafe\Domain\ReadModel\Items:
     id:
         itemId:
             type: integer
-            options:
-                fixed: false
             id: true
             column: item_id
-            generator:
-                strategy: AUTO
     fields:
         description:
             type: string
@@ -20,4 +16,8 @@ malotor\EventsCafe\Domain\ReadModel\Items:
         price:
             type: decimal
             nullable: false
+        is_drink:
+            type: boolean
+            options:
+                default : true
     lifecycleCallbacks: {  }

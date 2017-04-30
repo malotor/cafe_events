@@ -32,7 +32,6 @@ $app['base_path'] =  __DIR__ . '/../../../..';
 
 $app->error(function (\Exception $e, $code) use ($app) {
     $response = [
-        'code' => $code,
         'message' => $e->getMessage(),
     ];
     return $app->json($response,500);
@@ -90,6 +89,11 @@ $app['command_bus'] = function($app) {
     $locator->addHandler(
         new Command\OpenTabHandler($app['tab_repository']),
         Command\OpenTabCommand::class)
+    ;
+
+    $locator->addHandler(
+        new Command\PlaceOrderHandler($app['tab_repository'], $app['ordered_items_repository']),
+        Command\PlaceOrderCommand::class)
     ;
 
     $handlerMiddleware = new League\Tactician\Handler\CommandHandlerMiddleware(
@@ -151,6 +155,11 @@ $app['tab_view_repository'] = function ($app) {
     return $em->getRepository('malotor\EventsCafe\Domain\ReadModel\Tabs');
 };
 
+$app['ordered_items_repository'] = function ($app) {
+    /** @var EntityManager $em */
+    $em = $app['entity_manager'];
+    return new \malotor\EventsCafe\Infrastructure\Persistence\Domain\Model\DoctrineOrderedItemRepository($em);
+};
 
 
 // CONTROLLERS
@@ -200,6 +209,19 @@ $app->get('/tab', function(Request $request) use($app) {
 
     return   $app->json([
         'tabs' => $response
+    ]);
+
+});
+
+$app->post('/tab/{id}', function(Request $request, $id) use($app) {
+
+    $items = $request->request->get("orderedItems");
+
+    $command = new Command\PlaceOrderCommand($id, $items);
+    $app['command_bus']->handle($command);
+
+    return   $app->json([
+        'message' => 'Order has placed'
     ]);
 
 });
