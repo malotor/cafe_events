@@ -23,7 +23,7 @@ class DoctrineOrderedItemRepository implements OrderedItemsRepository
     {
         try {
             /** @var Items $readOrderedItem */
-            $readOrderedItem = $this->em->find('namespace malotor\EventsCafe\Domain\ReadModel\Items', $id);
+            $readOrderedItem = $this->em->find('malotor\EventsCafe\Domain\ReadModel\Items', $id);
             return new OrderedItem($id, $readOrderedItem->getIsDrink(),$readOrderedItem->getPrice());
         } catch (\Exception $e)
         {

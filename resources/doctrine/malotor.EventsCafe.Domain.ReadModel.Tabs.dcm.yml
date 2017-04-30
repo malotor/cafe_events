@@ -6,12 +6,8 @@ malotor\EventsCafe\Domain\ReadModel\Tabs:
             type: string
             nullable: false
             length: 255
-            options:
-                fixed: false
             id: true
             column: tab_id
-            generator:
-                strategy: IDENTITY
     fields:
         waiter:
             type: string

@@ -32,7 +32,6 @@ $app['base_path'] =  __DIR__ . '/../../../..';
 
 $app->error(function (\Exception $e, $code) use ($app) {
     $response = [
-        'code' => $code,
         'message' => $e->getMessage(),
     ];
     return $app->json($response,500);
@@ -159,7 +158,7 @@ $app['tab_view_repository'] = function ($app) {
 $app['ordered_items_repository'] = function ($app) {
     /** @var EntityManager $em */
     $em = $app['entity_manager'];
-    return $em->getRepository('malotor\EventsCafe\Domain\ReadModel\Items');
+    return new \malotor\EventsCafe\Infrastructure\Persistence\Domain\Model\DoctrineOrderedItemRepository($em);
 };
 
 
@@ -214,12 +213,15 @@ $app->get('/tab', function(Request $request) use($app) {
 
 });
 
-$app->post('/tab', function(Request $request) use($app) {
+$app->post('/tab/{id}', function(Request $request, $id) use($app) {
 
-    $response = $app['query_bus']->handle(new \malotor\EventsCafe\Application\Query\AllTabsQuery());
+    $items = $request->request->get("orderedItems");
+
+    $command = new Command\PlaceOrderCommand($id, $items);
+    $app['command_bus']->handle($command);
 
     return   $app->json([
-        'tabs' => $response
+        'message' => 'Order has placed'
     ]);
 
 });
