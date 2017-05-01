@@ -13,16 +13,14 @@ class TabToArrayDataTransformer implements DataTranformer
 
     public function write($input)
     {
-        if (get_class($input) ==  'malotor\EventsCafe\Domain\ReadModel\Tabs') {
+        if (is_array($input)) {
+            foreach ($input as $tab)
+            {
+                $this->result[] = $this->convertTab($tab);
+                //unset($tmp);
+            }
+        } else if (get_class($input) ==  'malotor\EventsCafe\Domain\ReadModel\Tabs') {
             $this->result = $this->convertTab($input);
-            return;
-        }
-
-        if (is_array($input))
-        foreach ($input as $tab)
-        {
-            $this->result[] = $this->convertTab($tab);
-            unset($tmp);
         }
 
     }
@@ -49,6 +47,11 @@ class TabToArrayDataTransformer implements DataTranformer
         foreach ($tab->getOutstandingFoods() as $food)
         {
             $tmp['outstanding_foods'][] = $food->getDescription();
+        }
+
+        foreach ($tab->getPreparedFoods() as $food)
+        {
+            $tmp['prepared_foods'][] = $food->getDescription();
         }
 
         return $tmp;

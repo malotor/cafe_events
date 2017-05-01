@@ -18,6 +18,7 @@ class OneTabQueryHandler
 
     public function handle(OneTabQuery $query)
     {
+        //If tab does not exists this return null  findOfFail()
         $tab = $this->tabsRepository->find($query->id);
         $this->dataTransformer->write($tab);
         return $this->dataTransformer->read();

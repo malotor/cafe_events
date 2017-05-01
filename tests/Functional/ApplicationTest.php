@@ -15,17 +15,17 @@ class ApplicationTest extends Acceptance
         /** @var EntityManager $em */
         $em = $this->app['entity_manager'];
 
-        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-
-        $tool->dropDatabase();
-
-        $classes = [
-            $em->getClassMetadata('malotor\EventsCafe\Domain\ReadModel\Tabs'),
-            $em->getClassMetadata('malotor\EventsCafe\Domain\ReadModel\Items'),
-        ];
-        $tool->createSchema($classes);
-
         $connection = $em->getConnection();
+        $schemaManager = $connection->getSchemaManager();
+        $tables = $schemaManager->listTables();
+
+        $platform   = $connection->getDatabasePlatform();
+
+        foreach($tables as $table) {
+            $name = $table->getName();
+            $connection->executeUpdate($platform->getTruncateTableSQL($name, true ));
+        }
+
         $connection->exec(file_get_contents(__DIR__ . '/../../resources/db/events_cafe_fixtures.sql'));
 
         $predisClient = new \Predis\Client('tcp://redis:6379');
@@ -35,14 +35,6 @@ class ApplicationTest extends Acceptance
 
     }
 
-    /**
-     * @test
-     */
-    public function basic_page()
-    {
-        $this->request('GET', '/');
-        $this->assertTrue($this->client->getResponse()->isOk());
-    }
 
     /**
      * @test
@@ -67,8 +59,38 @@ class ApplicationTest extends Acceptance
         ]);
 
         $this->assertEquals(200, $this->getResponseStatusCode());
+
+        $this->request('POST', '/tab', [
+            'table'  => '2',
+            'waiter' => 'Jane Doe'
+        ]);
+
+        $this->assertEquals(200, $this->getResponseStatusCode());
     }
 
+    /**
+     * @test
+     */
+    public function get_tab_info()
+    {
+        $this->request('POST', '/tab', [
+            'table'  => '2',
+            'waiter' => 'Jane Doe'
+        ]);
+
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+
+        //$tabId = $response['tab']['id'];
+
+        //$response = $this->request('GET', "/tab/$tabId");
+
+        //$this->assertTrue($this->client->getResponse()->isOk());
+
+        //$this->assertEquals(2, $response['tab']['table']);
+        //$this->assertEquals('Jane Doe', $response['tab']['waiter']);
+        //$this->assertEquals('open', $response['tab']['status']);
+    }
 
     /**
      * @test
@@ -91,26 +113,7 @@ class ApplicationTest extends Acceptance
     }
 
 
-    /**
-     * @test
-     */
-    public function get_tab_info()
-    {
-        $response = $this->request('POST', '/tab', [
-            'table'  => '1',
-            'waiter' => 'John Doe'
-        ]);
 
-        $tabId = $response['tab']['id'];
-
-        $response = $this->request('GET', '/tab/' . $tabId);
-
-        $this->assertTrue($this->client->getResponse()->isOk());
-
-        $this->assertEquals(1, $response['tab']['table']);
-        $this->assertEquals('John Doe', $response['tab']['waiter']);
-        $this->assertEquals('open', $response['tab']['status']);
-    }
 
     /**
      * @test
@@ -186,12 +189,12 @@ class ApplicationTest extends Acceptance
             'items' => [1, 2]
         ]);
 
-        ///var_dump($response);
-
         $this->assertTrue($this->client->getResponse()->isOk());
 
-        //$this->assertEquals('Pizza', $response['tabs'][0]['outstanding_foods'][0]);
-        //$this->assertEquals('Pizza', $response['tabs'][0]['prepared_foods'][0]);
+        $response = $this->request("GET", "/tab/$tabId");
+
+        $this->assertEquals('Pizza', $response['tab']['outstanding_foods'][0]);
+        $this->assertEquals('Pizza', $response['tab']['prepared_foods'][0]);
 
     }
 
