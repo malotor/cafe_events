@@ -2,6 +2,7 @@
 
 namespace malotor\EventsCafe\Infrastructure\Persistence\EventStore;
 
+use malotor\EventsCafe\Infrastructure\Serialize\JsonSerializer;
 use PHPUnit\Framework\TestCase;
 
 use Buttercup\Protects\DomainEvents;
@@ -19,9 +20,7 @@ class RedisEventStoreTest extends TestCase
 
     public function setUp()
     {
-        $serializer = SerializerBuilder::create()
-            ->addMetadataDir(__DIR__ . '/../../../../resources/serializer')
-            ->build();
+        $serializer = new JsonSerializer(__DIR__ . '/../../../../resources/serializer');
 
         $client = new \Predis\Client('tcp://redis:6379');
 

@@ -6,7 +6,7 @@ use Buttercup\Protects\AggregateHistory;
 use Buttercup\Protects\DomainEvents;
 use Buttercup\Protects\IdentifiesAggregate;
 
-use JMS\Serializer\Serializer;
+use malotor\EventsCafe\Infrastructure\Serialize\Serializer;
 use Predis\Client;
 
 class RedisEventStore implements EventStore
@@ -21,7 +21,7 @@ class RedisEventStore implements EventStore
      */
     private $serializer;
 
-    public function __construct($predis, $serializer)
+    public function __construct($predis, Serializer $serializer)
     {
         $this->predis = $predis;
         $this->serializer = $serializer;
@@ -31,7 +31,7 @@ class RedisEventStore implements EventStore
     {
         foreach ($events as $event) {
             $eventType = get_class($event);
-            $data = $this->serializer->serialize($event, 'json');
+            $data = $this->serializer->serialize($event);
 
             $this->predis->rpush(
                 $this->computeHashFor($event->getAggregateId()),
@@ -39,7 +39,7 @@ class RedisEventStore implements EventStore
                     'type' => $eventType,
                     'created_on' => (new \DateTimeImmutable())->format('YmdHis'),
                     'data' => $data
-                ], 'json')
+                ])
             );
         }
     }
@@ -51,8 +51,8 @@ class RedisEventStore implements EventStore
         $eventStream = [];
 
         foreach ($serializedEvents as $serializedEvent) {
-            $eventData = $this->serializer->deserialize($serializedEvent, 'array', 'json');
-            $eventStream[] = $this->serializer->deserialize($eventData['data'], $eventData['type'], 'json');
+            $eventData = $this->serializer->deserialize($serializedEvent, 'array');
+            $eventStream[] = $this->serializer->deserialize($eventData['data'], $eventData['type']);
         }
 
         return new AggregateHistory($id, $eventStream);

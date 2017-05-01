@@ -5,15 +5,12 @@ namespace malotor\EventsCafe\Domain\Model\Aggregate;
 class OrderedItem
 {
     private $menuNumber;
-    private $description;
     private $IsDrink;
     private $price;
-
 
     public function __construct(int $menuNumber, bool $IsDrink, float $price)
     {
         $this->menuNumber = $menuNumber;
-        //$this->description = $description;
         $this->IsDrink = $IsDrink;
         $this->price = $price;
     }
@@ -25,14 +22,6 @@ class OrderedItem
     {
         return $this->menuNumber;
     }
-
-
-    /*
-    public function getDescription(): string 
-    {
-        return $this->description;
-    }
-    */
 
     /**
      * @return bool

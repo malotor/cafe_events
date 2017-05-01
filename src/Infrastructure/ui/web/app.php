@@ -70,9 +70,11 @@ $app['pdo'] = function ($app) {
 };
 
 $app['serializer'] = function ($app) {
-    return SerializerBuilder::create()
+
+    return new \malotor\EventsCafe\Infrastructure\Serialize\JsonSerializer($app['base_path'] . '/resources/serializer');
+   /* return SerializerBuilder::create()
         ->addMetadataDir($app['base_path'] . '/resources/serializer')
-        ->build();
+        ->build();*/
 };
 
 $app['tab_repository'] = function($app) {
@@ -94,6 +96,11 @@ $app['command_bus'] = function($app) {
     $locator->addHandler(
         new Command\PlaceOrderHandler($app['tab_repository'], $app['ordered_items_repository']),
         Command\PlaceOrderCommand::class)
+    ;
+
+    $locator->addHandler(
+        new Command\PrepareFoodHandler($app['tab_repository']),
+        Command\PrepareFoodCommand::class)
     ;
 
     $handlerMiddleware = new League\Tactician\Handler\CommandHandlerMiddleware(
@@ -225,6 +232,20 @@ $app->post('/tab/{id}', function(Request $request, $id) use($app) {
 
     return   $app->json([
         'message' => 'Order has placed'
+    ]);
+
+});
+
+
+$app->post('/tab/{id}/prepare', function(Request $request, $id) use($app) {
+
+    $items = $request->request->get("items");
+
+    $command = new Command\PrepareFoodCommand($id, $items);
+    $app['command_bus']->handle($command);
+
+    return   $app->json([
+        'message' => 'Food has been prepared'
     ]);
 
 });
