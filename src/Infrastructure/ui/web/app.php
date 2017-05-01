@@ -123,6 +123,14 @@ $app['query_bus'] = function($app) {
         Query\AllTabsQuery::class
     );
 
+    $locator->addHandler(
+        new Query\OneTabQueryHandler(
+            $app['tab_view_repository'],
+            new \malotor\EventsCafe\Application\DataTransformer\TabToArrayDataTransformer()
+        ),
+        Query\OneTabQuery::class
+    );
+
     $handlerMiddleware = new League\Tactician\Handler\CommandHandlerMiddleware(
         new ClassNameExtractor(),
         $locator,
@@ -219,6 +227,17 @@ $app->get('/tab', function(Request $request) use($app) {
 
     return   $app->json([
         'tabs' => $response
+    ]);
+
+});
+
+$app->get('/tab/{id}', function(Request $request, $id) use($app) {
+
+    $query = new Query\OneTabQuery($id);
+    $response = $app['query_bus']->handle($query);
+
+    return   $app->json([
+        'tab' => $response
     ]);
 
 });
