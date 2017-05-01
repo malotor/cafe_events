@@ -1,0 +1,10 @@
+malotor\EventsCafe\Domain\Model\Aggregate\OrderedItem:
+    exclusion_policy: ALL
+    properties:
+        menuNumber:
+            type: integer
+        IsDrink:
+            type: boolean
+            serialized_name: is_drink
+        price:
+            type: double

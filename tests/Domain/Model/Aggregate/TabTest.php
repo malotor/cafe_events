@@ -5,6 +5,9 @@ use PHPUnit\Framework\TestCase;
 use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
 use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItem;
 use Ramsey\Uuid\Uuid;
+use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
+use Buttercup\Protects\AggregateHistory;
+use malotor\EventsCafe\Domain\Model\Events;
 
 class TabTest extends TestCase
 {
@@ -279,5 +282,38 @@ class TabTest extends TestCase
         $tab->close(9);
 
         $this->assertFalse($tab->isOpen());
+    }
+
+
+    /**
+     * @tests
+     */
+    public function it_should_be_reconstituted_from_events()
+    {
+        $aggregateId = TabId::fromString("adb40bf1-e79c-442e-ae7c-3c9cfcdd38f1");
+
+        $eventHistory = new AggregateHistory($aggregateId, [
+            new Events\TabOpened($aggregateId,1,'Jane Doe'),
+            new Events\DrinksOrdered($aggregateId,
+                [
+                    new OrderedItem(1,true,10)
+                ]
+            ),
+            new Events\DrinksServed($aggregateId,[1]),
+            new Events\FoodOrdered($aggregateId,
+                [
+                    new OrderedItem(2,false,13)
+                ]
+            ),
+            new Events\FoodPrepared($aggregateId, [2]),
+            new Events\FoodServed($aggregateId,[2]),
+            new Events\TabClosed($aggregateId,23, 23, 0),
+        ]);
+
+
+        $anAggregate = Tab::reconstituteFrom($eventHistory);
+
+        $this->assertEquals("adb40bf1-e79c-442e-ae7c-3c9cfcdd38f1",(string) $anAggregate->getAggregateId());
+        //$this->assertEquals(4, $anAggregate->get());
     }
 }
