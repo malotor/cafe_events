@@ -19,14 +19,14 @@ class ApplicationTest extends Acceptance
 
         $tool->dropDatabase();
 
-        $classes = array(
+        $classes = [
             $em->getClassMetadata('malotor\EventsCafe\Domain\ReadModel\Tabs'),
             $em->getClassMetadata('malotor\EventsCafe\Domain\ReadModel\Items'),
-        );
+        ];
         $tool->createSchema($classes);
 
         $connection = $em->getConnection();
-        $connection->exec(file_get_contents(__DIR__.'/../../resources/db/events_cafe_fixtures.sql'));
+        $connection->exec(file_get_contents(__DIR__ . '/../../resources/db/events_cafe_fixtures.sql'));
 
         $predisClient = new \Predis\Client('tcp://redis:6379');
         $predisClient->flushall();
@@ -62,13 +62,12 @@ class ApplicationTest extends Acceptance
     public function a_waiter_could_open_new_tab_for_a_table()
     {
         $this->request('POST', '/tab', [
-            'table' => '1',
+            'table'  => '1',
             'waiter' => 'John Doe'
         ]);
 
         $this->assertEquals(200, $this->getResponseStatusCode());
     }
-
 
 
     /**
@@ -77,10 +76,9 @@ class ApplicationTest extends Acceptance
     public function list_all_tabs()
     {
         $this->request('POST', '/tab', [
-            'table' => '1',
+            'table'  => '1',
             'waiter' => 'John Doe'
         ]);
-
 
 
         $response = $this->request('GET', '/tab');
@@ -92,6 +90,28 @@ class ApplicationTest extends Acceptance
         $this->assertEquals('open', $response['tabs'][0]['status']);
     }
 
+
+    /**
+     * @test
+     */
+    public function get_tab_info()
+    {
+        $response = $this->request('POST', '/tab', [
+            'table'  => '1',
+            'waiter' => 'John Doe'
+        ]);
+
+        $tabId = $response['tab']['id'];
+
+        $response = $this->request('GET', '/tab/' . $tabId);
+
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+        $this->assertEquals(1, $response['tab']['table']);
+        $this->assertEquals('John Doe', $response['tab']['waiter']);
+        $this->assertEquals('open', $response['tab']['status']);
+    }
+
     /**
      * @test
      */
@@ -99,14 +119,14 @@ class ApplicationTest extends Acceptance
     {
 
         $response = $this->request('POST', '/tab', [
-            'table' => '1',
+            'table'  => '1',
             'waiter' => 'John Doe'
         ]);
 
         //$response = $this->request('GET', '/tab');
         $tabId = $response['tab']['id'];
 
-        $response = $this->request('POST', "/tab/$tabId",[
+        $response = $this->request('POST', "/tab/$tabId", [
             'orderedItems' => [9999]
         ]);
 
@@ -121,14 +141,14 @@ class ApplicationTest extends Acceptance
     {
 
         $response = $this->request('POST', '/tab', [
-            'table' => '1',
+            'table'  => '1',
             'waiter' => 'John Doe'
         ]);
 
         $tabId = $response['tab']['id'];
 
-        $response = $this->request('POST', "/tab/$tabId",[
-            'orderedItems' => [1,2,5,6]
+        $response = $this->request('POST', "/tab/$tabId", [
+            'orderedItems' => [1, 2, 5, 6]
         ]);
 
         $this->assertTrue($this->client->getResponse()->isOk());
@@ -152,18 +172,18 @@ class ApplicationTest extends Acceptance
     {
 
         $response = $this->request('POST', '/tab', [
-            'table' => '1',
+            'table'  => '1',
             'waiter' => 'John Doe'
         ]);
 
         $tabId = $response['tab']['id'];
 
-        $response = $this->request('POST', "/tab/$tabId",[
-            'orderedItems' => [1,2,5,6]
+        $response = $this->request('POST', "/tab/$tabId", [
+            'orderedItems' => [1, 2, 5, 6]
         ]);
 
-        $response = $this->request("POST", "/tab/$tabId/prepare",[
-            'items' => [1,2]
+        $response = $this->request("POST", "/tab/$tabId/prepare", [
+            'items' => [1, 2]
         ]);
 
         ///var_dump($response);
