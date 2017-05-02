@@ -1,0 +1,5 @@
+malotor\EventsCafe\Domain\Model\Events\DrinksServed:
+    exclusion_policy: ALL
+    properties:
+        items:
+            type: array
