@@ -201,7 +201,7 @@ class ApplicationTest extends Acceptance
     /**
      * @test
      */
-    public function drinks_could_be_served()
+    public function outstanding_drinks_could_be_served()
     {
 
         $response = $this->request('POST', '/tab', [
@@ -214,11 +214,16 @@ class ApplicationTest extends Acceptance
         $response = $this->request('POST', "/tab/$tabId", [
             'orderedItems' => [1, 2, 5, 6]
         ]);
-        $response = $this->request("POST", "/tab/$tabId/prepare", [
-            'items' => [1, 2]
-        ]);
-        $response = $this->request("GET", "/tab/$tabId/serve", [1,2,5,6]);
 
+        $response = $this->request("POST", "/tab/$tabId/mark_drinks_served", [ 'items' => [5,6] ]);
+
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+        $response = $this->request("GET", "/tab/$tabId");
+        var_dump($response);
+
+        $this->assertEquals('Beer', $response['tab']['served_items'][0]);
+        $this->assertEquals('Ice tea', $response['tab']['served_items'][1]);
     }
 
 }

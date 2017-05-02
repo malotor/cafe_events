@@ -20,96 +20,43 @@ class JsonSerializerTest extends TestCase
         $this->serializer = new JsonSerializer(__DIR__ . '/../../../resources/serializer');
     }
 
+
     /**
      * @test
+     * @dataProvider events
      */
-    public function it_should_serialize_tab_opened_event()
+    public function it_should_serialize_events($anEvent)
     {
-
+        /*
         $tabId = TabId::create();
-        $anEvent = new Events\TabOpened($tabId,1,'John Doe');
-
+        $anEvent = new Events\FoodServed($tabId,[1,10]);
+        */
         $serializedEvent = $this->serializer->serialize($anEvent);
-
-        /** @var Events\TabOpened $unserializedEvent */
-        $unserializedEvent = $this->serializer->deserialize($serializedEvent, 'malotor\EventsCafe\Domain\Model\Events\TabOpened' );
-
-        $this->assertEquals($tabId, $unserializedEvent->getAggregateId());
-        $this->assertEquals('John Doe', $unserializedEvent->getWaiterId());
-        $this->assertEquals(1, $unserializedEvent->getTableNumber());
+        $unserializedEvent = $this->serializer->deserialize($serializedEvent, get_class($anEvent) );
+        $this->assertEquals($anEvent, $unserializedEvent);
 
     }
 
-    /**
-     * @test
-     */
-    public function it_should_serialize_drinks_ordered_event()
+    public function events()
     {
-
         $tabId = TabId::create();
-        $anEvent = new Events\DrinksOrdered($tabId,
-        [
-            new OrderedItem(1,true,10),
-            new OrderedItem(2,true,11),
-        ]
-        );
-
-        $serializedEvent = $this->serializer->serialize($anEvent);
-
-        /** @var Events\DrinksOrdered $unserializedEvent */
-        $unserializedEvent = $this->serializer->deserialize($serializedEvent, 'malotor\EventsCafe\Domain\Model\Events\DrinksOrdered' );
-
-        $this->assertEquals($tabId, $unserializedEvent->getAggregateId());
-        $items = $unserializedEvent->getItems();
-        $this->assertEquals(1, $items[0]->getMenuNumber());
-        $this->assertTrue($items[0]->isDrink());
-        $this->assertEquals(10, $items[0]->getPrice());
-
-    }
-
-    /**
-     * @test
-     */
-    public function it_should_serialize_foods_ordered_event()
-    {
-
-        $tabId = TabId::create();
-        $anEvent = new Events\FoodOrdered($tabId,
-            [
-                new OrderedItem(1,false,10)
-            ]
-        );
-
-        $serializedEvent = $this->serializer->serialize($anEvent);
-
-        /** @var Events\FoodOrdered $unserializedEvent */
-        $unserializedEvent = $this->serializer->deserialize($serializedEvent, 'malotor\EventsCafe\Domain\Model\Events\FoodOrdered' );
-
-        $this->assertEquals($tabId, $unserializedEvent->getAggregateId());
-        $items = $unserializedEvent->getItems();
-        $this->assertEquals(1, $items[0]->getMenuNumber());
-        $this->assertFalse($items[0]->isDrink());
-        $this->assertEquals(10, $items[0]->getPrice());
-
-    }
-
-    /**
-     * @test
-     */
-    public function it_should_serialize_food_prepared_event()
-    {
-
-        $tabId = TabId::create();
-        $anEvent = new Events\FoodPrepared($tabId,[1,10]);
-
-        $serializedEvent = $this->serializer->serialize($anEvent);
-
-        $unserializedEvent = $this->serializer->deserialize($serializedEvent, 'malotor\EventsCafe\Domain\Model\Events\FoodPrepared' );
-
-        $this->assertEquals($tabId, $unserializedEvent->getAggregateId());
-        $items = $unserializedEvent->getItems();
-        $this->assertEquals(1, $items[0]);
-        $this->assertEquals(10, $items[1]);
-
+        return [
+            [ new Events\TabOpened($tabId,1,'John Doe') ],
+            [ new Events\DrinksOrdered($tabId,
+                [
+                    new OrderedItem(1,true,10),
+                    new OrderedItem(2,true,11),
+                ]
+            )],
+            [ new Events\FoodOrdered($tabId,
+                [
+                    new OrderedItem(1,false,10)
+                ]
+            )],
+            [ new Events\FoodPrepared($tabId,[1,10]) ],
+            [ new Events\DrinksServed($tabId,[1,10]) ],
+            [ new Events\FoodServed($tabId,[1,10]) ],
+            [ new Events\TabClosed($tabId,10,11,1)]
+        ];
     }
 }

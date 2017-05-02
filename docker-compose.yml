@@ -34,6 +34,17 @@ services:
         environment:
             - PHP_IDE_CONFIG="serverName=app"
 
+    test:
+        build:
+            context: ./build/php
+            args:
+                remote_host : 192.168.1.100
+        container_name: test
+        working_dir: /code
+        volumes:
+            - "$PWD:/code"
+        environment:
+            - PHP_IDE_CONFIG="serverName=app"
     composer:
         build:
             context: ./build/php

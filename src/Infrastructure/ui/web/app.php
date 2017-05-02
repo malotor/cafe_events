@@ -103,6 +103,11 @@ $app['command_bus'] = function($app) {
         Command\PrepareFoodCommand::class)
     ;
 
+    $locator->addHandler(
+        new Command\MarkDrinksServedHandler($app['tab_repository']),
+        Command\MarkDrinksServedCommand::class)
+    ;
+
     $handlerMiddleware = new League\Tactician\Handler\CommandHandlerMiddleware(
         new ClassNameExtractor(),
         $locator,
@@ -265,6 +270,19 @@ $app->post('/tab/{id}/prepare', function(Request $request, $id) use($app) {
 
     return   $app->json([
         'message' => 'Food has been prepared'
+    ]);
+
+});
+
+$app->post('/tab/{id}/mark_drinks_served', function(Request $request, $id) use($app) {
+
+    $items = $request->request->get("items");
+
+    $command = new Command\MarkDrinksServedCommand($id, $items);
+    $app['command_bus']->handle($command);
+
+    return   $app->json([
+        'message' => 'Drinks has been prepared'
     ]);
 
 });

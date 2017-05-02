@@ -1,0 +1,9 @@
+malotor\EventsCafe\Domain\Model\Events\TabClosed:
+    exclusion_policy: ALL
+    properties:
+        amountPaid:
+            type: double
+        orderValue:
+            type: double
+        tipValue:
+            type: double

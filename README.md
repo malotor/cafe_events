@@ -55,3 +55,7 @@ Finally, the visitors close the tab by paying what is owed, possibly with a tip 
   Reverse
   
   sh scripts/run.sh vendor/bin/doctrine orm:convert-mapping --from-database yml resources/doctrine
+  
+  
+  
+  docker run --name ubuntu_bash --rm -i -t ubuntu

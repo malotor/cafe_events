@@ -54,6 +54,11 @@ class TabToArrayDataTransformer implements DataTranformer
             $tmp['prepared_foods'][] = $food->getDescription();
         }
 
+        foreach ($tab->getServedItems() as $item)
+        {
+            $tmp['served_items'][] = $item->getDescription();
+        }
+
         return $tmp;
     }
 }
