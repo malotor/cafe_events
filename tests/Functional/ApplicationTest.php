@@ -220,10 +220,37 @@ class ApplicationTest extends Acceptance
         $this->assertTrue($this->client->getResponse()->isOk());
 
         $response = $this->request("GET", "/tab/$tabId");
-        var_dump($response);
 
         $this->assertEquals('Beer', $response['tab']['served_items'][0]);
         $this->assertEquals('Ice tea', $response['tab']['served_items'][1]);
     }
 
+
+
+    /**
+     * @test
+     */
+    public function prepared_food_could_be_served()
+    {
+
+        $response = $this->request('POST', '/tab', [
+            'table'  => '1',
+            'waiter' => 'John Doe'
+        ]);
+
+        $tabId = $response['tab']['id'];
+
+        $response = $this->request('POST', "/tab/$tabId", [
+            'orderedItems' => [1, 2, 5, 6]
+        ]);
+
+        $response = $this->request("POST", "/tab/$tabId/mark_food_served", [ 'items' => [1,2] ]);
+
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+        $response = $this->request("GET", "/tab/$tabId");
+
+        $this->assertEquals('Pizza', $response['tab']['served_items'][0]);
+        $this->assertEquals('Hamburger', $response['tab']['served_items'][1]);
+    }
 }
