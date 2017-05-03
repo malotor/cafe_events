@@ -19,32 +19,21 @@ services:
         environment:
             - APP_ENV=dev
             - PHP_IDE_CONFIG="serverName=app"
-
-    phpunit:
+    run:
         build:
             context: ./build/php
             args:
                 remote_host : 192.168.1.100
-        container_name: phpunit
-        entrypoint:
-            - vendor/bin/phpunit
+        container_name: run
         working_dir: /code
-        volumes_from:
-            - app
-        environment:
-            - PHP_IDE_CONFIG="serverName=app"
-
-    test:
-        build:
-            context: ./build/php
-            args:
-                remote_host : 192.168.1.100
-        container_name: test
-        working_dir: /code
+        command: sleep 100d
         volumes:
             - "$PWD:/code"
         environment:
             - PHP_IDE_CONFIG="serverName=app"
+        depends_on:
+            - redis
+
     composer:
         build:
             context: ./build/php
@@ -62,6 +51,7 @@ services:
         restart: unless-stopped
         ports:
           - "50002:6379"
+
     redis-gui:
         image: tenstartups/redis-commander
         container_name: redis-gui

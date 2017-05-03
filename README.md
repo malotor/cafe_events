@@ -11,13 +11,12 @@ This project is an example of Command Query Responsibility Segregation ( CQRS ) 
     
 ## Run the tests
 
-    $ docker-compose run --rm phpunit
-    $ sh phpunit_docker.sh  --coverage-html ./coverage
+    $ docker-compose up -d test
+    $ sh scripts/phpunit
 
-    
-## App
+## JSON API
 
-http://localhost:8080
+    http://localhost:8080
     
 ## The domain
 
@@ -41,21 +40,15 @@ Finally, the visitors close the tab by paying what is owed, possibly with a tip 
 
 ## Doctrine
 
-  sh scripts/run.sh vendor/bin/doctrine orm:generate-entities src/Domain/ReadModel
-  sh scripts/run.sh vendor/bin/doctrine orm:schema-tool:drop --force
-  sh scripts/run.sh vendor/bin/doctrine orm:schema-tool:create
-  sh scripts/run.sh vendor/bin/doctrine orm:schema-tool:create --dump-sql > resources/db/events_cafe.sql
-
-  sh scripts/run.sh vendor/bin/doctrine orm:generate-entities src/Domain/ReadModel --update-entities
-
-  sh scripts/run.sh vendor/bin/doctrine orm:clear-cache:metadata
-  sh scripts/run.sh vendor/bin/doctrine orm:clear-cache:query
-  sh scripts/run.sh vendor/bin/doctrine orm:clear-cache:result
+    sh scripts/doctrine orm:generate-entities src/Domain/ReadModel
+    sh scripts/doctrine orm:schema-tool:drop --force
+    sh scripts/doctrine orm:schema-tool:create
+    sh scripts/doctrine orm:schema-tool:create --dump-sql > resources/db/events_cafe.sql
   
-  Reverse
+    sh scripts/doctrine orm:generate-entities src/Domain/ReadModel --update-entities
   
-  sh scripts/run.sh vendor/bin/doctrine orm:convert-mapping --from-database yml resources/doctrine
-  
-  
-  
-  docker run --name ubuntu_bash --rm -i -t ubuntu
+    sh scripts/doctrine orm:clear-cache:metadata
+    sh scripts/doctrine orm:clear-cache:query
+    sh scripts/doctrine orm:clear-cache:result
+    
+    sh scripts/doctrine orm:convert-mapping --from-database yml resources/doctrine
