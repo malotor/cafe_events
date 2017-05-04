@@ -162,6 +162,13 @@ class Tab extends Aggregate
         return in_array($itemMenuNumber, array_keys($this->servedItems));
     }
 
+    public function isFoodPrepared($itemMenuNumber): bool
+    {
+        return in_array($itemMenuNumber, array_keys($this->preparedFood));
+    }
+
+
+
     public function applyTabOpened(TabOpened $tabOpenedEvent)
     {
         $this->waiter = $tabOpenedEvent->getWaiterId();
