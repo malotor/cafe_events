@@ -244,13 +244,15 @@ class ApplicationTest extends Acceptance
             'orderedItems' => [1, 2, 5, 6]
         ]);
 
-        $response = $this->request("POST", "/tab/$tabId/mark_food_served", [ 'items' => [1,2] ]);
+        $response = $this->request("POST", "/tab/$tabId/prepare", [ 'items' => [2] ]);
+
+        $response = $this->request("POST", "/tab/$tabId/mark_food_served", [ 'items' => [2] ]);
 
         $this->assertTrue($this->client->getResponse()->isOk());
 
         $response = $this->request("GET", "/tab/$tabId");
 
-        $this->assertEquals('Pizza', $response['tab']['served_items'][0]);
-        $this->assertEquals('Hamburger', $response['tab']['served_items'][1]);
+        $this->assertEquals('Hamburger', $response['tab']['served_items'][0]);
+        //$this->assertEquals('Hamburger', $response['tab']['served_items'][1]);
     }
 }

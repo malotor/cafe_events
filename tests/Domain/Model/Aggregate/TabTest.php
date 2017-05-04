@@ -163,6 +163,25 @@ class TabTest extends TestCase
     }
 
 
+    /**
+     * @test
+     */
+    public function food_served_is_no_longer_prepared()
+    {
+
+        $tab = Tab::open(1,"John");
+        $orderedItems = [
+            new OrderedItem(1,true,2.5),
+            new OrderedItem(2,false,4.5),
+        ];
+        $tab->placeOrder($orderedItems);
+
+        $tab->prepareFood([2]);
+        $tab->serveFood([2]);
+
+        $this->assertFalse($tab->isFoodPrepared(2));
+
+    }
 
 
 

@@ -133,6 +133,15 @@ class TabProjection extends BaseProjection
                 ':tab_id' => $event->getAggregateId(),
                 ':item_id'   => $item
             ]);
+
+            $stmt = $this->pdo->prepare(
+                "DELETE FROM tabs_prepared_foods WHERE tabId = :tab_id AND itemId = :item_id"
+            );
+
+            $stmt->execute([
+                ':tab_id' => $event->getAggregateId(),
+                ':item_id'   => $item
+            ]);
         }
     }
 }

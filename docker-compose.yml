@@ -19,12 +19,12 @@ services:
         environment:
             - APP_ENV=dev
             - PHP_IDE_CONFIG="serverName=app"
-    run:
+    tests:
         build:
             context: ./build/php
             args:
                 remote_host : 192.168.1.100
-        container_name: run
+        container_name: tests
         working_dir: /code
         command: sleep 100d
         volumes:
