@@ -25,6 +25,16 @@ malotor\EventsCafe\Domain\ReadModel\Tabs:
             type: boolean
             options:
                 default : true
+        amountPaid:
+            type: decimal
+            nullable: true
+            options:
+                default : null
+        orderValue:
+            type: decimal
+            nullable: true
+            options:
+                default : null
 
     manyToMany:
         outstandingDrinks:

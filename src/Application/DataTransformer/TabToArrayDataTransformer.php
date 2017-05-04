@@ -59,6 +59,10 @@ class TabToArrayDataTransformer implements DataTranformer
             $tmp['served_items'][] = $item->getDescription();
         }
 
+        $tmp['amountPaid'] = $tab->getAmountPaid();
+        $tmp['orderValue'] = $tab->getOrderValue();
+        $tmp['tipValue'] = $tab->getAmountPaid() - $tab->getOrderValue();
+
         return $tmp;
     }
 }

@@ -29,6 +29,20 @@ class Items
 
 
     /**
+     * Set itemId
+     *
+     * @param integer $itemId
+     *
+     * @return Items
+     */
+    public function setItemId($itemId)
+    {
+        $this->itemId = $itemId;
+
+        return $this;
+    }
+
+    /**
      * Get itemId
      *
      * @return integer
