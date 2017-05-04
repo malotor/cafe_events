@@ -132,7 +132,7 @@ class Tab extends Aggregate
         if ($tabAmount > $amount)
             throw new MustPayEnoughException();
 
-        $this->applyAndRecordThat(new TabClosed($this->getAggregateId(),$amount, $tabAmount , ($tabAmount-$amount)));
+        $this->applyAndRecordThat(new TabClosed($this->getAggregateId(),$amount, $tabAmount , ($amount - $tabAmount)));
 
     }
 

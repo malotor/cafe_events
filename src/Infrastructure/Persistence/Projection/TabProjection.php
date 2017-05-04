@@ -8,6 +8,7 @@ use malotor\EventsCafe\Domain\Model\Events\DrinksServed;
 use malotor\EventsCafe\Domain\Model\Events\FoodOrdered;
 use malotor\EventsCafe\Domain\Model\Events\FoodPrepared;
 use malotor\EventsCafe\Domain\Model\Events\FoodServed;
+use malotor\EventsCafe\Domain\Model\Events\TabClosed;
 use malotor\EventsCafe\Domain\Model\Events\TabOpened;
 
 class TabProjection extends BaseProjection
@@ -143,5 +144,20 @@ class TabProjection extends BaseProjection
                 ':item_id'   => $item
             ]);
         }
+    }
+
+    public function projectTabClosed(TabClosed $event)
+    {
+
+        $stmt = $this->pdo->prepare(
+            "UPDATE tabs SET open = 0, amountPaid = :amount_paid, orderValue = :order_value WHERE tab_id = :tab_id"
+        );
+
+        $stmt->execute([
+            ':tab_id' => $event->getAggregateId(),
+            ':amount_paid' => $event->getAmountPaid(),
+            ':order_value' => $event->getOrderValue()
+        ]);
+
     }
 }

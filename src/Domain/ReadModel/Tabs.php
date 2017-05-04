@@ -28,6 +28,16 @@ class Tabs
     private $open = true;
 
     /**
+     * @var string
+     */
+    private $amountPaid;
+
+    /**
+     * @var string
+     */
+    private $orderValue;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $outstandingDrinks;
@@ -56,6 +66,20 @@ class Tabs
         $this->outstandingFoods = new \Doctrine\Common\Collections\ArrayCollection();
         $this->preparedFoods = new \Doctrine\Common\Collections\ArrayCollection();
         $this->servedItems = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set tabId
+     *
+     * @param string $tabId
+     *
+     * @return Tabs
+     */
+    public function setTabId($tabId)
+    {
+        $this->tabId = $tabId;
+
+        return $this;
     }
 
     /**
@@ -138,6 +162,54 @@ class Tabs
     public function getOpen()
     {
         return $this->open;
+    }
+
+    /**
+     * Set amountPaid
+     *
+     * @param string $amountPaid
+     *
+     * @return Tabs
+     */
+    public function setAmountPaid($amountPaid)
+    {
+        $this->amountPaid = $amountPaid;
+
+        return $this;
+    }
+
+    /**
+     * Get amountPaid
+     *
+     * @return string
+     */
+    public function getAmountPaid()
+    {
+        return $this->amountPaid;
+    }
+
+    /**
+     * Set orderValue
+     *
+     * @param string $orderValue
+     *
+     * @return Tabs
+     */
+    public function setOrderValue($orderValue)
+    {
+        $this->orderValue = $orderValue;
+
+        return $this;
+    }
+
+    /**
+     * Get orderValue
+     *
+     * @return string
+     */
+    public function getOrderValue()
+    {
+        return $this->orderValue;
     }
 
     /**
