@@ -2,9 +2,8 @@
 
 namespace malotor\EventsCafe\Application\DataTransformer;
 
-use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItem;
-use malotor\EventsCafe\Domain\ReadModel\Tabs;
 use malotor\EventsCafe\Domain\ReadModel\Items;
+use malotor\EventsCafe\Domain\ReadModel\Tabs;
 
 
 class TabToArrayDataTransformer implements DataTranformer
@@ -14,22 +13,17 @@ class TabToArrayDataTransformer implements DataTranformer
     public function write($input)
     {
         if (is_array($input)) {
-            foreach ($input as $tab)
-            {
+            foreach ($input as $tab) {
                 $this->result[] = $this->convertTab($tab);
                 //unset($tmp);
             }
-        } else if (get_class($input) ==  'malotor\EventsCafe\Domain\ReadModel\Tabs') {
-            $this->result = $this->convertTab($input);
+        } else {
+            if (get_class($input) == 'malotor\EventsCafe\Domain\ReadModel\Tabs') {
+                $this->result = $this->convertTab($input);
+            }
         }
 
     }
-
-    public function read()
-    {
-        return $this->result;
-    }
-
 
     private function convertTab(Tabs $tab)
     {
@@ -39,23 +33,19 @@ class TabToArrayDataTransformer implements DataTranformer
         $tmp['status'] = $tab->getOpen() ? 'open' : 'close';
         /** @var Items $drink */
         $drinks = $tab->getOutstandingDrinks();
-        foreach ($tab->getOutstandingDrinks() as $drink)
-        {
+        foreach ($tab->getOutstandingDrinks() as $drink) {
             $tmp['outstanding_drinks'][] = $drink->getDescription();
         }
         /** @var Items $drink */
-        foreach ($tab->getOutstandingFoods() as $food)
-        {
+        foreach ($tab->getOutstandingFoods() as $food) {
             $tmp['outstanding_foods'][] = $food->getDescription();
         }
 
-        foreach ($tab->getPreparedFoods() as $food)
-        {
+        foreach ($tab->getPreparedFoods() as $food) {
             $tmp['prepared_foods'][] = $food->getDescription();
         }
 
-        foreach ($tab->getServedItems() as $item)
-        {
+        foreach ($tab->getServedItems() as $item) {
             $tmp['served_items'][] = $item->getDescription();
         }
 
@@ -64,5 +54,10 @@ class TabToArrayDataTransformer implements DataTranformer
         $tmp['tipValue'] = $tab->getAmountPaid() - $tab->getOrderValue();
 
         return $tmp;
+    }
+
+    public function read()
+    {
+        return $this->result;
     }
 }

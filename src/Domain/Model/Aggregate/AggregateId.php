@@ -12,8 +12,9 @@ class AggregateId implements IdentifiesAggregate
 
     private function __construct(Uuid $uuid = null)
     {
-        if ($uuid === null)
+        if ($uuid === null) {
             $uuid = Uuid::uuid4();
+        }
         $this->value = $uuid;
     }
 
@@ -29,11 +30,11 @@ class AggregateId implements IdentifiesAggregate
 
     public function __toString()
     {
-        return (string) $this->value;
+        return (string)$this->value;
     }
 
     public function equals(IdentifiesAggregate $other)
     {
-        return (string) $this->value == (string) $other;
+        return (string)$this->value == (string)$other;
     }
 }

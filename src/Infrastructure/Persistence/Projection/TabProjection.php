@@ -26,13 +26,11 @@ class TabProjection extends BaseProjection
 
     public function projectTabOpened(TabOpened $event)
     {
-        $stmt = $this->pdo->prepare(
-            "INSERT INTO tabs (tab_id, waiter, tableNumber, open) VALUES (:tab_id, :waiter, :tableNumber, 1)"
-        );
+        $stmt = $this->pdo->prepare("INSERT INTO tabs (tab_id, waiter, tableNumber, open) VALUES (:tab_id, :waiter, :tableNumber, 1)");
 
         $stmt->execute([
-            ':tab_id' => $event->getAggregateId(),
-            ':waiter'   => $event->getWaiterId(),
+            ':tab_id'      => $event->getAggregateId(),
+            ':waiter'      => $event->getWaiterId(),
             ':tableNumber' => $event->getTableNumber(),
         ]);
 
@@ -41,15 +39,12 @@ class TabProjection extends BaseProjection
     public function projectDrinksOrdered(DrinksOrdered $event)
     {
 
-        foreach ($event->getItems() as $item)
-        {
-            $stmt = $this->pdo->prepare(
-                "INSERT INTO tabs_outstanding_drinks (tabid,itemid) VALUES (:tab_id, :item_id)"
-            );
+        foreach ($event->getItems() as $item) {
+            $stmt = $this->pdo->prepare("INSERT INTO tabs_outstanding_drinks (tabid,itemid) VALUES (:tab_id, :item_id)");
 
             $stmt->execute([
-                ':tab_id' => $event->getAggregateId(),
-                ':item_id'   => $item->getMenuNumber()
+                ':tab_id'  => $event->getAggregateId(),
+                ':item_id' => $item->getMenuNumber()
             ]);
         }
 
@@ -58,15 +53,12 @@ class TabProjection extends BaseProjection
     public function projectFoodOrdered(FoodOrdered $event)
     {
         /** @var OrderedItem $item */
-        foreach ($event->getItems() as $item)
-        {
-            $stmt = $this->pdo->prepare(
-                "INSERT INTO tabs_outstanding_foods (tabid,itemid) VALUES (:tab_id, :item_id)"
-            );
+        foreach ($event->getItems() as $item) {
+            $stmt = $this->pdo->prepare("INSERT INTO tabs_outstanding_foods (tabid,itemid) VALUES (:tab_id, :item_id)");
 
             $stmt->execute([
-                ':tab_id' => $event->getAggregateId(),
-                ':item_id'   => $item->getMenuNumber()
+                ':tab_id'  => $event->getAggregateId(),
+                ':item_id' => $item->getMenuNumber()
             ]);
         }
     }
@@ -74,15 +66,12 @@ class TabProjection extends BaseProjection
     public function projectFoodPrepared(FoodPrepared $event)
     {
         /** @var OrderedItem $item */
-        foreach ($event->getItems() as $item)
-        {
-            $stmt = $this->pdo->prepare(
-                "INSERT INTO tabs_prepared_foods (tabid,itemid) VALUES (:tab_id, :item_id)"
-            );
+        foreach ($event->getItems() as $item) {
+            $stmt = $this->pdo->prepare("INSERT INTO tabs_prepared_foods (tabid,itemid) VALUES (:tab_id, :item_id)");
 
             $stmt->execute([
-                ':tab_id' => $event->getAggregateId(),
-                ':item_id'   => $item
+                ':tab_id'  => $event->getAggregateId(),
+                ':item_id' => $item
             ]);
         }
     }
@@ -90,24 +79,19 @@ class TabProjection extends BaseProjection
     public function projectDrinksServed(DrinksServed $event)
     {
         /** @var OrderedItem $item */
-        foreach ($event->getItems() as $item)
-        {
-            $stmt = $this->pdo->prepare(
-                "INSERT INTO tabs_served_items (tabid,itemid) VALUES (:tab_id, :item_id)"
-            );
+        foreach ($event->getItems() as $item) {
+            $stmt = $this->pdo->prepare("INSERT INTO tabs_served_items (tabid,itemid) VALUES (:tab_id, :item_id)");
 
             $stmt->execute([
-                ':tab_id' => $event->getAggregateId(),
-                ':item_id'   => $item
+                ':tab_id'  => $event->getAggregateId(),
+                ':item_id' => $item
             ]);
 
-            $stmt = $this->pdo->prepare(
-                "DELETE FROM tabs_outstanding_drinks WHERE tabId = :tab_id AND itemId = :item_id"
-            );
+            $stmt = $this->pdo->prepare("DELETE FROM tabs_outstanding_drinks WHERE tabId = :tab_id AND itemId = :item_id");
 
             $stmt->execute([
-                ':tab_id' => $event->getAggregateId(),
-                ':item_id'   => $item
+                ':tab_id'  => $event->getAggregateId(),
+                ':item_id' => $item
             ]);
         }
     }
@@ -115,33 +99,26 @@ class TabProjection extends BaseProjection
     public function projectFoodServed(FoodServed $event)
     {
         /** @var OrderedItem $item */
-        foreach ($event->getItems() as $item)
-        {
-            $stmt = $this->pdo->prepare(
-                "INSERT INTO tabs_served_items (tabid,itemid) VALUES (:tab_id, :item_id)"
-            );
+        foreach ($event->getItems() as $item) {
+            $stmt = $this->pdo->prepare("INSERT INTO tabs_served_items (tabid,itemid) VALUES (:tab_id, :item_id)");
 
             $stmt->execute([
-                ':tab_id' => $event->getAggregateId(),
-                ':item_id'   => $item
+                ':tab_id'  => $event->getAggregateId(),
+                ':item_id' => $item
             ]);
 
-            $stmt = $this->pdo->prepare(
-                "DELETE FROM tabs_outstanding_foods WHERE tabId = :tab_id AND itemId = :item_id"
-            );
+            $stmt = $this->pdo->prepare("DELETE FROM tabs_outstanding_foods WHERE tabId = :tab_id AND itemId = :item_id");
 
             $stmt->execute([
-                ':tab_id' => $event->getAggregateId(),
-                ':item_id'   => $item
+                ':tab_id'  => $event->getAggregateId(),
+                ':item_id' => $item
             ]);
 
-            $stmt = $this->pdo->prepare(
-                "DELETE FROM tabs_prepared_foods WHERE tabId = :tab_id AND itemId = :item_id"
-            );
+            $stmt = $this->pdo->prepare("DELETE FROM tabs_prepared_foods WHERE tabId = :tab_id AND itemId = :item_id");
 
             $stmt->execute([
-                ':tab_id' => $event->getAggregateId(),
-                ':item_id'   => $item
+                ':tab_id'  => $event->getAggregateId(),
+                ':item_id' => $item
             ]);
         }
     }
@@ -149,12 +126,10 @@ class TabProjection extends BaseProjection
     public function projectTabClosed(TabClosed $event)
     {
 
-        $stmt = $this->pdo->prepare(
-            "UPDATE tabs SET open = 0, amountPaid = :amount_paid, orderValue = :order_value WHERE tab_id = :tab_id"
-        );
+        $stmt = $this->pdo->prepare("UPDATE tabs SET open = 0, amountPaid = :amount_paid, orderValue = :order_value WHERE tab_id = :tab_id");
 
         $stmt->execute([
-            ':tab_id' => $event->getAggregateId(),
+            ':tab_id'      => $event->getAggregateId(),
             ':amount_paid' => $event->getAmountPaid(),
             ':order_value' => $event->getOrderValue()
         ]);

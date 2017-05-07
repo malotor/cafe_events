@@ -2,10 +2,14 @@
 
 namespace malotor\EventsCafe\Domain\Model\Aggregate;
 
-class FoodIsNotPrepared extends \Exception {
+class FoodIsNotPrepared extends \Exception
+{
 
-    public function __construct($message = "", $code = 0, Throwable $previous = NULL)
-    {
+    public function __construct(
+        $message = "",
+        $code = 0,
+        Throwable $previous = null
+    ) {
         $message = 'Food is not prepared';
         parent::__construct($message, $code, $previous);
     }

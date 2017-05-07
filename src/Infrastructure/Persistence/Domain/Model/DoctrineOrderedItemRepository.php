@@ -3,7 +3,6 @@
 namespace malotor\EventsCafe\Infrastructure\Persistence\Domain\Model;
 
 use Doctrine\ORM\EntityManager;
-use JMS\Serializer\Tests\Fixtures\Order;
 use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItem;
 use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItemNotExists;
 use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItemsRepository;
@@ -22,10 +21,13 @@ class DoctrineOrderedItemRepository implements OrderedItemsRepository
     public function findById($id): OrderedItem
     {
         /** @var Items $readOrderedItem */
-        $readOrderedItem = $this->em->find('malotor\EventsCafe\Domain\ReadModel\Items', $id);
-        if ($readOrderedItem === null)
+        $readOrderedItem = $this->em->find('malotor\EventsCafe\Domain\ReadModel\Items',
+            $id);
+        if ($readOrderedItem === null) {
             throw new OrderedItemNotExists();
+        }
 
-        return new OrderedItem($id, $readOrderedItem->getIsDrink(),$readOrderedItem->getPrice());
+        return new OrderedItem($id, $readOrderedItem->getIsDrink(),
+            $readOrderedItem->getPrice());
     }
 }

@@ -27,18 +27,17 @@ class PDOEventStore implements EventStore
 
     /**
      * @param DomainEvents $events
+     *
      * @return void
      */
     public function commit(DomainEvents $events)
     {
-        $stmt = $this->pdo->prepare(
-            'INSERT INTO events (aggregate_id, `type`, created_at, `data`)
-             VALUES (:aggregate_id, :type, :created_at, :data)'
-        );
+        $stmt = $this->pdo->prepare('INSERT INTO events (aggregate_id, `type`, created_at, `data`)
+             VALUES (:aggregate_id, :type, :created_at, :data)');
 
         foreach ($events as $event) {
             $stmt->execute([
-                ':aggregate_id' => (string) $event->getAggregateId(),
+                ':aggregate_id' => (string)$event->getAggregateId(),
                 ':type'         => get_class($event),
                 ':created_at'   => (new \DateTimeImmutable())->format('Y-m-d H:i:s'),
                 ':data'         => $this->serializer->serialize($event, 'json')
@@ -48,23 +47,19 @@ class PDOEventStore implements EventStore
 
     /**
      * @param IdentifiesAggregate $id
+     *
      * @return AggregateHistory
      */
     public function getAggregateHistoryFor(IdentifiesAggregate $id)
     {
-        $stmt = $this->pdo->query(
-            'SELECT * FROM events WHERE aggregate_id = :aggregate_id'
-        );
-        $stmt->execute([':aggregate_id' => (string) $id]);
+        $stmt = $this->pdo->query('SELECT * FROM events WHERE aggregate_id = :aggregate_id');
+        $stmt->execute([':aggregate_id' => (string)$id]);
 
         $events = [];
 
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $events[] = $this->serializer->deserialize(
-                $row['data'],
-                $row['type'],
-                'json'
-            );
+            $events[] = $this->serializer->deserialize($row['data'],
+                $row['type'], 'json');
         }
 
         $stmt->closeCursor();

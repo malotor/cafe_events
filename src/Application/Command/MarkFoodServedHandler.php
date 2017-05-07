@@ -2,9 +2,9 @@
 
 namespace malotor\EventsCafe\Application\Command;
 
-use malotor\EventsCafe\Domain\Model\Aggregate\TabRepository;
 use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
 use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
+use malotor\EventsCafe\Domain\Model\Aggregate\TabRepository;
 
 class MarkFoodServedHandler
 {

@@ -9,8 +9,10 @@ class AllTabsQueryHandler
     private $tabsRepository;
     private $dataTransformer;
 
-    public function __construct($tabsRepostiory, DataTranformer $dataTransformer)
-    {
+    public function __construct(
+        $tabsRepostiory,
+        DataTranformer $dataTransformer
+    ) {
         $this->tabsRepository = $tabsRepostiory;
         $this->dataTransformer = $dataTransformer;
     }
@@ -19,6 +21,7 @@ class AllTabsQueryHandler
     {
         $tabs = $this->tabsRepository->findAll();
         $this->dataTransformer->write($tabs);
+
         return $this->dataTransformer->read();
     }
 }

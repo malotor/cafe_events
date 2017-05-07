@@ -19,15 +19,15 @@ class Tab extends Aggregate
     private $waiter;
 
     private $open = false;
-    /** @var OrderedItem[]  */
+    /** @var OrderedItem[] */
     private $outstandingDrinks = [];
-    /** @var OrderedItem[]  */
+    /** @var OrderedItem[] */
     private $outstandingFoods = [];
 
-    /** @var OrderedItem[]  */
+    /** @var OrderedItem[] */
     private $preparedFood = [];
 
-    /** @var OrderedItem[]  */
+    /** @var OrderedItem[] */
     private $servedItems = [];
 
     private function __construct(TabId $id, $table, $waiter)
@@ -36,6 +36,31 @@ class Tab extends Aggregate
         $this->table = $table;
         $this->waiter = $waiter;
         $this->open = true;
+    }
+
+    static public function open($table, $waiter): Tab
+    {
+
+        $id = TabId::create();
+        $newTab = new Tab($id, $table, $waiter);
+
+        $newTab->recordThat(new TabOpened($id, $table, $waiter));
+
+        return $newTab;
+
+    }
+
+    static public function openWithId(TabId $id, $table, $waiter): Tab
+    {
+        $newTab = new Tab($id, $table, $waiter);
+        $newTab->recordThat(new TabOpened($id, $table, $waiter));
+
+        return $newTab;
+    }
+
+    static public function createEmptyWithId($id): Aggregate
+    {
+        return new Tab($id, null, null);
     }
 
     /**
@@ -54,35 +79,6 @@ class Tab extends Aggregate
         return $this->waiter;
     }
 
-
-    static public function open($table, $waiter) : Tab
-    {
-
-        $id = TabId::create();
-        $newTab =  new Tab($id, $table, $waiter);
-
-        $newTab->recordThat(
-            new TabOpened($id, $table, $waiter)
-        );
-
-        return $newTab;
-
-    }
-
-    static public function openWithId(TabId $id, $table, $waiter) : Tab
-    {
-        $newTab =  new Tab($id, $table, $waiter);
-        $newTab->recordThat(
-            new TabOpened($id, $table, $waiter)
-        );
-        return $newTab;
-    }
-
-    static public function createEmptyWithId($id): Aggregate
-    {
-        return new Tab($id, null, null);
-    }
-
     public function isOpen(): bool
     {
         return $this->open;
@@ -91,37 +87,97 @@ class Tab extends Aggregate
 
     public function placeOrder($orderedItems)
     {
-        if (!$this->open)
+        if (!$this->open) {
             throw new TabNotOpenException();
+        }
 
-        $drinks = array_filter($orderedItems, function ($a) { return $a->isDrink(); });
-        $food = array_filter($orderedItems, function ($a) { return !$a->isDrink(); });
+        $drinks = array_filter($orderedItems, function ($a) {
+            return $a->isDrink();
+        });
+        $food = array_filter($orderedItems, function ($a) {
+            return !$a->isDrink();
+        });
 
 
-        if (count($drinks) > 0 ) $this->applyAndRecordThat(new DrinksOrdered($this->getAggregateId(), $drinks));
-        if (count($food) > 0 ) $this->applyAndRecordThat(new FoodOrdered($this->getAggregateId(), $food));
+        if (count($drinks) > 0) {
+            $this->applyAndRecordThat(new DrinksOrdered($this->getAggregateId(),
+                $drinks));
+        }
+        if (count($food) > 0) {
+            $this->applyAndRecordThat(new FoodOrdered($this->getAggregateId(),
+                $food));
+        }
 
     }
 
     public function serveDrinks($drinksServed)
     {
         $this->assertDrinksAreOutstanding($drinksServed);
-        $this->applyAndRecordThat(new DrinksServed($this->getAggregateId(), $drinksServed));
+        $this->applyAndRecordThat(new DrinksServed($this->getAggregateId(),
+            $drinksServed));
+    }
+
+    private function assertDrinksAreOutstanding($drinksServed)
+    {
+
+        foreach ($drinksServed as $drink) {
+            $inArray = false;
+            foreach ($this->outstandingDrinks as $item) {
+                if ($item->getMenuNumber() == $drink) {
+                    $inArray = true;
+                }
+            }
+            if (!$inArray) {
+                throw new DrinkIsNotOutstanding();
+            }
+        }
     }
 
     public function prepareFood($foodPrepared)
     {
         $this->assertFoodsAreOutstanding($foodPrepared);
-        $this->applyAndRecordThat(new FoodPrepared($this->getAggregateId(),$foodPrepared));
+        $this->applyAndRecordThat(new FoodPrepared($this->getAggregateId(),
+            $foodPrepared));
+
+    }
+
+    private function assertFoodsAreOutstanding($foodsServed)
+    {
+        foreach ($foodsServed as $food) {
+            $inArray = false;
+            foreach ($this->outstandingFoods as $item) {
+                if ($item->getMenuNumber() == $food) {
+                    $inArray = true;
+                }
+            }
+            if (!$inArray) {
+                throw new FoodNotOutstanding();
+            }
+        }
 
     }
 
     public function serveFood($foodServed)
     {
         $this->assertFoodsArePrepared($foodServed);
-        $this->applyAndRecordThat(new FoodServed($this->getAggregateId(),$foodServed));
+        $this->applyAndRecordThat(new FoodServed($this->getAggregateId(),
+            $foodServed));
     }
 
+    private function assertFoodsArePrepared($foodsServed)
+    {
+        foreach ($foodsServed as $food) {
+            $inArray = false;
+            foreach ($this->preparedFood as $item) {
+                if ($item->getMenuNumber() == $food) {
+                    $inArray = true;
+                }
+            }
+            if (!$inArray) {
+                throw new FoodIsNotPrepared();
+            }
+        }
+    }
 
     public function close(float $amount)
     {
@@ -129,23 +185,28 @@ class Tab extends Aggregate
 
         $tabAmount = $this->calculateTotalAmount();
 
-        if ($tabAmount > $amount)
+        if ($tabAmount > $amount) {
             throw new MustPayEnoughException();
+        }
 
-        $this->applyAndRecordThat(new TabClosed($this->getAggregateId(),$amount, $tabAmount , ($amount - $tabAmount)));
+        $this->applyAndRecordThat(new TabClosed($this->getAggregateId(),
+            $amount, $tabAmount, ($amount - $tabAmount)));
 
     }
 
+    private function assertHasNotUnservedItems()
+    {
+        if (!(empty($this->outstandingDrinks) && empty($this->outstandingFoods))) {
+            throw new TabHasUnservedItems();
+        }
+    }
 
     private function calculateTotalAmount()
     {
-        return array_reduce(
-            $this->servedItems,
-            function($res, $a) { return $res += $a->getPrice(); },
-            0
-        );
+        return array_reduce($this->servedItems, function ($res, $a) {
+            return $res += $a->getPrice();
+        }, 0);
     }
-
 
     public function outstandingItems()
     {
@@ -154,7 +215,9 @@ class Tab extends Aggregate
 
     public function isItemOutstanding($itemMenuNumber): bool
     {
-        return in_array($itemMenuNumber, array_keys($this->outstandingFoods)) || in_array($itemMenuNumber, array_keys($this->outstandingDrinks));
+        return in_array($itemMenuNumber,
+                array_keys($this->outstandingFoods)) || in_array($itemMenuNumber,
+                array_keys($this->outstandingDrinks));
     }
 
     public function isItemServed($itemMenuNumber): bool
@@ -167,8 +230,6 @@ class Tab extends Aggregate
         return in_array($itemMenuNumber, array_keys($this->preparedFood));
     }
 
-
-
     public function applyTabOpened(TabOpened $tabOpenedEvent)
     {
         $this->waiter = $tabOpenedEvent->getWaiterId();
@@ -177,31 +238,27 @@ class Tab extends Aggregate
 
     public function applyDrinksOrdered(DrinksOrdered $drinksOrdered)
     {
-        foreach ($drinksOrdered->getItems() as $drink)
-        {
+        foreach ($drinksOrdered->getItems() as $drink) {
             $this->outstandingDrinks[$drink->getMenuNumber()] = $drink;
         }
     }
 
     public function applyFoodOrdered(FoodOrdered $foodOrdered)
     {
-        foreach ($foodOrdered->getItems() as $food)
-        {
+        foreach ($foodOrdered->getItems() as $food) {
             $this->outstandingFoods[$food->getMenuNumber()] = $food;
         }
     }
-
 
     public function applyDrinksServed(DrinksServed $drinksServed)
     {
         foreach ($drinksServed->getItems() as $drink) {
 
-            foreach ( $this->outstandingDrinks as $itemMenuNumber => $item)
-            {
+            foreach ($this->outstandingDrinks as $itemMenuNumber => $item) {
                 if ($itemMenuNumber == $drink) {
                     $this->servedItems[$itemMenuNumber] = $item;
                     unset($this->outstandingDrinks[$itemMenuNumber]);
-                 }
+                }
 
             }
         }
@@ -231,54 +288,6 @@ class Tab extends Aggregate
     {
         //TODO Save amount and tip
         $this->open = false;
-    }
-
-    private function assertDrinksAreOutstanding($drinksServed)
-    {
-
-        foreach ($drinksServed as $drink) {
-            $inArray = false;
-            foreach ($this->outstandingDrinks as $item)
-            {
-                if ($item->getMenuNumber() == $drink ) $inArray = true;
-            }
-            if (!$inArray)
-                throw new DrinkIsNotOutstanding();
-        }
-    }
-
-    private function assertFoodsAreOutstanding($foodsServed)
-    {
-        foreach ($foodsServed as $food) {
-            $inArray = false;
-            foreach ($this->outstandingFoods as $item)
-            {
-                if ($item->getMenuNumber() == $food ) $inArray = true;
-            }
-            if (!$inArray)
-                throw new FoodNotOutstanding();
-        }
-
-    }
-
-
-    private function assertFoodsArePrepared($foodsServed)
-    {
-        foreach ($foodsServed as $food) {
-            $inArray = false;
-            foreach ($this->preparedFood as $item)
-            {
-                if ($item->getMenuNumber() == $food ) $inArray = true;
-            }
-            if (!$inArray)
-                throw new FoodIsNotPrepared();
-        }
-    }
-
-    private function assertHasNotUnservedItems()
-    {
-        if (!(empty($this->outstandingDrinks) && empty($this->outstandingFoods)) )
-            throw new TabHasUnservedItems();
     }
 
 

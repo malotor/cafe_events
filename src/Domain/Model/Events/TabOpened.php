@@ -40,5 +40,4 @@ class TabOpened extends TabEvent
     }
 
 
-
 }

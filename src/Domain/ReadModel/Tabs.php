@@ -69,6 +69,16 @@ class Tabs
     }
 
     /**
+     * Get tabId
+     *
+     * @return string
+     */
+    public function getTabId()
+    {
+        return $this->tabId;
+    }
+
+    /**
      * Set tabId
      *
      * @param string $tabId
@@ -83,13 +93,13 @@ class Tabs
     }
 
     /**
-     * Get tabId
+     * Get waiter
      *
      * @return string
      */
-    public function getTabId()
+    public function getWaiter()
     {
-        return $this->tabId;
+        return $this->waiter;
     }
 
     /**
@@ -107,13 +117,13 @@ class Tabs
     }
 
     /**
-     * Get waiter
+     * Get tableNumber
      *
      * @return string
      */
-    public function getWaiter()
+    public function getTableNumber()
     {
-        return $this->waiter;
+        return $this->tableNumber;
     }
 
     /**
@@ -131,13 +141,13 @@ class Tabs
     }
 
     /**
-     * Get tableNumber
+     * Get open
      *
-     * @return string
+     * @return boolean
      */
-    public function getTableNumber()
+    public function getOpen()
     {
-        return $this->tableNumber;
+        return $this->open;
     }
 
     /**
@@ -155,13 +165,13 @@ class Tabs
     }
 
     /**
-     * Get open
+     * Get amountPaid
      *
-     * @return boolean
+     * @return string
      */
-    public function getOpen()
+    public function getAmountPaid()
     {
-        return $this->open;
+        return $this->amountPaid;
     }
 
     /**
@@ -179,13 +189,13 @@ class Tabs
     }
 
     /**
-     * Get amountPaid
+     * Get orderValue
      *
      * @return string
      */
-    public function getAmountPaid()
+    public function getOrderValue()
     {
-        return $this->amountPaid;
+        return $this->orderValue;
     }
 
     /**
@@ -203,24 +213,15 @@ class Tabs
     }
 
     /**
-     * Get orderValue
-     *
-     * @return string
-     */
-    public function getOrderValue()
-    {
-        return $this->orderValue;
-    }
-
-    /**
      * Add outstandingDrink
      *
      * @param \malotor\EventsCafe\Domain\ReadModel\Items $outstandingDrink
      *
      * @return Tabs
      */
-    public function addOutstandingDrink(\malotor\EventsCafe\Domain\ReadModel\Items $outstandingDrink)
-    {
+    public function addOutstandingDrink(
+        \malotor\EventsCafe\Domain\ReadModel\Items $outstandingDrink
+    ) {
         $this->outstandingDrinks[] = $outstandingDrink;
 
         return $this;
@@ -231,8 +232,9 @@ class Tabs
      *
      * @param \malotor\EventsCafe\Domain\ReadModel\Items $outstandingDrink
      */
-    public function removeOutstandingDrink(\malotor\EventsCafe\Domain\ReadModel\Items $outstandingDrink)
-    {
+    public function removeOutstandingDrink(
+        \malotor\EventsCafe\Domain\ReadModel\Items $outstandingDrink
+    ) {
         $this->outstandingDrinks->removeElement($outstandingDrink);
     }
 
@@ -253,8 +255,9 @@ class Tabs
      *
      * @return Tabs
      */
-    public function addOutstandingFood(\malotor\EventsCafe\Domain\ReadModel\Items $outstandingFood)
-    {
+    public function addOutstandingFood(
+        \malotor\EventsCafe\Domain\ReadModel\Items $outstandingFood
+    ) {
         $this->outstandingFoods[] = $outstandingFood;
 
         return $this;
@@ -265,8 +268,9 @@ class Tabs
      *
      * @param \malotor\EventsCafe\Domain\ReadModel\Items $outstandingFood
      */
-    public function removeOutstandingFood(\malotor\EventsCafe\Domain\ReadModel\Items $outstandingFood)
-    {
+    public function removeOutstandingFood(
+        \malotor\EventsCafe\Domain\ReadModel\Items $outstandingFood
+    ) {
         $this->outstandingFoods->removeElement($outstandingFood);
     }
 
@@ -287,8 +291,9 @@ class Tabs
      *
      * @return Tabs
      */
-    public function addPreparedFood(\malotor\EventsCafe\Domain\ReadModel\Items $preparedFood)
-    {
+    public function addPreparedFood(
+        \malotor\EventsCafe\Domain\ReadModel\Items $preparedFood
+    ) {
         $this->preparedFoods[] = $preparedFood;
 
         return $this;
@@ -299,8 +304,9 @@ class Tabs
      *
      * @param \malotor\EventsCafe\Domain\ReadModel\Items $preparedFood
      */
-    public function removePreparedFood(\malotor\EventsCafe\Domain\ReadModel\Items $preparedFood)
-    {
+    public function removePreparedFood(
+        \malotor\EventsCafe\Domain\ReadModel\Items $preparedFood
+    ) {
         $this->preparedFoods->removeElement($preparedFood);
     }
 
@@ -321,8 +327,9 @@ class Tabs
      *
      * @return Tabs
      */
-    public function addServedItem(\malotor\EventsCafe\Domain\ReadModel\Items $servedItem)
-    {
+    public function addServedItem(
+        \malotor\EventsCafe\Domain\ReadModel\Items $servedItem
+    ) {
         $this->servedItems[] = $servedItem;
 
         return $this;
@@ -333,8 +340,9 @@ class Tabs
      *
      * @param \malotor\EventsCafe\Domain\ReadModel\Items $servedItem
      */
-    public function removeServedItem(\malotor\EventsCafe\Domain\ReadModel\Items $servedItem)
-    {
+    public function removeServedItem(
+        \malotor\EventsCafe\Domain\ReadModel\Items $servedItem
+    ) {
         $this->servedItems->removeElement($servedItem);
     }
 

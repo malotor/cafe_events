@@ -2,16 +2,18 @@
 
 namespace malotor\EventsCafe\Application\Query;
 
-use malotor\EventsCafe\Application\DataTransformer\DataTranformer;
 use Doctrine\ORM\EntityRepository;
+use malotor\EventsCafe\Application\DataTransformer\DataTranformer;
 
 class OneTabQueryHandler
 {
     private $tabsRepository;
     private $dataTransformer;
 
-    public function __construct(EntityRepository $tabsRepostiory, DataTranformer $dataTransformer)
-    {
+    public function __construct(
+        EntityRepository $tabsRepostiory,
+        DataTranformer $dataTransformer
+    ) {
         $this->tabsRepository = $tabsRepostiory;
         $this->dataTransformer = $dataTransformer;
     }
@@ -21,6 +23,7 @@ class OneTabQueryHandler
         //If tab does not exists this return null  findOfFail()
         $tab = $this->tabsRepository->find($query->id);
         $this->dataTransformer->write($tab);
+
         return $this->dataTransformer->read();
     }
 }

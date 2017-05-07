@@ -22,6 +22,6 @@ class JsonSerializer implements Serializer
 
     public function deserialize($data, $type)
     {
-        return $this->builder->deserialize($data,$type,'json');
+        return $this->builder->deserialize($data, $type, 'json');
     }
 }

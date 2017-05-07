@@ -27,6 +27,15 @@ class Items
      */
     private $is_drink = true;
 
+    /**
+     * Get itemId
+     *
+     * @return integer
+     */
+    public function getItemId()
+    {
+        return $this->itemId;
+    }
 
     /**
      * Set itemId
@@ -43,13 +52,13 @@ class Items
     }
 
     /**
-     * Get itemId
+     * Get description
      *
-     * @return integer
+     * @return string
      */
-    public function getItemId()
+    public function getDescription()
     {
-        return $this->itemId;
+        return $this->description;
     }
 
     /**
@@ -67,13 +76,13 @@ class Items
     }
 
     /**
-     * Get description
+     * Get price
      *
      * @return string
      */
-    public function getDescription()
+    public function getPrice()
     {
-        return $this->description;
+        return $this->price;
     }
 
     /**
@@ -91,13 +100,13 @@ class Items
     }
 
     /**
-     * Get price
+     * Get isDrink
      *
-     * @return string
+     * @return boolean
      */
-    public function getPrice()
+    public function getIsDrink()
     {
-        return $this->price;
+        return $this->is_drink;
     }
 
     /**
@@ -112,16 +121,6 @@ class Items
         $this->is_drink = $isDrink;
 
         return $this;
-    }
-
-    /**
-     * Get isDrink
-     *
-     * @return boolean
-     */
-    public function getIsDrink()
-    {
-        return $this->is_drink;
     }
 }
 
