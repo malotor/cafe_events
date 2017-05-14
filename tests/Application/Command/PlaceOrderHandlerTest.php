@@ -18,9 +18,7 @@ use Prophecy\Argument;
 class PlaceOrderHandlerTest extends TestCase
 {
 
-    /**
-     * @test
-     */
+
     public function it_should_place_an_order_on_a_tab()
     {
         $repository = $this->prophesize(TabRepository::class);
@@ -30,7 +28,7 @@ class PlaceOrderHandlerTest extends TestCase
             return new OrderedItem($args[0],true,0);
         });
 
-        $tab = new TabSpy(1,"Jhon Doe");
+        $tab = TabSpy::createEmptyWithId(1,"Jhon Doe");
 
         $repository->get(Argument::any())->will(function ($args)  use ($tab) {
            return $tab;
@@ -51,15 +49,17 @@ class PlaceOrderHandlerTest extends TestCase
 }
 
 
-class TabSpy {
+class TabSpy extends Tab {
 
     public $items = [];
-    public $tab;
+    //public $tab;
 
+    /*
     public function __construct($table, $waiter)
     {
         $this->tab = Tab::open($table,$waiter);
     }
+    */
 
     public function placeOrder($orderedItems)
     {

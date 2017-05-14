@@ -8,9 +8,10 @@ use malotor\EventsCafe\Application\Command;
 use malotor\EventsCafe\Application\Query;
 use malotor\EventsCafe\Infrastructure\Persistence\Domain\Model\TabEventSourcingRepository;
 use malotor\EventsCafe\Infrastructure\Persistence\EventStore\RedisEventStore;
-use malotor\EventsCafe\Infrastructure\Persistence\Projection\TabProjection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
+
+use malotor\EventsCafe\Infrastructure\Persistence\Projection;
 
 $app = new Silex\Application();
 
@@ -56,20 +57,29 @@ $app['pdo'] = function ($app) {
 };
 
 $app['serializer'] = function ($app) {
-
     return new \malotor\EventsCafe\Infrastructure\Serialize\JsonSerializer($app['base_path'] . '/resources/serializer');
-    /* return SerializerBuilder::create()
-         ->addMetadataDir($app['base_path'] . '/resources/serializer')
-         ->build();*/
+};
+$app['projector'] = function ($app) {
+
+    $projector = new \malotor\EventsCafe\Infrastructure\Persistence\Projection\Projector();
+
+    $projector->register([
+        new Projection\TabOpenedProjection($app['pdo']),
+        new Projection\DrinksOrderedProjection($app['pdo']),
+        new Projection\DrinksServedProjection($app['pdo']),
+        new Projection\FoodOrderedProjection($app['pdo']),
+        new Projection\FoodPreparedProjection($app['pdo']),
+        new Projection\FoodServedProjection($app['pdo']),
+        new Projection\TabClosedProjection($app['pdo']),
+    ]);
+
+    return $projector;
 };
 
 $app['tab_repository'] = function ($app) {
-    $tabProjection = new TabProjection($app['pdo']);
-    //$eventStore = new PDOEventStore($app['pdo'], $app['serializer']);
     $client = new \Predis\Client('tcp://redis:6379');
     $eventStore = new RedisEventStore($client, $app['serializer']);
-
-    return new TabEventSourcingRepository($eventStore, $tabProjection);
+    return new TabEventSourcingRepository($eventStore, $app['projector']);
 };
 
 $app['command_bus'] = function ($app) {
@@ -118,6 +128,8 @@ $app['query_bus'] = function ($app) {
 
     return new \League\Tactician\CommandBus([$handlerMiddleware]);
 };
+
+
 
 $app['entity_manager'] = function ($app) {
 
@@ -252,33 +264,31 @@ $app->post('/tab/{id}/prepare', function (Request $request, $id) use ($app) {
 
 });
 
-$app->post('/tab/{id}/mark_drinks_served',
-    function (Request $request, $id) use ($app) {
+$app->post('/tab/{id}/mark_drinks_served', function (Request $request, $id) use ($app) {
 
-        $items = $request->request->get("items");
+    $items = $request->request->get("items");
 
-        $command = new Command\MarkDrinksServedCommand($id, $items);
-        $app['command_bus']->handle($command);
+    $command = new Command\MarkDrinksServedCommand($id, $items);
+    $app['command_bus']->handle($command);
 
-        return $app->json([
-            'message' => 'Drinks has been served'
-        ]);
+    return $app->json([
+        'message' => 'Drinks has been served'
+    ]);
 
-    });
+});
 
-$app->post('/tab/{id}/mark_food_served',
-    function (Request $request, $id) use ($app) {
+$app->post('/tab/{id}/mark_food_served', function (Request $request, $id) use ($app) {
 
-        $items = $request->request->get("items");
+    $items = $request->request->get("items");
 
-        $command = new Command\MarkFoodServedCommand($id, $items);
-        $app['command_bus']->handle($command);
+    $command = new Command\MarkFoodServedCommand($id, $items);
+    $app['command_bus']->handle($command);
 
-        return $app->json([
-            'message' => 'Food has been served'
-        ]);
+    return $app->json([
+        'message' => 'Food has been served'
+    ]);
 
-    });
+});
 
 $app->post('/tab/{id}/paid', function (Request $request, $id) use ($app) {
 
