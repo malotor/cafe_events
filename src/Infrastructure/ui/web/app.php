@@ -12,6 +12,8 @@ use malotor\EventsCafe\Infrastructure\Persistence\Projection\TabProjection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use malotor\EventsCafe\Infrastructure\Persistence\Projection;
+
 $app = new Silex\Application();
 
 $app->register(new Silex\Provider\ValidatorServiceProvider());
@@ -62,14 +64,30 @@ $app['serializer'] = function ($app) {
          ->addMetadataDir($app['base_path'] . '/resources/serializer')
          ->build();*/
 };
+$app['projector'] = function ($app) {
+
+    $projector = new \malotor\EventsCafe\Infrastructure\Persistence\Projection\Projector();
+
+    $projector->register([
+        new Projection\TabOpenedProjection($app['pdo']),
+        new Projection\DrinksOrderedProjection($app['pdo']),
+        new Projection\DrinksServedProjection($app['pdo']),
+        new Projection\FoodOrderedProjection($app['pdo']),
+        new Projection\FoodPreparedProjection($app['pdo']),
+        new Projection\FoodServedProjection($app['pdo']),
+        new Projection\TabClosedProjection($app['pdo']),
+    ]);
+
+    return $projector;
+};
 
 $app['tab_repository'] = function ($app) {
-    $tabProjection = new TabProjection($app['pdo']);
+    //$tabProjection = new TabProjection($app['pdo']);
     //$eventStore = new PDOEventStore($app['pdo'], $app['serializer']);
     $client = new \Predis\Client('tcp://redis:6379');
     $eventStore = new RedisEventStore($client, $app['serializer']);
 
-    return new TabEventSourcingRepository($eventStore, $tabProjection);
+    return new TabEventSourcingRepository($eventStore, $app['projector']);
 };
 
 $app['command_bus'] = function ($app) {
@@ -118,6 +136,8 @@ $app['query_bus'] = function ($app) {
 
     return new \League\Tactician\CommandBus([$handlerMiddleware]);
 };
+
+
 
 $app['entity_manager'] = function ($app) {
 

@@ -18,17 +18,15 @@ class TabEventSourcingRepository implements TabRepository
      */
     private $eventStore;
 
-    /**
-     * @var PostProjection
-     */
-    private $projection;
+
+    private $projector;
 
     public function __construct(
         EventStore $eventStore,
-        Projection $postProjection
+        $projector
     ) {
         $this->eventStore = $eventStore;
-        $this->projection = $postProjection;
+        $this->projector = $projector;
     }
 
     /**
@@ -56,7 +54,7 @@ class TabEventSourcingRepository implements TabRepository
     {
         $events = $aggregate->getRecordedEvents();
         $this->eventStore->commit($events);
-        $this->projection->project($events);
+        $this->projector->project($events);
 
         $aggregate->clearRecordedEvents();
     }
