@@ -1,8 +1,10 @@
 <?php
 
-namespace malotor\EventsCafe\Domain\Model\Aggregate;
+namespace malotor\EventsCafe\Domain\Model\OrderedItem;
 
-class FoodNotOutstanding extends \Exception
+use Throwable;
+
+class OrderedItemNotExists extends \Exception
 {
 
     public function __construct(
@@ -10,7 +12,7 @@ class FoodNotOutstanding extends \Exception
         $code = 0,
         Throwable $previous = null
     ) {
-        $message = 'Food is not outstanding';
+        $message = 'The Ordered item does not exists';
         parent::__construct($message, $code, $previous);
     }
 }

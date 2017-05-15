@@ -2,5 +2,5 @@ malotor\EventsCafe\Domain\Model\Events\TabEvent:
     exclusion_policy: ALL
     properties:
         id:
-            type: malotor\EventsCafe\Domain\Model\Aggregate\TabId
+            type: malotor\EventsCafe\Domain\Model\Tab\TabId
             serialized_name: id

@@ -3,9 +3,9 @@
 namespace malotor\EventsCafe\Infrastructure\Persistence\Domain\Model;
 
 use Doctrine\ORM\EntityManager;
-use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItem;
-use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItemNotExists;
-use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItemsRepository;
+use malotor\EventsCafe\Domain\Model\OrderedItem\OrderedItem;
+use malotor\EventsCafe\Domain\Model\OrderedItem\OrderedItemNotExists;
+use malotor\EventsCafe\Domain\Model\OrderedItem\OrderedItemsRepository;
 use malotor\EventsCafe\Domain\ReadModel\Items;
 
 class DoctrineOrderedItemRepository implements OrderedItemsRepository

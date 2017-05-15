@@ -2,10 +2,10 @@
 
 use PHPUnit\Framework\TestCase;
 
-use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
-use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItem;
+use malotor\EventsCafe\Domain\Model\Tab\Tab;
+use malotor\EventsCafe\Domain\Model\OrderedItem\OrderedItem;
 use Ramsey\Uuid\Uuid;
-use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
+use malotor\EventsCafe\Domain\Model\Tab\TabId;
 use Buttercup\Protects\AggregateHistory;
 use malotor\EventsCafe\Domain\Model\Events;
 
@@ -43,7 +43,7 @@ class TabTest extends TestCase
 
     /**
      * @test
-     * @expectedException \malotor\EventsCafe\Domain\Model\Aggregate\DrinkIsNotOutstanding
+     * @expectedException \malotor\EventsCafe\Domain\Model\Tab\DrinkIsNotOutstanding
      */
     public function should_not_serve_drinks_that_are_not_outstanding()
     {
@@ -87,7 +87,7 @@ class TabTest extends TestCase
 
     /**
      * @test
-     * @expectedException \malotor\EventsCafe\Domain\Model\Aggregate\FoodNotOutstanding
+     * @expectedException \malotor\EventsCafe\Domain\Model\Tab\FoodNotOutstanding
      */
     public function food_not_ordered_cannot_be_marked_as_prepared()
     {
@@ -106,7 +106,7 @@ class TabTest extends TestCase
 
     /**
      * @test
-     * @expectedException \malotor\EventsCafe\Domain\Model\Aggregate\FoodIsNotPrepared
+     * @expectedException \malotor\EventsCafe\Domain\Model\Tab\FoodIsNotPrepared
      */
     public function food_not_prepared_cannot_be_served()
     {
@@ -187,7 +187,7 @@ class TabTest extends TestCase
 
     /**
      * @test
-     * @expectedException \malotor\EventsCafe\Domain\Model\Aggregate\TabHasUnservedItems
+     * @expectedException \malotor\EventsCafe\Domain\Model\Tab\TabHasUnservedItems
      */
     public function can_not_close_tab_with_unserved_drinks()
     {
@@ -206,7 +206,7 @@ class TabTest extends TestCase
 
     /**
      * @test
-     * @expectedException \malotor\EventsCafe\Domain\Model\Aggregate\TabHasUnservedItems
+     * @expectedException \malotor\EventsCafe\Domain\Model\Tab\TabHasUnservedItems
      */
     public function can_not_close_tab_with_unprepared_food()
     {
@@ -224,7 +224,7 @@ class TabTest extends TestCase
 
     /**
      * @test
-     * @expectedException \malotor\EventsCafe\Domain\Model\Aggregate\TabHasUnservedItems
+     * @expectedException \malotor\EventsCafe\Domain\Model\Tab\TabHasUnservedItems
      */
     public function can_not_close_tab_with_unserved_food()
     {
@@ -242,7 +242,7 @@ class TabTest extends TestCase
 
     /**
      * @test
-     * @expectedException \malotor\EventsCafe\Domain\Model\Aggregate\MustPayEnoughException
+     * @expectedException \malotor\EventsCafe\Domain\Model\Tab\MustPayEnoughException
      */
     public function cannot_be_closed_with_not_enough_pay()
     {

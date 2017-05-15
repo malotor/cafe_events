@@ -7,7 +7,7 @@ use Buttercup\Protects\DomainEvent;
 use Buttercup\Protects\IdentifiesAggregate;
 use malotor\EventsCafe\Domain\Model\Aggregate\Aggregate;
 use malotor\EventsCafe\Domain\Model\Aggregate\AggregateId;
-use malotor\EventsCafe\Domain\Model\Aggregate\tab;
+use malotor\EventsCafe\Domain\Model\Tab\Tab;
 use PHPUnit\Framework\TestCase;
 
 class AggregateTest extends TestCase

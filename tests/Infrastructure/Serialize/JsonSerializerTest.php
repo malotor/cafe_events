@@ -3,11 +3,11 @@
 namespace malotor\EventsCafe\Infrastructure\Serialize;
 
 use JMS\Serializer\EventDispatcher\Event;
-use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItem;
+use malotor\EventsCafe\Domain\Model\OrderedItem\OrderedItem;
 use PHPUnit\Framework\TestCase;
 
 use malotor\EventsCafe\Domain\Model\Events;
-use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
+use malotor\EventsCafe\Domain\Model\Tab\TabId;
 use Symfony\Component\EventDispatcher\Tests\EventTest;
 
 class JsonSerializerTest extends TestCase

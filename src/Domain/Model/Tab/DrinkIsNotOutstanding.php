@@ -1,18 +1,15 @@
 <?php
 
-namespace malotor\EventsCafe\Domain\Model\Aggregate;
+namespace malotor\EventsCafe\Domain\Model\Tab;
 
-use Throwable;
-
-class OrderedItemNotExists extends \Exception
+class DrinkIsNotOutstanding extends \Exception
 {
-
     public function __construct(
         $message = "",
         $code = 0,
         Throwable $previous = null
     ) {
-        $message = 'The Ordered item does not exists';
+        $message = 'Drinks is not Outstanding';
         parent::__construct($message, $code, $previous);
     }
 }

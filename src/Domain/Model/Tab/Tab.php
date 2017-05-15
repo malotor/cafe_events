@@ -1,6 +1,8 @@
 <?php
 
-namespace malotor\EventsCafe\Domain\Model\Aggregate;
+namespace malotor\EventsCafe\Domain\Model\Tab;
+
+use malotor\EventsCafe\Domain\Model\Aggregate\Aggregate;
 
 use malotor\EventsCafe\Domain\Model\Events\DrinksOrdered;
 use malotor\EventsCafe\Domain\Model\Events\DrinksServed;

@@ -12,11 +12,15 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
+            <exclude>
+                <file>./src/Domain/ReadModel</file>
+            </exclude>
         </whitelist>
     </filter>
     <testsuites>
         <testsuite name="default">
             <directory suffix=".php">./tests</directory>
+            <exclude>./tests/Common</exclude>
         </testsuite>
     </testsuites>
 </phpunit>

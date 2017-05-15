@@ -1,0 +1,3 @@
+#!/bin/bash
+sh scripts/doctrine orm:schema-tool:create
+sh scripts/doctrine orm:schema-tool:create --dump-sql > resources/db/events_cafe.sql

@@ -1,8 +1,8 @@
 <?php
 
-namespace malotor\EventsCafe\Domain\Model\Aggregate;
+namespace malotor\EventsCafe\Domain\Model\Tab;
 
-class FoodIsNotPrepared extends \Exception
+class FoodNotOutstanding extends \Exception
 {
 
     public function __construct(
@@ -10,7 +10,7 @@ class FoodIsNotPrepared extends \Exception
         $code = 0,
         Throwable $previous = null
     ) {
-        $message = 'Food is not prepared';
+        $message = 'Food is not outstanding';
         parent::__construct($message, $code, $previous);
     }
 }
