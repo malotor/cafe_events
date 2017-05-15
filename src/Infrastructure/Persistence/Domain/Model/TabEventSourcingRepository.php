@@ -6,10 +6,9 @@ use Buttercup\Protects\IdentifiesAggregate;
 use Buttercup\Protects\IsEventSourced;
 use Buttercup\Protects\RecordsEvents;
 use malotor\EventsCafe\Domain\Model\Tab\Tab;
-use malotor\EventsCafe\Domain\Model\Aggregate\TabNotExists;
-use malotor\EventsCafe\Domain\Model\Aggregate\TabRepository;
+use malotor\EventsCafe\Domain\Model\Tab\TabNotExists;
+use malotor\EventsCafe\Domain\Model\Tab\TabRepository;
 use malotor\EventsCafe\Infrastructure\Persistence\EventStore\EventStore;
-use malotor\EventsCafe\Infrastructure\Persistence\Projection\Projection;
 
 class TabEventSourcingRepository implements TabRepository
 {

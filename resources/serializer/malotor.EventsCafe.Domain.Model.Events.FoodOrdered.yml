@@ -2,4 +2,4 @@ malotor\EventsCafe\Domain\Model\Events\FoodOrdered:
     exclusion_policy: ALL
     properties:
         items:
-            type: array<malotor\EventsCafe\Domain\Model\Aggregate\OrderedItem>
+            type: array<malotor\EventsCafe\Domain\Model\OrderedItem\OrderedItem>

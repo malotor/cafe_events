@@ -1,6 +1,6 @@
 <?php
 
-namespace malotor\EventsCafe\Domain\Model\Aggregate;
+namespace malotor\EventsCafe\Domain\Model\OrderedItem;
 
 use Throwable;
 

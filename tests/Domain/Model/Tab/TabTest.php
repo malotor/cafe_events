@@ -3,9 +3,9 @@
 use PHPUnit\Framework\TestCase;
 
 use malotor\EventsCafe\Domain\Model\Tab\Tab;
-use malotor\EventsCafe\Domain\Model\Aggregate\OrderedItem;
+use malotor\EventsCafe\Domain\Model\OrderedItem\OrderedItem;
 use Ramsey\Uuid\Uuid;
-use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
+use malotor\EventsCafe\Domain\Model\Tab\TabId;
 use Buttercup\Protects\AggregateHistory;
 use malotor\EventsCafe\Domain\Model\Events;
 

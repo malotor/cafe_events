@@ -2,7 +2,7 @@
 
 namespace malotor\EventsCafe\Domain\Model\Events;
 
-use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
+use malotor\EventsCafe\Domain\Model\Tab\TabId;
 
 class FoodPrepared extends TabEvent
 {

@@ -1,4 +1,4 @@
-malotor\EventsCafe\Domain\Model\Aggregate\OrderedItem:
+malotor\EventsCafe\Domain\Model\OrderedItem\OrderedItem:
     exclusion_policy: ALL
     properties:
         menuNumber:

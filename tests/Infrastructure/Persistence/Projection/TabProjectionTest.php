@@ -3,7 +3,7 @@
 namespace malotor\EventsCafe\Tests\Infrastructure\Persistence\Projection;
 
 use Buttercup\Protects\DomainEvents;
-use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
+use malotor\EventsCafe\Domain\Model\Tab\TabId;
 use malotor\EventsCafe\Domain\Model\Events\TabOpened;
 use malotor\EventsCafe\Infrastructure\Persistence\Projection\TabOpenedProjection;
 use malotor\EventsCafe\Infrastructure\Persistence\Projection\TabProjection;
