@@ -21,9 +21,10 @@ class Projector
     public function project(DomainEvents $events)
     {
         foreach ($events as $event) {
-            if (isset($this->projections[get_class($event)])) {
-                $this->projections[get_class($event)]->project($event);
-            }
+            if (!isset($this->projections[get_class($event)]))
+                throw  new NoProjectionExists();
+
+            $this->projections[get_class($event)]->project($event);
         }
     }
 }
