@@ -6,13 +6,15 @@ This project is an example of Command Query Responsibility Segregation ( CQRS ) 
 
     $ docker-compose build
     $ docker-compose run --rm composer install
-    $ sqlite3 resources/db/events_cafe.db < resources/db/events_cafe.sql
+    $ sh scripts/init_project
     $ docker-compose up -d app
     
 ## Run the tests
 
     $ docker-compose up -d test
     $ sh scripts/phpunit
+    
+    $ sh scripts/phpunit --coverage-html ./coverage
 
 ## JSON API
 

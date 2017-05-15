@@ -2,7 +2,7 @@
 
 namespace malotor\EventsCafe\Application\Command;
 
-use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
+use malotor\EventsCafe\Domain\Model\Tab\Tab;
 use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
 use malotor\EventsCafe\Domain\Model\Aggregate\TabRepository;
 

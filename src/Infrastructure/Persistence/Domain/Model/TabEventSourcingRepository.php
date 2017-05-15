@@ -5,7 +5,7 @@ namespace malotor\EventsCafe\Infrastructure\Persistence\Domain\Model;
 use Buttercup\Protects\IdentifiesAggregate;
 use Buttercup\Protects\IsEventSourced;
 use Buttercup\Protects\RecordsEvents;
-use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
+use malotor\EventsCafe\Domain\Model\Tab\Tab;
 use malotor\EventsCafe\Domain\Model\Aggregate\TabNotExists;
 use malotor\EventsCafe\Domain\Model\Aggregate\TabRepository;
 use malotor\EventsCafe\Infrastructure\Persistence\EventStore\EventStore;

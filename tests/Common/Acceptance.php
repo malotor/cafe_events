@@ -1,6 +1,6 @@
 <?php
 
-namespace malotor\EventsCafe\Tests\Functional;
+namespace malotor\EventsCafe\Tests\Common;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\HttpKernelInterface;

@@ -3,7 +3,7 @@
 namespace malotor\EventsCafe\Tests\Functional;
 
 use Doctrine\ORM\EntityManager;
-
+use malotor\EventsCafe\Tests\Common\Acceptance;
 
 class ApplicationTest extends Acceptance
 {

@@ -202,10 +202,8 @@ $app->post('/tab', function (Request $request) use ($app) {
         return $app->json($errors, 500);
     }
 
-    $command = new Command\OpenTabCommand();
-    $command->tabId = \Ramsey\Uuid\Uuid::uuid4();
-    $command->tableNumber = $data['table'];
-    $command->waiterId = $data['waiter'];
+    $command = new Command\OpenTabCommand(\Ramsey\Uuid\Uuid::uuid4(),$data['table'],$data['waiter']);
+
     $app['command_bus']->handle($command);
 
     return $app->json([

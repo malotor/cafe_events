@@ -9,7 +9,7 @@ use Buttercup\Protects\DomainEvents;
 use malotor\EventsCafe\Domain\Model\Aggregate\TabId;
 use malotor\EventsCafe\Domain\Model\Events\TabOpened;
 
-use malotor\EventsCafe\Domain\Model\Aggregate\Tab;
+use malotor\EventsCafe\Domain\Model\Tab\Tab;
 use malotor\EventsCafe\Infrastructure\Persistence\EventStore\RedisEventStore;
 
 use JMS\Serializer\SerializerBuilder;
