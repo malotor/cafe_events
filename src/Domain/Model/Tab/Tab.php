@@ -119,43 +119,28 @@ class Tab extends Aggregate
             $drinksServed));
     }
 
-    private function assertDrinksAreOutstanding($drinksServed)
+    private function assertDrinksAreOutstanding($items)
     {
-
-        foreach ($drinksServed as $drink) {
-            $inArray = false;
-            foreach ($this->outstandingDrinks as $item) {
-                if ($item->getMenuNumber() == $drink) {
-                    $inArray = true;
-                }
-            }
-            if (!$inArray) {
+        array_walk($items, function($drink) {
+            if (!in_array($drink, array_keys($this->outstandingDrinks)))
                 throw new DrinkIsNotOutstanding();
-            }
-        }
+        });
     }
 
     public function prepareFood($foodPrepared)
     {
         $this->assertFoodsAreOutstanding($foodPrepared);
-        $this->applyAndRecordThat(new FoodPrepared($this->getAggregateId(),
-            $foodPrepared));
+        $this->applyAndRecordThat(new FoodPrepared($this->getAggregateId(), $foodPrepared));
 
     }
 
-    private function assertFoodsAreOutstanding($foodsServed)
+    private function assertFoodsAreOutstanding($items)
     {
-        foreach ($foodsServed as $food) {
-            $inArray = false;
-            foreach ($this->outstandingFoods as $item) {
-                if ($item->getMenuNumber() == $food) {
-                    $inArray = true;
-                }
-            }
-            if (!$inArray) {
+
+        array_walk($items, function($food) {
+            if (!in_array($food, array_keys($this->outstandingFoods)))
                 throw new FoodNotOutstanding();
-            }
-        }
+        });
 
     }
 
@@ -166,19 +151,13 @@ class Tab extends Aggregate
             $foodServed));
     }
 
-    private function assertFoodsArePrepared($foodsServed)
+    private function assertFoodsArePrepared($items)
     {
-        foreach ($foodsServed as $food) {
-            $inArray = false;
-            foreach ($this->preparedFood as $item) {
-                if ($item->getMenuNumber() == $food) {
-                    $inArray = true;
-                }
-            }
-            if (!$inArray) {
+        array_walk($items, function($food) {
+            if (!in_array($food, array_keys($this->preparedFood)))
                 throw new FoodIsNotPrepared();
-            }
-        }
+        });
+
     }
 
     public function close(float $amount)
@@ -240,55 +219,47 @@ class Tab extends Aggregate
 
     public function applyDrinksOrdered(DrinksOrdered $drinksOrdered)
     {
-        foreach ($drinksOrdered->getItems() as $drink) {
+        array_walk($drinksOrdered->getItems(), function($drink) {
             $this->outstandingDrinks[$drink->getMenuNumber()] = $drink;
-        }
+        });
     }
 
     public function applyFoodOrdered(FoodOrdered $foodOrdered)
     {
-        foreach ($foodOrdered->getItems() as $food) {
+        array_walk($foodOrdered->getItems(), function($food) {
             $this->outstandingFoods[$food->getMenuNumber()] = $food;
-        }
+        });
     }
 
     public function applyDrinksServed(DrinksServed $drinksServed)
     {
-        foreach ($drinksServed->getItems() as $drink) {
-
-            foreach ($this->outstandingDrinks as $itemMenuNumber => $item) {
-                if ($itemMenuNumber == $drink) {
-                    $this->servedItems[$itemMenuNumber] = $item;
-                    unset($this->outstandingDrinks[$itemMenuNumber]);
-                }
-
-            }
-        }
-
+        array_walk($drinksServed->getItems(), function($drinkServedNumber) {
+            $item = $this->outstandingDrinks[$drinkServedNumber];
+            unset($this->outstandingDrinks[$drinkServedNumber]);
+            $this->servedItems[$drinkServedNumber] = $item;
+        });
     }
 
     public function applyFoodPrepared(FoodPrepared $foodPrepared)
     {
-        foreach ($foodPrepared->getItems() as $food) {
+        array_walk($foodPrepared->getItems(), function($food) {
             $item = $this->outstandingFoods[$food];
             $this->preparedFood[$food] = $item;
-        }
+        });
     }
 
     public function applyFoodServed(FoodServed $foodServed)
     {
-        foreach ($foodServed->getItems() as $food) {
+        array_walk($foodServed->getItems(), function($food) {
             $item = $this->preparedFood[$food];
             $this->servedItems[$food] = $item;
             unset($this->outstandingFoods[$food]);
             unset($this->preparedFood[$food]);
-        }
-
+        });
     }
 
     public function applyTabClosed(TabClosed $tabClosed)
     {
-        //TODO Save amount and tip
         $this->open = false;
     }
 

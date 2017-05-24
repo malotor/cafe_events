@@ -8,7 +8,6 @@ use Buttercup\Protects\DomainEvent;
 use Buttercup\Protects\DomainEvents;
 use Buttercup\Protects\IdentifiesAggregate;
 use Buttercup\Protects\RecordsEvents;
-use malotor\Common\Events\DomainEventPublisher;
 use Verraes\ClassFunctions\ClassFunctions;
 
 abstract class Aggregate implements AggregateRoot
@@ -21,15 +20,8 @@ abstract class Aggregate implements AggregateRoot
      */
     private $recordedEvents = [];
 
-    /**
-     * Allow to reconstitute an aggregate from an aggregate events history and an initial state
-     *
-     * @param AggregateHistory $anAggregateHistory
-     *
-     * @return RecordsEvents
-     */
-    public static function reconstituteFrom(AggregateHistory $anAggregateHistory
-    ) {
+
+    public static function reconstituteFrom(AggregateHistory $anAggregateHistory) {
         $anAggregate = static::createEmptyWithId($anAggregateHistory->getAggregateId());
 
         foreach ($anAggregateHistory as $anEvent) {
@@ -96,9 +88,11 @@ abstract class Aggregate implements AggregateRoot
         $this->$method($anEvent);
     }
 
+
     protected function publishThat($domainEvent)
     {
-        DomainEventPublisher::instance()->publish($domainEvent);
+        //DomainEventPublisher::instance()->publish($domainEvent);
     }
+
 
 }
