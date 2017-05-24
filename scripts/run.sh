@@ -1,2 +1,2 @@
 #!/bin/bash
-docker run --rm -it --network eventscafe_default -e PHP_IDE_CONFIG="serverName=app" -v $PWD:/code -w /code eventscafe_app $@
+docker-compose exec tests vendor/bin/phpunit $@

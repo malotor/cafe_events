@@ -18,7 +18,7 @@ services:
             - "8080:80"
         environment:
             - APP_ENV=dev
-            - PHP_IDE_CONFIG="serverName=app"
+            - PHP_IDE_CONFIG=serverName=app
     tests:
         build:
             context: ./build/php
@@ -30,7 +30,7 @@ services:
         volumes:
             - "$PWD:/code"
         environment:
-            - PHP_IDE_CONFIG="serverName=app"
+            - PHP_IDE_CONFIG=serverName=app
         depends_on:
             - redis
 

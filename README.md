@@ -6,12 +6,13 @@ This project is an example of Command Query Responsibility Segregation ( CQRS ) 
 
     $ docker-compose build
     $ docker-compose run --rm composer install
+    $ docker-compose up -d tests
     $ sh scripts/init_project
-    $ docker-compose up -d app
+    
     
 ## Run the tests
 
-    $ docker-compose up -d test
+    $ docker-compose up -d tests
     $ sh scripts/phpunit
     
     $ sh scripts/phpunit --coverage-html ./coverage

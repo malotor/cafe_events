@@ -71,6 +71,7 @@ class TabTest extends TestCase
 
         $tab = Tab::open(1,"John");
         $orderedItems = [
+            new OrderedItem(4,true,3.5),
             new OrderedItem(1,true,2.5),
             new OrderedItem(2,false,4.5),
         ];
@@ -78,9 +79,10 @@ class TabTest extends TestCase
 
         $tab->serveDrinks([1]);
 
-        $this->assertEquals(1,$tab->outstandingItems());
+        $this->assertEquals(2,$tab->outstandingItems());
         $this->assertFalse($tab->isItemOutstanding(1));
         $this->assertTrue($tab->isItemOutstanding(2));
+        $this->assertTrue($tab->isItemOutstanding(4));
     }
 
 
