@@ -8,6 +8,7 @@ This project is an example of Command Query Responsibility Segregation ( CQRS ) 
     $ docker-compose run --rm composer install
     $ docker-compose up -d tests
     $ sh scripts/init_project
+    $ docker-compose up -d app
     
     
 ## Run the tests

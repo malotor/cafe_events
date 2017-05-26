@@ -41,8 +41,8 @@ services:
         working_dir: /code
         entrypoint:
           - composer
-        volumes_from:
-            - app
+        volumes:
+          - "$PWD:/code"
 
     redis:
         container_name: redis
@@ -50,7 +50,7 @@ services:
         command: redis-server --appendonly yes
         restart: unless-stopped
         ports:
-          - "50002:6379"
+          - "6379:6379"
 
     redis-gui:
         image: tenstartups/redis-commander
@@ -58,6 +58,6 @@ services:
         command:  --redis-host redis
         restart: unless-stopped
         ports:
-          - "50000:8081"
+          - "8081:8081"
         depends_on:
           - redis
