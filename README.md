@@ -15,10 +15,9 @@ This project is an example of Command Query Responsibility Segregation ( CQRS ) 
 
     $ docker-compose up -d tests
     $ sh scripts/phpunit
-    
     $ sh scripts/phpunit --coverage-html ./coverage
 
-## JSON API
+##  Rest API 
 
     http://localhost:8080
     
@@ -29,8 +28,21 @@ For this tutorial, we'll work in the cafe domain. Our focus will be on the conce
 During their time at the restaurant, visitors may order extra food or drinks. If they realize they ordered the wrong thing, they may amend the order - but not after the food and drink has been served to and accepted by them.
 
 Finally, the visitors close the tab by paying what is owed, possibly with a tip for the serving staff. Upon closing a tab, it must be paid for in full. A tab with unserved items cannot be closed unless the items are either marked as served or cancelled first.
+  
+## Thanks to
+
+EDUMENT
+
+http://cqrs.nu
+
+DDD in PHP
+
+https://github.com/dddinphp/blog-cqrs
+
+https://github.com/dddinphp/last-wishes-gamify
+
  
-## Documentations
+## Documentation
 
 - https://github.com/rojoangel/event-sourcing
 - https://github.com/dddinphp/blog-cqrs
@@ -42,7 +54,7 @@ Finally, the visitors close the tab by paying what is owed, possibly with a tip 
 - https://www.securityartwork.es/2012/04/23/arquitecturas-robustas-y-seguras-con-cqrs-i/
 
 
-## Doctrine
+## Doctrine reference commands
 
     sh scripts/doctrine orm:generate-entities src/Domain/ReadModel
     sh scripts/doctrine orm:schema-tool:drop --force
