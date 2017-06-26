@@ -32,10 +32,13 @@ class TabTest extends TestCase
         $this->assertEquals(0,$tab->outstandingItems());
 
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $this->assertEquals(2,$tab->outstandingItems());
 
@@ -52,10 +55,13 @@ class TabTest extends TestCase
 
 
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->serveDrinks([
             3
@@ -71,11 +77,14 @@ class TabTest extends TestCase
 
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(4,true,3.5),
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [4,true,3.5],
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->serveDrinks([1]);
 
@@ -96,10 +105,13 @@ class TabTest extends TestCase
 
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->prepareFood([3]);
 
@@ -115,10 +127,13 @@ class TabTest extends TestCase
 
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->serveFood([2]);
 
@@ -132,10 +147,13 @@ class TabTest extends TestCase
 
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->prepareFood([2]);
 
@@ -151,10 +169,13 @@ class TabTest extends TestCase
 
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->prepareFood([2]);
         $tab->serveFood([2]);
@@ -173,10 +194,13 @@ class TabTest extends TestCase
 
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->prepareFood([2]);
         $tab->serveFood([2]);
@@ -195,10 +219,13 @@ class TabTest extends TestCase
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->prepareFood([2]);
         $tab->serveFood([2]);
@@ -214,10 +241,13 @@ class TabTest extends TestCase
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->serveDrinks([1]);
         $tab->close(10);
@@ -232,10 +262,13 @@ class TabTest extends TestCase
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->serveDrinks([1]);
         $tab->prepareFood([2]);
@@ -250,10 +283,13 @@ class TabTest extends TestCase
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->serveDrinks([1]);
         $tab->prepareFood([2]);
@@ -270,10 +306,13 @@ class TabTest extends TestCase
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->serveDrinks([1]);
         $tab->prepareFood([2]);
@@ -291,10 +330,13 @@ class TabTest extends TestCase
     {
         $tab = Tab::open(1,"John");
         $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
+            [1,true,2.5],
+            [2,false,4.5],
         ];
-        $tab->placeOrder($orderedItems);
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
 
         $tab->serveDrinks([1]);
         $tab->prepareFood([2]);
@@ -337,4 +379,5 @@ class TabTest extends TestCase
         $this->assertEquals("adb40bf1-e79c-442e-ae7c-3c9cfcdd38f1",(string) $anAggregate->getAggregateId());
         //$this->assertEquals(4, $anAggregate->get());
     }
+
 }
