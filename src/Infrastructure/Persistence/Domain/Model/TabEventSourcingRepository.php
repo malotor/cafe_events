@@ -38,7 +38,7 @@ class TabEventSourcingRepository implements TabRepository
         $eventStream = $this->eventStore->getAggregateHistoryFor($aggregateId);
 
         if ($eventStream->count() == 0) {
-            throw new TabNotExists();
+            throw TabNotExists::create();
         }
 
         return Tab::reconstituteFrom($eventStream);

@@ -2,13 +2,11 @@
 
 namespace malotor\EventsCafe\Domain\Model\Tab;
 
-class DrinkIsNotOutstanding extends \Exception
+class TabNotOpen extends \Exception
 {
-
-    const MESSAGE = 'Drinks is not Outstanding';
+    const MESSAGE = 'The tab is not open';
 
     public static function create() {
         return new static(self::MESSAGE);
     }
-
 }

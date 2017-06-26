@@ -5,12 +5,9 @@ namespace malotor\EventsCafe\Domain\Model\Tab;
 class FoodNotOutstanding extends \Exception
 {
 
-    public function __construct(
-        $message = "",
-        $code = 0,
-        Throwable $previous = null
-    ) {
-        $message = 'Food is not outstanding';
-        parent::__construct($message, $code, $previous);
+    const MESSAGE = 'Food is not outstanding';
+
+    public static function create() {
+        return new static(self::MESSAGE);
     }
 }

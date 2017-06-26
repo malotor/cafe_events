@@ -4,12 +4,10 @@ namespace malotor\EventsCafe\Domain\Model\Tab;
 
 class TabNotExists extends \Exception
 {
-    public function __construct(
-        $message = "",
-        $code = 0,
-        Throwable $previous = null
-    ) {
-        $message = 'The tab does not exists';
-        parent::__construct($message, $code, $previous);
+    const MESSAGE = 'The tab does not exists';
+
+    public static function create() {
+        return new static(self::MESSAGE);
     }
+
 }

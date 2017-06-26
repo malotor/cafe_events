@@ -15,8 +15,6 @@ use malotor\EventsCafe\Domain\Model\Events\TabOpened;
 
 class Tab extends Aggregate
 {
-
-
     private $table;
     private $waiter;
 
@@ -90,7 +88,7 @@ class Tab extends Aggregate
     public function placeOrder($orderedItems)
     {
         if (!$this->open) {
-            throw new TabNotOpenException();
+            throw TabNotOpen::create();
         }
 
         $drinks = array_filter($orderedItems, function ($a) {
@@ -123,7 +121,7 @@ class Tab extends Aggregate
     {
         array_walk($items, function($drink) {
             if (!in_array($drink, array_keys($this->outstandingDrinks)))
-                throw new DrinkIsNotOutstanding();
+                throw DrinkIsNotOutstanding::create();
         });
     }
 
@@ -139,7 +137,7 @@ class Tab extends Aggregate
 
         array_walk($items, function($food) {
             if (!in_array($food, array_keys($this->outstandingFoods)))
-                throw new FoodNotOutstanding();
+                throw FoodNotOutstanding::create();
         });
 
     }
@@ -155,7 +153,7 @@ class Tab extends Aggregate
     {
         array_walk($items, function($food) {
             if (!in_array($food, array_keys($this->preparedFood)))
-                throw new FoodIsNotPrepared();
+                throw FoodIsNotPrepared::create();
         });
 
     }
@@ -167,7 +165,7 @@ class Tab extends Aggregate
         $tabAmount = $this->calculateTotalAmount();
 
         if ($tabAmount > $amount) {
-            throw new MustPayEnoughException();
+            throw  MustPayEnoughException::create();
         }
 
         $this->applyAndRecordThat(new TabClosed($this->getAggregateId(),
@@ -178,7 +176,7 @@ class Tab extends Aggregate
     private function assertHasNotUnservedItems()
     {
         if (!(empty($this->outstandingDrinks) && empty($this->outstandingFoods))) {
-            throw new TabHasUnservedItems();
+            throw TabHasUnservedItems::create();
         }
     }
 
