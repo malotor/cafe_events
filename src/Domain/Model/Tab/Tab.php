@@ -107,14 +107,6 @@ class Tab extends Aggregate
 
     }
 
-    public function placeOrder($orderedItems)
-    {
-        foreach ($orderedItems as $item)
-        {
-            $this->placeItemInOrder($item[0], $item[1], $item[2]);
-        }
-    }
-
     public function serveDrinks($drinksServed)
     {
         $this->assertDrinksAreOutstanding($drinksServed);
