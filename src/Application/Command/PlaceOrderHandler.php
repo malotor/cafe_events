@@ -2,6 +2,7 @@
 
 namespace malotor\EventsCafe\Application\Command;
 
+use malotor\EventsCafe\Domain\Model\OrderedItem\OrderedItemsRepository;
 use malotor\EventsCafe\Domain\Model\Tab\Tab;
 use malotor\EventsCafe\Domain\Model\Tab\TabId;
 use malotor\EventsCafe\Domain\Model\Tab\TabRepository;
@@ -13,7 +14,7 @@ class PlaceOrderHandler
 
     public function __construct(
         TabRepository $tabRepository,
-        $orderedItemsRepository
+        OrderedItemsRepository $orderedItemsRepository
     ) {
         $this->tabRepopsitory = $tabRepository;
         $this->orderedItemsRepository = $orderedItemsRepository;
@@ -22,15 +23,13 @@ class PlaceOrderHandler
     public function handle(PlaceOrderCommand $command)
     {
 
-        $orderedItems = [];
-        foreach ($command->items as $itemNumber) {
-            $orderedItems[] = $this->orderedItemsRepository->findById($itemNumber);
-        }
-
         /** @var Tab $tab */
         $tab = $this->tabRepopsitory->get(TabId::fromString($command->id));
-        $tab->placeOrder($orderedItems);
 
+        foreach ($command->items as $itemNumber) {
+            $orderedItem = $this->orderedItemsRepository->findById($itemNumber);
+            $tab->placeItemInOrder($orderedItem->getMenuNumber() , $orderedItem->isDrink(), $orderedItem->getPrice());
+        }
         $this->tabRepopsitory->add($tab);
 
     }

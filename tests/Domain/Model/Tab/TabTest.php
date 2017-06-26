@@ -14,30 +14,41 @@ class TabTest extends TestCase
     /**
      * @test
      */
-    public function new_tab_should_be_open()
+    public function it_should_be_opened_when_its_created()
     {
         $tab = Tab::open(1,"John");
 
         $this->assertTrue($tab->isOpen());
     }
 
+
     /**
      * @test
      */
-    public function it_should_place_an_order()
+    public function it_should_not_have_any_outstanding_item_when_its_created()
     {
-
         $tab = Tab::open(1,"John");
 
         $this->assertEquals(0,$tab->outstandingItems());
+    }
 
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+
+    /**
+     * @test
+     */
+    public function it_should_place_new_items_as_outstanding()
+    {
+
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5],
+        ]);
 
         $this->assertEquals(2,$tab->outstandingItems());
+
+        $this->assertTrue($tab->isItemOutstanding(1));
+        $this->assertTrue($tab->isItemOutstanding(2));
+        $this->assertFalse($tab->isItemOutstanding(3));
 
     }
 
@@ -45,17 +56,13 @@ class TabTest extends TestCase
      * @test
      * @expectedException \malotor\EventsCafe\Domain\Model\Tab\DrinkIsNotOutstanding
      */
-    public function should_not_serve_drinks_that_are_not_outstanding()
+    public function it_should_not_mark_drinks_as_served_it_are_not_outstanding()
     {
 
-        $tab = Tab::open(1,"John");
-
-
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5],
+        ]);
 
         $tab->serveDrinks([
             3
@@ -66,40 +73,49 @@ class TabTest extends TestCase
     /**
      * @test
      */
-    public function served_drinks_must_be_outstanding()
+    public function it_should_mark_drinks_as_served_if_outstanding()
+    {
+        $tab = self::openTabWithMenuItems([
+            [4,true,3.5],
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
+        $tab->serveDrinks([1]);
+
+        $this->assertTrue($tab->isItemServed(1));
+    }
+
+
+    /**
+     * @test
+     */
+    public function it_should_remove_drinks_from_outstanding_when_it_has_been_served()
     {
 
-        $tab = Tab::open(1,"John");
-        $orderedItems = [
-            new OrderedItem(4,true,3.5),
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [4,true,3.5],
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
 
         $tab->serveDrinks([1]);
 
         $this->assertEquals(2,$tab->outstandingItems());
-        $this->assertFalse($tab->isItemOutstanding(1));
-        $this->assertTrue($tab->isItemOutstanding(2));
-        $this->assertTrue($tab->isItemOutstanding(4));
-    }
 
+        $this->assertFalse($tab->isItemOutstanding(1));
+    }
 
 
     /**
      * @test
      * @expectedException \malotor\EventsCafe\Domain\Model\Tab\FoodNotOutstanding
      */
-    public function food_not_ordered_cannot_be_marked_as_prepared()
+    public function it_should_not_mark_food_as_prepared_it_it_are_not_outstanding()
     {
-
-        $tab = Tab::open(1,"John");
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
 
         $tab->prepareFood([3]);
 
@@ -110,15 +126,13 @@ class TabTest extends TestCase
      * @test
      * @expectedException \malotor\EventsCafe\Domain\Model\Tab\FoodIsNotPrepared
      */
-    public function food_not_prepared_cannot_be_served()
+    public function it_should_not_mark_food_as_served_if_it_are_not_prepared()
     {
 
-        $tab = Tab::open(1,"John");
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
 
         $tab->serveFood([2]);
 
@@ -127,15 +141,13 @@ class TabTest extends TestCase
     /**
      * @test
      */
-    public function food_prepared_still_be_outstanding()
+    public function it_should_keep_food_as_outstanding_when_it_is_prepared()
     {
 
-        $tab = Tab::open(1,"John");
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
 
         $tab->prepareFood([2]);
 
@@ -146,15 +158,13 @@ class TabTest extends TestCase
     /**
      * @test
      */
-    public function food_ordered_and_prepared_can_be_served()
+    public function it_could_mark_food_as_served_if_they_are_prepared()
     {
 
-        $tab = Tab::open(1,"John");
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
 
         $tab->prepareFood([2]);
         $tab->serveFood([2]);
@@ -168,15 +178,13 @@ class TabTest extends TestCase
     /**
      * @test
      */
-    public function food_served_is_no_longer_prepared()
+    public function it_should_unmark_food_as_prepared_when_it_is_served()
     {
 
-        $tab = Tab::open(1,"John");
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
 
         $tab->prepareFood([2]);
         $tab->serveFood([2]);
@@ -191,14 +199,12 @@ class TabTest extends TestCase
      * @test
      * @expectedException \malotor\EventsCafe\Domain\Model\Tab\TabHasUnservedItems
      */
-    public function can_not_close_tab_with_unserved_drinks()
+    public function it_should_not_be_closed_it_has_unserved_drinks()
     {
-        $tab = Tab::open(1,"John");
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
 
         $tab->prepareFood([2]);
         $tab->serveFood([2]);
@@ -210,14 +216,12 @@ class TabTest extends TestCase
      * @test
      * @expectedException \malotor\EventsCafe\Domain\Model\Tab\TabHasUnservedItems
      */
-    public function can_not_close_tab_with_unprepared_food()
+    public function it_should_not_be_closed_it_has_unprepared_food()
     {
-        $tab = Tab::open(1,"John");
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
 
         $tab->serveDrinks([1]);
         $tab->close(10);
@@ -228,14 +232,12 @@ class TabTest extends TestCase
      * @test
      * @expectedException \malotor\EventsCafe\Domain\Model\Tab\TabHasUnservedItems
      */
-    public function can_not_close_tab_with_unserved_food()
+    public function it_should_not_be_closed_it_has_served_food()
     {
-        $tab = Tab::open(1,"John");
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
 
         $tab->serveDrinks([1]);
         $tab->prepareFood([2]);
@@ -246,14 +248,12 @@ class TabTest extends TestCase
      * @test
      * @expectedException \malotor\EventsCafe\Domain\Model\Tab\MustPayEnoughException
      */
-    public function cannot_be_closed_with_not_enough_pay()
+    public function it_should_not_be_closed_without_enough_pay()
     {
-        $tab = Tab::open(1,"John");
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
 
         $tab->serveDrinks([1]);
         $tab->prepareFood([2]);
@@ -266,14 +266,12 @@ class TabTest extends TestCase
     /**
      * @test
      */
-    public function can_close_tab_by_paying_exact_amount()
+    public function it_should_be_closed_with_exact_pay()
     {
-        $tab = Tab::open(1,"John");
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
 
         $tab->serveDrinks([1]);
         $tab->prepareFood([2]);
@@ -287,14 +285,12 @@ class TabTest extends TestCase
     /**
      * @test
      */
-    public function can_close_tab_with_tip()
+    public function it_should_be_closed_with_a_tip()
     {
-        $tab = Tab::open(1,"John");
-        $orderedItems = [
-            new OrderedItem(1,true,2.5),
-            new OrderedItem(2,false,4.5),
-        ];
-        $tab->placeOrder($orderedItems);
+        $tab = self::openTabWithMenuItems([
+            [1,true,2.5],
+            [2,false,4.5]
+        ]);
 
         $tab->serveDrinks([1]);
         $tab->prepareFood([2]);
@@ -336,5 +332,18 @@ class TabTest extends TestCase
 
         $this->assertEquals("adb40bf1-e79c-442e-ae7c-3c9cfcdd38f1",(string) $anAggregate->getAggregateId());
         //$this->assertEquals(4, $anAggregate->get());
+    }
+
+
+    protected static function openTabWithMenuItems($orderedItems) : Tab
+    {
+        $tab = Tab::open(1,"John");
+
+        foreach ($orderedItems as $item)
+        {
+            $tab->placeItemInOrder($item[0],$item[1],$item[2]);
+        }
+
+        return $tab;
     }
 }

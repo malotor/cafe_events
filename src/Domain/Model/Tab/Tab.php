@@ -12,6 +12,7 @@ use malotor\EventsCafe\Domain\Model\Events\FoodServed;
 use malotor\EventsCafe\Domain\Model\Events\TabClosed;
 use malotor\EventsCafe\Domain\Model\Events\TabOpened;
 
+use malotor\EventsCafe\Domain\Model\OrderedItem\OrderedItem;
 
 class Tab extends Aggregate
 {
@@ -85,28 +86,24 @@ class Tab extends Aggregate
     }
 
 
-    public function placeOrder($orderedItems)
+    public function placeItemInOrder($id, $isDrink, $price)
     {
+
         if (!$this->open) {
             throw TabNotOpen::create();
         }
 
-        $drinks = array_filter($orderedItems, function ($a) {
-            return $a->isDrink();
-        });
-        $food = array_filter($orderedItems, function ($a) {
-            return !$a->isDrink();
-        });
+        $item = new OrderedItem($id,$isDrink,$price);
 
-
-        if (count($drinks) > 0) {
+        if ($isDrink)
+        {
             $this->applyAndRecordThat(new DrinksOrdered($this->getAggregateId(),
-                $drinks));
+                [$item]));
+            return;
         }
-        if (count($food) > 0) {
-            $this->applyAndRecordThat(new FoodOrdered($this->getAggregateId(),
-                $food));
-        }
+
+        $this->applyAndRecordThat(new FoodOrdered($this->getAggregateId(),
+                [$item]));
 
     }
 
