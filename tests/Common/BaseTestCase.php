@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Client;
 
-class Acceptance extends TestCase
+class BaseTestCase extends TestCase
 {
     protected $crawler;
     protected $client;

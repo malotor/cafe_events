@@ -3,9 +3,10 @@
 namespace malotor\EventsCafe\Tests\Functional;
 
 use Doctrine\ORM\EntityManager;
-use malotor\EventsCafe\Tests\Common\Acceptance;
+use malotor\EventsCafe\Tests\Common\BaseTestCase;
+use Ramsey\Uuid\Uuid;
 
-class ApplicationTest extends Acceptance
+class ApplicationTest extends BaseTestCase
 {
 
 
@@ -53,18 +54,9 @@ class ApplicationTest extends Acceptance
      */
     public function a_waiter_could_open_new_tab_for_a_table()
     {
-        $this->request('POST', '/tab', [
-            'table'  => '1',
-            'waiter' => 'John Doe'
-        ]);
-
+        $this->openTab(1,'John Doe');
         $this->assertEquals(200, $this->getResponseStatusCode());
-
-        $this->request('POST', '/tab', [
-            'table'  => '2',
-            'waiter' => 'Jane Doe'
-        ]);
-
+        $this->openTab(2,'Jane Doe');
         $this->assertEquals(200, $this->getResponseStatusCode());
     }
 
@@ -73,23 +65,14 @@ class ApplicationTest extends Acceptance
      */
     public function get_tab_info()
     {
-        $this->request('POST', '/tab', [
-            'table'  => '2',
-            'waiter' => 'Jane Doe'
-        ]);
-
+        $tabId = $this->openTab(1,'John Doe');
+        $this->assertTrue($this->client->getResponse()->isOk());
+        $response = $this->getTab($tabId);
         $this->assertTrue($this->client->getResponse()->isOk());
 
-
-        //$tabId = $response['tab']['id'];
-
-        //$response = $this->request('GET', "/tab/$tabId");
-
-        //$this->assertTrue($this->client->getResponse()->isOk());
-
-        //$this->assertEquals(2, $response['tab']['table']);
-        //$this->assertEquals('Jane Doe', $response['tab']['waiter']);
-        //$this->assertEquals('open', $response['tab']['status']);
+        $this->assertEquals(1, $response['tab']['table']);
+        $this->assertEquals('John Doe', $response['tab']['waiter']);
+        $this->assertEquals('open', $response['tab']['status']);
     }
 
     /**
@@ -97,15 +80,8 @@ class ApplicationTest extends Acceptance
      */
     public function list_all_tabs()
     {
-        $this->request('POST', '/tab', [
-            'table'  => '1',
-            'waiter' => 'John Doe'
-        ]);
-
-
-        $response = $this->request('GET', '/tab');
-
-        $this->assertTrue($this->client->getResponse()->isOk());
+        $tabId = $this->openTab(1,'John Doe');
+        $response = $this->getTabs();
 
         $this->assertEquals(1, $response['tabs'][0]['table']);
         $this->assertEquals('John Doe', $response['tabs'][0]['waiter']);
@@ -121,18 +97,10 @@ class ApplicationTest extends Acceptance
     public function only_order_items_that_are_in_the_menu()
     {
 
-        $response = $this->request('POST', '/tab', [
-            'table'  => '1',
-            'waiter' => 'John Doe'
-        ]);
-
-        //$response = $this->request('GET', '/tab');
-        $tabId = $response['tab']['id'];
-
-        $response = $this->request('POST', "/tab/$tabId", [
+        $tabId = $this->openTab(1,'John Doe');
+        $this->request('POST', "/tab/$tabId", [
             'orderedItems' => [9999]
         ]);
-
         $this->assertFalse($this->client->getResponse()->isOk());
 
     }
@@ -143,20 +111,11 @@ class ApplicationTest extends Acceptance
     public function items_in_the_menu_could_be_ordered()
     {
 
-        $response = $this->request('POST', '/tab', [
-            'table'  => '1',
-            'waiter' => 'John Doe'
-        ]);
+        $tabId = $this->openTab(1,'John Doe');
 
-        $tabId = $response['tab']['id'];
+        $this->placeOrder($tabId, [1, 2, 5, 6]);
 
-        $response = $this->request('POST', "/tab/$tabId", [
-            'orderedItems' => [1, 2, 5, 6]
-        ]);
-
-        $this->assertTrue($this->client->getResponse()->isOk());
-
-        $response = $this->request('GET', '/tab');
+        $response = $this->getTabs();
 
         //var_dump($response['tabs'][0]);
         $this->assertEquals('Beer', $response['tabs'][0]['outstanding_drinks'][0]);
@@ -174,24 +133,13 @@ class ApplicationTest extends Acceptance
     public function outstanding_foods_could_be_prepared()
     {
 
-        $response = $this->request('POST', '/tab', [
-            'table'  => '1',
-            'waiter' => 'John Doe'
-        ]);
+        $tabId = $this->openTab(1,'John Doe');
 
-        $tabId = $response['tab']['id'];
+        $this->placeOrder($tabId, [1, 2, 5, 6]);
 
-        $response = $this->request('POST', "/tab/$tabId", [
-            'orderedItems' => [1, 2, 5, 6]
-        ]);
+        $this->prepareFood($tabId, [1,2]);
 
-        $response = $this->request("POST", "/tab/$tabId/prepare", [
-            'items' => [1, 2]
-        ]);
-
-        $this->assertTrue($this->client->getResponse()->isOk());
-
-        $response = $this->request("GET", "/tab/$tabId");
+        $response = $this->getTab($tabId);
 
         $this->assertEquals('Pizza', $response['tab']['outstanding_foods'][0]);
         $this->assertEquals('Pizza', $response['tab']['prepared_foods'][0]);
@@ -204,22 +152,12 @@ class ApplicationTest extends Acceptance
     public function outstanding_drinks_could_be_served()
     {
 
-        $response = $this->request('POST', '/tab', [
-            'table'  => '1',
-            'waiter' => 'John Doe'
-        ]);
+        $tabId = $this->openTab(1,'John Doe');
 
-        $tabId = $response['tab']['id'];
+        $this->placeOrder($tabId, [1, 2, 5, 6]);
+        $this->markDrinksServed($tabId, [5,6]);
 
-        $response = $this->request('POST', "/tab/$tabId", [
-            'orderedItems' => [1, 2, 5, 6]
-        ]);
-
-        $response = $this->request("POST", "/tab/$tabId/mark_drinks_served", [ 'items' => [5,6] ]);
-
-        $this->assertTrue($this->client->getResponse()->isOk());
-
-        $response = $this->request("GET", "/tab/$tabId");
+        $response = $this->getTab($tabId);
 
         $this->assertEquals('Beer', $response['tab']['served_items'][0]);
         $this->assertEquals('Ice tea', $response['tab']['served_items'][1]);
@@ -233,24 +171,12 @@ class ApplicationTest extends Acceptance
     public function prepared_food_could_be_served()
     {
 
-        $response = $this->request('POST', '/tab', [
-            'table'  => '1',
-            'waiter' => 'John Doe'
-        ]);
+        $tabId = $this->openTab(1,'John Doe');
 
-        $tabId = $response['tab']['id'];
-
-        $response = $this->request('POST', "/tab/$tabId", [
-            'orderedItems' => [1, 2, 5, 6]
-        ]);
-
-        $response = $this->request("POST", "/tab/$tabId/prepare", [ 'items' => [2] ]);
-
-        $response = $this->request("POST", "/tab/$tabId/mark_food_served", [ 'items' => [2] ]);
-
-        $this->assertTrue($this->client->getResponse()->isOk());
-
-        $response = $this->request("GET", "/tab/$tabId");
+        $this->placeOrder($tabId, [1, 2, 5, 6]);
+        $this->prepareFood($tabId, [2]);
+        $this->markFoodServed($tabId,[2]);
+        $response = $this->getTab($tabId);
 
         $this->assertEquals('Hamburger', $response['tab']['served_items'][0]);
         //$this->assertEquals('Hamburger', $response['tab']['served_items'][1]);
@@ -261,32 +187,84 @@ class ApplicationTest extends Acceptance
      */
     public function tab_without_standing_items_could_be_paid()
     {
+        $tabId = $this->openTab(1,'John Doe');
+
+        $this->placeOrder($tabId, [1, 2, 5, 6]);
+        $this->markDrinksServed($tabId, [5,6]);
+        $this->prepareFood($tabId, [1, 2]);
+        $this->markFoodServed($tabId, [1,2]);
+        $this->closeTab($tabId, 23);
+
+        $response = $this->getTab($tabId);
+
+        $this->assertEquals(23, $response['tab']['amountPaid']);
+        $this->assertEquals(21, $response['tab']['orderValue']);
+        $this->assertEquals(2, $response['tab']['tipValue']);
+    }
+
+
+    protected function openTab($table, $waiter) : string
+    {
+
         $response = $this->request('POST', '/tab', [
             'table'  => '1',
             'waiter' => 'John Doe'
         ]);
 
-        $tabId = $response['tab']['id'];
+        return $response['tab']['id'];
 
+    }
+
+    protected function placeOrder($tabId, $items)
+    {
         $this->request('POST', "/tab/$tabId", [
-            'orderedItems' => [1, 2, 5, 6]
+            'orderedItems' => $items
         ]);
-
-        $this->request("POST", "/tab/$tabId/mark_drinks_served", [ 'items' => [5,6] ]);
-
-        $this->request("POST", "/tab/$tabId/prepare", [ 'items' => [1, 2] ]);
-
-        $this->request("POST", "/tab/$tabId/mark_food_served", [ 'items' => [1,2] ]);
-
-        $this->request("POST", "/tab/$tabId/paid", [ 'amount' => 23 ]);
-
-
         $this->assertTrue($this->client->getResponse()->isOk());
 
-        $response = $this->request("GET", "/tab/$tabId");
+    }
 
-        $this->assertEquals(23, $response['tab']['amountPaid']);
-        $this->assertEquals(21, $response['tab']['orderValue']);
-        $this->assertEquals(2, $response['tab']['tipValue']);
+    protected function prepareFood($tabId, $items)
+    {
+        $this->request("POST", "/tab/$tabId/prepare", [ 'items' => $items ]);
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+    }
+
+    protected function markFoodServed($tabId, $items)
+    {
+        $this->request("POST", "/tab/$tabId/mark_food_served", [ 'items' => $items ]);
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+    }
+
+    protected function markDrinksServed($tabId, $items)
+    {
+        $this->request("POST", "/tab/$tabId/mark_drinks_served", [ 'items' => $items ]);
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+    }
+
+    protected function closeTab($tabId, $amount)
+    {
+        $this->request("POST", "/tab/$tabId/paid", [ 'amount' => $amount ]);
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+    }
+
+    protected function getTab($tabId)
+    {
+        $response = $this->request("GET", "/tab/$tabId");
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+        return $response;
+    }
+
+    protected function getTabs()
+    {
+        $response = $this->request("GET", "/tab");
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+        return $response;
     }
 }
